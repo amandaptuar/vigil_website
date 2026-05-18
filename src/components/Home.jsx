@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './Testimonials.css';
+import './Features.css';
+import './OnlineRisks.css';
+import HowItWorks from './HowItWorks';
+
 
 function Home() {
   useEffect(() => {
@@ -40,380 +45,963 @@ function Home() {
 
   return (
     <>
-      <div className="luminix-hero-section section" style={{ backgroundImage: 'url(/assets/images/hero/hero-01.png)' }}>
+      <div className="luminix-hero-section section" style={{ backgroundImage: 'url("/myimg/image copy.png")' }}>
         <div className="container">
-          <div className="luminix-hero-content">
-            <h5 data-aos="fade-up" data-aos-duration="700">Trusted by 50,000+ Families Worldwide</h5>
-            <h1 data-aos="fade-up" data-aos-duration="900" className="hero-title">Keep Your Kids Safe Online — 24/7</h1>
-            <p data-aos="fade-up" data-aos-duration="1100" className="text">Vigil is the leading parental monitoring system. Know where your child is, what they're viewing, and who they're talking to — all in real time. Setup takes under 5 minutes. Cancel anytime.</p>
-            <div className="mt-50" data-aos="fade-up" data-aos-duration="700">
-              <Link to="/contact" className="luminix-default-btn pill luminix-hero-btn">Contact Us
-                <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          <div className="row align-items-center">
+            {/* Left Column - Content */}
+            <div className="col-lg-6 col-md-12">
+              <div className="vigil-hero-content" data-aos="fade-right" data-aos-duration="1000">
+                
+                {/* Families Pill Badge */}
+                <div className="vigil-hero-badge">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                  <span>Trusted by 50,000+ Families Worldwide</span>
+                </div>
+
+                {/* Title */}
+                <h1 className="vigil-hero-title">
+                  Peace of Mind for You.<br />
+                  <span className="vigil-text-green">A Safer Online World</span><br />
+                  <span className="vigil-text-green vigil-underline-wrapper">
+                    for Your Child.
+                    <svg className="vigil-accent-underline" width="220" height="15" viewBox="0 0 220 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 10C50 4 150 3 215 11" stroke="#3F26D9" strokeWidth="4" strokeLinecap="round" />
+                    </svg>
+                  </span>
+                </h1>
+
+                {/* Subtitle */}
+                <p className="vigil-hero-subtitle">
+                  Vigil is your all-in-one parental monitoring system that lets you know where your child is, what they're viewing, and who they're talking to — in real time. Simple to use. Powerful in protection.
+                </p>
+
+                {/* Horizontal Features (5 icons in row) */}
+                <ul className="vigil-features-row">
+                  <li className="vigil-feature-item">
+                    <div className="vigil-feature-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <path d="m9 11 2 2 4-4" />
+                      </svg>
+                    </div>
+                    <span>Real-Time Monitoring</span>
+                  </li>
+                  <li className="vigil-feature-item">
+                    <div className="vigil-feature-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                    </div>
+                    <span>Location Tracking</span>
+                  </li>
+                  <li className="vigil-feature-item">
+                    <div className="vigil-feature-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        <path d="M8 10h.01M12 10h.01M16 10h.01" />
+                      </svg>
+                    </div>
+                    <span>App & Chat Monitoring</span>
+                  </li>
+                  <li className="vigil-feature-item">
+                    <div className="vigil-feature-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                        <path d="M2 12h20" />
+                      </svg>
+                    </div>
+                    <span>Web & Content Filtering</span>
+                  </li>
+                  <li className="vigil-feature-item">
+                    <div className="vigil-feature-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                      </svg>
+                    </div>
+                    <span>Instant Alerts</span>
+                  </li>
+                </ul>
+
+                {/* Actions (CTA Button + Setup Info) */}
+                <div className="vigil-actions-block">
+                  <Link to="/contact" className="vigil-cta-btn">
+                    <span>Start Protecting Your Child Today</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </Link>
+                  <div className="vigil-setup-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    <span>Setup in Under 5 Minutes</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Right Column - Shield and Floating Badges */}
+            <div className="col-lg-6 col-md-12 position-relative">
+              <div className="vigil-hero-graphic-area" data-aos="fade-left" data-aos-duration="1000">
+                
+                {/* Cyber-Security glowing SVG shield outline overlay */}
+                <div className="vigil-shield-svg-container">
+                  <svg width="100%" height="100%" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Glowing outer shield */}
+                    <path className="vigil-shield-path" d="M250 80 C 190 55, 130 55, 120 55 C 80 180, 90 340, 250 460 C 410 340, 420 180, 380 55 C 370 55, 310 55, 250 80 Z" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="3" strokeLinecap="round" filter="url(#shieldGlow)" />
+                    {/* Glowing inner shield */}
+                    <path className="vigil-shield-path" d="M250 100 C 200 78, 150 78, 140 78 C 105 190, 115 325, 250 435 C 385 325, 395 190, 360 78 C 350 78, 300 78, 250 100 Z" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1.5" strokeLinecap="round" />
+                    
+                    <defs>
+                      <filter id="shieldGlow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="8" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+
+                {/* Floating Widget 1: Location Update */}
+                <div className="vigil-glass-card vigil-card-location">
+                  <div className="vigil-card-icon-wrapper" style={{ backgroundColor: 'rgba(40, 167, 69, 0.1)', borderColor: 'rgba(40, 167, 69, 0.2)', color: '#28a745' }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                  </div>
+                  <div className="vigil-card-content">
+                    <span className="vigil-card-title">Location Update</span>
+                    <span className="vigil-card-sub">Home • 2 min ago</span>
+                  </div>
+                </div>
+
+                {/* Floating Widget 2: Alert */}
+                <div className="vigil-glass-card vigil-card-alert">
+                  <div className="vigil-card-icon-wrapper" style={{ backgroundColor: 'rgba(40, 167, 69, 0.1)', borderColor: 'rgba(40, 167, 69, 0.2)', color: '#28a745' }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                    </svg>
+                  </div>
+                  <div className="vigil-card-content">
+                    <span className="vigil-card-title">Alert</span>
+                    <span className="vigil-card-sub">New Activity Detected</span>
+                  </div>
+                </div>
+
+                {/* Floating Widget 3: Screen Time */}
+                <div className="vigil-glass-card vigil-card-screentime">
+                  <div className="vigil-card-icon-wrapper" style={{ backgroundColor: 'rgba(40, 167, 69, 0.1)', borderColor: 'rgba(40, 167, 69, 0.2)', color: '#28a745' }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  </div>
+                  <div className="vigil-card-content">
+                    <span className="vigil-card-title">Screen Time</span>
+                    <span className="vigil-card-sub">2h 15m Today</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Calligraphy Area (bottom-right of hero) */}
+        <div className="vigil-calligraphy-area">
+          <div className="vigil-calligraphy-text-1">Because every click matters. Every moment counts.</div>
+          <div className="vigil-calligraphy-signature">
+            <span>We've got your back!</span>
+            <svg width="230" height="20" viewBox="0 0 230 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 15C60 7 150 6 225 15" stroke="#39D353" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+      {/* --- HOW IT WORKS SECTION --- */}
+      <HowItWorks />
+
+      {/* --- SECTION 2: TRUSTED BY FAMILIES ACROSS THE USA --- */}
+      <section className="vigil-trusted-parents-section" style={{ backgroundImage: 'url("/myimg/image copy 2.png")' }}>
+        <div className="container">
+          <div className="vigil-section-title-wrap text-center">
+            <div className="vigil-stories-badge mx-auto">
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: '6px' }}>
+                <rect width="16" height="12" rx="1" fill="white"/>
+                <mask id="flag_mask" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
+                  <rect width="16" height="12" rx="1" fill="white"/>
+                </mask>
+                <g mask="url(#flag_mask)">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
+                  <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
+                  <circle cx="1.5" cy="1.5" r="0.4" fill="white"/>
+                  <circle cx="3.5" cy="1.5" r="0.4" fill="white"/>
+                  <circle cx="5.5" cy="1.5" r="0.4" fill="white"/>
+                  <circle cx="2.5" cy="3" r="0.4" fill="white"/>
+                  <circle cx="4.5" cy="3" r="0.4" fill="white"/>
+                  <circle cx="1.5" cy="4.5" r="0.4" fill="white"/>
+                  <circle cx="3.5" cy="4.5" r="0.4" fill="white"/>
+                  <circle cx="5.5" cy="4.5" r="0.4" fill="white"/>
+                </g>
+              </svg>
+              Real Parents. Real Stories. Real Protection.
+            </div>
+            
+            {/* Sparkles Decorative SVG */}
+            <svg className="vigil-section-sparkles" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+
+            {/* Dotted Map Decorative SVG */}
+            <svg className="vigil-section-map" width="120" height="80" viewBox="0 0 120 80" fill="currentColor">
+              <circle cx="10" cy="20" r="1.5"/>
+              <circle cx="20" cy="15" r="1.5"/>
+              <circle cx="30" cy="25" r="1.5"/>
+              <circle cx="15" cy="35" r="1.5"/>
+              <circle cx="25" cy="45" r="1.5"/>
+              <circle cx="40" cy="10" r="1.5"/>
+              <circle cx="50" cy="20" r="1.5"/>
+              <circle cx="60" cy="15" r="1.5"/>
+              <circle cx="45" cy="30" r="1.5"/>
+              <circle cx="55" cy="40" r="1.5"/>
+              <circle cx="70" cy="25" r="1.5"/>
+              <circle cx="80" cy="15" r="1.5"/>
+              <circle cx="90" cy="20" r="1.5"/>
+              <circle cx="75" cy="35" r="1.5"/>
+              <circle cx="85" cy="45" r="1.5"/>
+              <circle cx="100" cy="10" r="1.5"/>
+              <circle cx="110" cy="25" r="1.5"/>
+              <circle cx="105" cy="40" r="1.5"/>
+              <circle cx="35" cy="55" r="1.5"/>
+              <circle cx="45" cy="65" r="1.5"/>
+              <circle cx="65" cy="55" r="1.5"/>
+              <circle cx="75" cy="65" r="1.5"/>
+              <circle cx="95" cy="55" r="1.5"/>
+            </svg>
+
+            <h2 className="vigil-section-main-title">
+              Trusted by Families Across the <span className="vigil-gradient-text-usa">USA</span>
+            </h2>
+            <p className="vigil-section-desc mx-auto">
+              See how Vigil's AI-powered protection helps parents across the country keep their kids safe, informed, and one step ahead.
+            </p>
+          </div>
+
+          <div className="vigil-testimonials-row-5col">
+            {/* Card 1: AI-Powered Protection */}
+            <div className="vigil-ai-sidebar-card">
+              <div className="vigil-ai-sidebar-header">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3F26D9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <span className="vigil-ai-glow-tag" style={{ margin: 0 }}>AI-Powered Protection</span>
+                </div>
+                <h4 style={{ fontSize: '18px', fontWeight: '800' }}>AI-Powered Protection</h4>
+                <p>Real-time. Smart. Always On.</p>
+              </div>
+              <div className="vigil-ai-list">
+                <div className="vigil-ai-list-item">
+                  <div className="vigil-ai-list-icon vigil-icon-threat">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                  </div>
+                  <div className="vigil-ai-list-content">
+                    <h6>AI Threat Detection <span className="vigil-ai-list-mini-badge">AI</span></h6>
+                    <p>Detects cyberbullying, dangerous content & online predators in real time.</p>
+                  </div>
+                </div>
+                <div className="vigil-ai-list-item">
+                  <div className="vigil-ai-list-icon vigil-icon-chat">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                  </div>
+                  <div className="vigil-ai-list-content">
+                    <h6>Smart Chat Analysis <span className="vigil-ai-list-mini-badge">AI</span></h6>
+                    <p>AI reads between the lines to identify concerning conversations or emotional distress.</p>
+                  </div>
+                </div>
+                <div className="vigil-ai-list-item">
+                  <div className="vigil-ai-list-icon vigil-icon-behavior">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                  </div>
+                  <div className="vigil-ai-list-content">
+                    <h6>Behavior & Location <span className="vigil-ai-list-mini-badge">AI</span></h6>
+                    <p>AI learns routines & flags unusual activities or risky locations instantly.</p>
+                  </div>
+                </div>
+                <div className="vigil-ai-list-item">
+                  <div className="vigil-ai-list-icon vigil-icon-reports">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                      <line x1="16" y1="13" x2="8" y2="13" />
+                      <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                  </div>
+                  <div className="vigil-ai-list-content">
+                    <h6>Weekly AI Reports <span className="vigil-ai-list-mini-badge">AI</span></h6>
+                    <p>Get easy-to-understand insights with AI summaries & actionable recommendations.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="vigil-ai-sidebar-footer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-3.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2Z"/>
+                  <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-3.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2Z"/>
                 </svg>
+                <p>Vigil's AI works 24/7 so you don't have to. Smarter protection for a safer digital world.</p>
+              </div>
+            </div>
+
+            {/* Card 2: Jessica M. */}
+            <div className="vigil-testimony-card">
+              <div className="vigil-testimony-header">
+                <div className="vigil-testimony-author-group">
+                  <img className="vigil-testimony-photo" src="/myimg/parent1.png" alt="Jessica M." />
+                  <div>
+                    <h6 className="vigil-testimony-author-name">Jessica M.</h6>
+                    <div className="vigil-testimony-pin">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '3px', flexShrink: 0 }}>
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                      Austin, TX
+                    </div>
+                  </div>
+                </div>
+                <svg width="28" height="22" viewBox="0 0 48 38" fill="rgba(63, 38, 217, 0.08)" style={{ position: 'absolute', top: '-5px', right: 0 }}>
+                  <path d="M19.2 0C10.7 7.4 5.3 16.4 5.3 24.3C5.3 32.1 10.3 37.1 16.8 37.1C22.6 37.1 27.2 32.5 27.2 26.7C27.2 20.9 22.8 16.5 17.1 16.5C16 16.5 14.4 16.8 13.9 17.1C14.7 11.2 19.5 5.1 24.3 1.4L19.2 0ZM42.7 0C34.1 7.4 28.8 16.4 28.8 24.3C28.8 32.1 33.9 37.1 40.3 37.1C46.1 37.1 50.7 32.5 50.7 26.7C50.7 20.9 46.3 16.5 40.5 16.5C39.5 16.5 37.9 16.8 37.3 17.1C38.1 11.2 43 5.1 47.7 1.4L42.7 0Z" />
+                </svg>
+              </div>
+              <div className="vigil-stars-row">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#FFB800" stroke="#FFB800" style={{ marginRight: '2px', display: 'inline-block' }}>
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
+              </div>
+              <p className="vigil-testimony-quote">
+                "Vigil's AI detected a concerning conversation in my son's chat before it escalated. I got an alert right away and was able to talk to him. I honestly don't know what I'd do without it."
+              </p>
+              <div style={{ marginTop: 'auto' }}>
+                <span className="vigil-use-case-btn">Use Case</span>
+                <div className="vigil-context-bar">
+                  <div className="vigil-context-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                  </div>
+                  <p>AI Chat Analysis detected potential cyberbullying and flagged it instantly.</p>
+                </div>
+              </div>
+              <div className="vigil-testimony-footer">
+                <span className="vigil-testimony-relation">Mother of 2</span>
+                <div className="vigil-testimony-flag-pill">
+                  <svg width="12" height="9" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                    <rect width="16" height="12" rx="1" fill="white"/>
+                    <mask id="flag_mask2" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
+                      <rect width="16" height="12" rx="1" fill="white"/>
+                    </mask>
+                    <g mask="url(#flag_mask2)">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
+                      <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
+                    </g>
+                  </svg>
+                  USA
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Mark R. */}
+            <div className="vigil-testimony-card">
+              <div className="vigil-testimony-header">
+                <div className="vigil-testimony-author-group">
+                  <img className="vigil-testimony-photo" src="/myimg/parent2.png" alt="Mark R." />
+                  <div>
+                    <h6 className="vigil-testimony-author-name">Mark R.</h6>
+                    <div className="vigil-testimony-pin">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '3px', flexShrink: 0 }}>
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                      Denver, CO
+                    </div>
+                  </div>
+                </div>
+                <svg width="28" height="22" viewBox="0 0 48 38" fill="rgba(63, 38, 217, 0.08)" style={{ position: 'absolute', top: '-5px', right: 0 }}>
+                  <path d="M19.2 0C10.7 7.4 5.3 16.4 5.3 24.3C5.3 32.1 10.3 37.1 16.8 37.1C22.6 37.1 27.2 32.5 27.2 26.7C27.2 20.9 22.8 16.5 17.1 16.5C16 16.5 14.4 16.8 13.9 17.1C14.7 11.2 19.5 5.1 24.3 1.4L19.2 0ZM42.7 0C34.1 7.4 28.8 16.4 28.8 24.3C28.8 32.1 33.9 37.1 40.3 37.1C46.1 37.1 50.7 32.5 50.7 26.7C50.7 20.9 46.3 16.5 40.5 16.5C39.5 16.5 37.9 16.8 37.3 17.1C38.1 11.2 43 5.1 47.7 1.4L42.7 0Z" />
+                </svg>
+              </div>
+              <div className="vigil-stars-row">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#FFB800" stroke="#FFB800" style={{ marginRight: '2px', display: 'inline-block' }}>
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
+              </div>
+              <p className="vigil-testimony-quote">
+                "The location AI is spot on! I get notified the moment my daughter leaves school or enters an unfamiliar area. It gives me real peace of mind while she's on the go."
+              </p>
+              <div style={{ marginTop: 'auto' }}>
+                <span className="vigil-use-case-btn">Use Case</span>
+                <div className="vigil-context-bar">
+                  <div className="vigil-context-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                  </div>
+                  <p>AI Location Intelligence tracked routines and alerted unusual deviations.</p>
+                </div>
+              </div>
+              <div className="vigil-testimony-footer">
+                <span className="vigil-testimony-relation">Father of 1</span>
+                <div className="vigil-testimony-flag-pill">
+                  <svg width="12" height="9" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                    <rect width="16" height="12" rx="1" fill="white"/>
+                    <mask id="flag_mask3" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
+                      <rect width="16" height="12" rx="1" fill="white"/>
+                    </mask>
+                    <g mask="url(#flag_mask3)">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
+                      <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
+                    </g>
+                  </svg>
+                  USA
+                </div>
+              </div>
+            </div>
+
+            {/* Card 4: Amanda L. */}
+            <div className="vigil-testimony-card">
+              <div className="vigil-testimony-header">
+                <div className="vigil-testimony-author-group">
+                  <img className="vigil-testimony-photo" src="/myimg/parent3.png" alt="Amanda L." />
+                  <div>
+                    <h6 className="vigil-testimony-author-name">Amanda L.</h6>
+                    <div className="vigil-testimony-pin">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '3px', flexShrink: 0 }}>
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                      Chicago, IL
+                    </div>
+                  </div>
+                </div>
+                <svg width="28" height="22" viewBox="0 0 48 38" fill="rgba(63, 38, 217, 0.08)" style={{ position: 'absolute', top: '-5px', right: 0 }}>
+                  <path d="M19.2 0C10.7 7.4 5.3 16.4 5.3 24.3C5.3 32.1 10.3 37.1 16.8 37.1C22.6 37.1 27.2 32.5 27.2 26.7C27.2 20.9 22.8 16.5 17.1 16.5C16 16.5 14.4 16.8 13.9 17.1C14.7 11.2 19.5 5.1 24.3 1.4L19.2 0ZM42.7 0C34.1 7.4 28.8 16.4 28.8 24.3C28.8 32.1 33.9 37.1 40.3 37.1C46.1 37.1 50.7 32.5 50.7 26.7C50.7 20.9 46.3 16.5 40.5 16.5C39.5 16.5 37.9 16.8 37.3 17.1C38.1 11.2 43 5.1 47.7 1.4L42.7 0Z" />
+                </svg>
+              </div>
+              <div className="vigil-stars-row">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#FFB800" stroke="#FFB800" style={{ marginRight: '2px', display: 'inline-block' }}>
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
+              </div>
+              <p className="vigil-testimony-quote">
+                "The weekly AI report is a game changer. It shows me what's trending, what to watch out for, and even gives tips. I actually look forward to reading it every Sunday!"
+              </p>
+              <div style={{ marginTop: 'auto' }}>
+                <span className="vigil-use-case-btn">Use Case</span>
+                <div className="vigil-context-bar">
+                  <div className="vigil-context-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                  </div>
+                  <p>AI Weekly Report summarized screen time, app usage & content risks.</p>
+                </div>
+              </div>
+              <div className="vigil-testimony-footer">
+                <span className="vigil-testimony-relation">Mother of 3</span>
+                <div className="vigil-testimony-flag-pill">
+                  <svg width="12" height="9" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                    <rect width="16" height="12" rx="1" fill="white"/>
+                    <mask id="flag_mask4" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
+                      <rect width="16" height="12" rx="1" fill="white"/>
+                    </mask>
+                    <g mask="url(#flag_mask4)">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
+                      <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
+                    </g>
+                  </svg>
+                  USA
+                </div>
+              </div>
+            </div>
+
+            {/* Card 5: Daniel K. */}
+            <div className="vigil-testimony-card">
+              <div className="vigil-testimony-header">
+                <div className="vigil-testimony-author-group">
+                  <img className="vigil-testimony-photo" src="/myimg/parent4.png" alt="Daniel K." />
+                  <div>
+                    <h6 className="vigil-testimony-author-name">Daniel K.</h6>
+                    <div className="vigil-testimony-pin">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '3px', flexShrink: 0 }}>
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                      Seattle, WA
+                    </div>
+                  </div>
+                </div>
+                <svg width="28" height="22" viewBox="0 0 48 38" fill="rgba(63, 38, 217, 0.08)" style={{ position: 'absolute', top: '-5px', right: 0 }}>
+                  <path d="M19.2 0C10.7 7.4 5.3 16.4 5.3 24.3C5.3 32.1 10.3 37.1 16.8 37.1C22.6 37.1 27.2 32.5 27.2 26.7C27.2 20.9 22.8 16.5 17.1 16.5C16 16.5 14.4 16.8 13.9 17.1C14.7 11.2 19.5 5.1 24.3 1.4L19.2 0ZM42.7 0C34.1 7.4 28.8 16.4 28.8 24.3C28.8 32.1 33.9 37.1 40.3 37.1C46.1 37.1 50.7 32.5 50.7 26.7C50.7 20.9 46.3 16.5 40.5 16.5C39.5 16.5 37.9 16.8 37.3 17.1C38.1 11.2 43 5.1 47.7 1.4L42.7 0Z" />
+                </svg>
+              </div>
+              <div className="vigil-stars-row">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#FFB800" stroke="#FFB800" style={{ marginRight: '2px', display: 'inline-block' }}>
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
+              </div>
+              <p className="vigil-testimony-quote">
+                "Vigil's AI blocked a harmful website my son tried to visit. It's like having a digital guardian watching over him 24/7. Worth every penny."
+              </p>
+              <div style={{ marginTop: 'auto' }}>
+                <span className="vigil-use-case-btn">Use Case</span>
+                <div className="vigil-context-bar">
+                  <div className="vigil-context-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="m8.5 12.5 3 3 6-6"/>
+                    </svg>
+                  </div>
+                  <p>AI Web Protection blocked access to explicit content in real time.</p>
+                </div>
+              </div>
+              <div className="vigil-testimony-footer">
+                <span className="vigil-testimony-relation">Father of 2</span>
+                <div className="vigil-testimony-flag-pill">
+                  <svg width="12" height="9" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                    <rect width="16" height="12" rx="1" fill="white"/>
+                    <mask id="flag_mask5" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
+                      <rect width="16" height="12" rx="1" fill="white"/>
+                    </mask>
+                    <g mask="url(#flag_mask5)">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
+                      <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
+                    </g>
+                  </svg>
+                  USA
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Metrics Trust Pill Banner */}
+          <div className="vigil-trust-stats-pill-banner">
+            <div className="vigil-trust-stats-pill-banner-left">
+              <div className="shield-icon" style={{ backgroundColor: '#3F26D9', color: '#FFFFFF', padding: '12px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <polyline points="9 11 11 13 15 9" />
+                </svg>
+              </div>
+              <div className="text-box">
+                <h6>Trusted by Thousands of Families Across the USA</h6>
+                <p>Because your child's safety deserves the best.</p>
+              </div>
+            </div>
+            
+            <div className="vigil-trust-stats-pill-divider"></div>
+
+            <div className="vigil-trust-stats-pill-item">
+              <div className="icon-box" style={{ backgroundColor: '#F3E8FF', color: '#8B5CF6' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                </svg>
+              </div>
+              <div className="text-box">
+                <h6>12,000+</h6>
+                <p>Happy Families Protected & Growing</p>
+              </div>
+            </div>
+
+            <div className="vigil-trust-stats-pill-divider"></div>
+
+            <div className="vigil-trust-stats-pill-item">
+              <div className="icon-box" style={{ backgroundColor: '#DCFCE7', color: '#16A34A' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="8 12 11 15 16 9" />
+                </svg>
+              </div>
+              <div className="text-box">
+                <h6>99.9%</h6>
+                <p>AI Detection Accuracy You Can Rely On</p>
+              </div>
+            </div>
+
+            <div className="vigil-trust-stats-pill-divider"></div>
+
+            <div className="vigil-trust-stats-pill-item">
+              <div className="icon-box" style={{ backgroundColor: '#FFEDD5', color: '#EA580C' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+              </div>
+              <div className="text-box">
+                <h6>2M+</h6>
+                <p>Real-time Alerts Delivered</p>
+              </div>
+            </div>
+
+            <div className="vigil-trust-stats-pill-divider"></div>
+
+            <div className="vigil-trust-stats-pill-item">
+              <div className="icon-box" style={{ backgroundColor: '#DBEAFE', color: '#2563EB' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+              </div>
+              <div className="text-box">
+                <h6>100%</h6>
+                <p>Private & Secure Your Data Stays Yours</p>
+              </div>
+            </div>
+
+            <div className="vigil-trust-stats-pill-divider"></div>
+
+            <div className="vigil-trust-stats-pill-item">
+              <div className="icon-box" style={{ backgroundColor: '#FFE4E6', color: '#E11D48' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                </svg>
+              </div>
+              <div className="text-box">
+                <h6>24/7</h6>
+                <p>AI Monitoring Always On Guard</p>
+              </div>
+            </div>
+
+            <div className="vigil-trust-stats-pill-divider"></div>
+
+            <div className="vigil-trust-stats-pill-banner-right">
+              <div className="map-icon">
+                <svg width="32" height="20" viewBox="0 0 40 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <circle cx="8" cy="8" r="2" fill="currentColor"/>
+                  <circle cx="16" cy="14" r="2" fill="currentColor"/>
+                  <circle cx="24" cy="6" r="2" fill="currentColor"/>
+                  <circle cx="32" cy="16" r="2" fill="currentColor"/>
+                  <line x1="8" y1="8" x2="16" y2="14" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
+                  <line x1="16" y1="14" x2="24" y2="6" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
+                  <line x1="24" y1="6" x2="32" y2="16" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
+                </svg>
+              </div>
+              <p>Proudly protecting families in every state across the USA.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Powerful Features Section */}
+      <section className="vigil-features-section" style={{ backgroundImage: 'url("/myimg/image copy 3.png")' }}>
+        <div className="container">
+          <div className="vigil-features-split">
+            {/* Left Column: Branding */}
+            <div className="vigil-features-left">
+              <h2>
+                <span style={{color: '#0F172A'}}>Powerful Features.</span> <br />
+                <span style={{color: '#4F46E5'}}>Total Peace of Mind.</span>
+              </h2>
+            </div>
+
+            {/* Right Column: 4x2 Grid */}
+            <div className="vigil-features-right">
+              <div className="vigil-features-header-flex">
+                <Link to="/contact" className="vigil-features-right-top-pill">
+                  Explore All Features →
+                </Link>
+              </div>
+              
+              <div className="vigil-features-grid">
+                {/* Card 1 */}
+                <div className="vigil-feature-card">
+                  <div className="vigil-feature-icon-wrap bg-pastel-green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  </div>
+                  <h5>Call Access</h5>
+                  <p>View all incoming, outgoing & missed calls to ensure your child is communicating safely with known contacts.</p>
+                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                </div>
+                {/* Card 2 */}
+                <div className="vigil-feature-card">
+                  <div className="vigil-feature-icon-wrap bg-pastel-blue">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  </div>
+                  <h5>SMS Access</h5>
+                  <p>Read sent, received & deleted text messages to quickly identify bullying or inappropriate conversations.</p>
+                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                </div>
+                {/* Card 3 */}
+                <div className="vigil-feature-card">
+                  <div className="vigil-feature-icon-wrap bg-pastel-green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  </div>
+                  <h5>WhatsApp Access</h5>
+                  <p>Monitor WhatsApp chats, media, and voice notes to keep an eye on their most active messaging app.</p>
+                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                </div>
+                {/* Card 4 */}
+                <div className="vigil-feature-card">
+                  <div className="vigil-feature-icon-wrap bg-pastel-purple">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                  </div>
+                  <h5>Social Media Access</h5>
+                  <p>Track activity on Instagram, Facebook, and Snapchat to protect them from dangerous online predators.</p>
+                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                </div>
+                {/* Card 5 */}
+                <div className="vigil-feature-card">
+                  <div className="vigil-feature-icon-wrap bg-pastel-purple">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  </div>
+                  <h5>Child Phone Gallery</h5>
+                  <p>View photos and videos stored on their device to ensure they are not exposed to explicit material.</p>
+                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                </div>
+                {/* Card 6 */}
+                <div className="vigil-feature-card">
+                  <div className="vigil-feature-icon-wrap bg-pastel-green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  </div>
+                  <h5>Live Location</h5>
+                  <p>Track your child's real-time location on a map so you always know exactly where they are.</p>
+                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                </div>
+                {/* Card 7 */}
+                <div className="vigil-feature-card">
+                  <div className="vigil-feature-icon-wrap bg-pastel-red">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                  </div>
+                  <h5>Call Recording</h5>
+                  <p>Record and listen to phone calls happening on the device if you suspect dangerous interactions.</p>
+                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                </div>
+                {/* Card 8 */}
+                <div className="vigil-feature-card">
+                  <div className="vigil-feature-icon-wrap bg-pastel-blue">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                  </div>
+                  <h5>And Much More</h5>
+                  <p>Web filtering, screen time control, keylogger, and dozens of other features designed for safety.</p>
+                  <Link to="/contact" className="vigil-feature-link" style={{color: '#4F46E5'}}>Explore All Features →</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Banner */}
+          <div className="vigil-features-bottom-banner">
+            <div className="vigil-fb-left">
+              <div className="vigil-fb-stat-icon-custom">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="18" stroke="#16A34A" strokeWidth="2.5" fill="none"/>
+                  <path d="M20 5C20 5 13 8 13 16C13 24 20 33 20 33C20 33 27 24 27 16C27 8 20 5 20 5Z" fill="#1E3A8A"/>
+                  <path d="M17 17L19.5 19.5L24 14" stroke="#16A34A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div className="vigil-fb-stat-text">
+                <h6>Protect What Matters Most</h6>
+                <p>Vigil is 100% legal, discreet, and designed for parents who care.</p>
+              </div>
+            </div>
+            
+            <div className="vigil-fb-center">
+              <div className="vigil-fb-stat">
+                <h6>100%</h6>
+                <p>USA Based Support</p>
+              </div>
+              <div className="vigil-fb-divider"></div>
+              <div className="vigil-fb-stat">
+                <h6>24/7</h6>
+                <p>Customer Support</p>
+              </div>
+              <div className="vigil-fb-divider"></div>
+              <div className="vigil-fb-stat">
+                <h6>100%</h6>
+                <p>Secure & Private</p>
+              </div>
+            </div>
+            
+            <div className="vigil-fb-right">
+              <Link to="/pricing" className="vigil-btn-solid">
+                Get Started Now →
               </Link>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="luminix-padding-section">
+      {/* Online Risks Section */}
+      <section className="online-risks-section">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-6">
-              <div className="luminix-about-thumb" data-aos="fade-up" data-aos-duration="700">
-                <img src="/assets/images/about-us/about-01.png" alt="" />
-                <div className="luminix-about-card">
-                  <h2 className="">12+</h2>
-                  <h5>Years of experience</h5>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="luminix-default-content">
-                <h6>Trusted Around the World</h6>
-                <h2 className="title">The Smarter Way to Protect Your Child Online</h2>
-                <p className="text">Parents today are facing an unprecedented digital threat landscape. Vigil gives you complete visibility into your child's online world — from apps and websites to location and screen time — so you can act before problems escalate.</p>
-                <div className="luminix-list-icon-content">
-                  <ul>
-                    <li><img src="/assets/images/about-us/icon1.svg" alt="" />Real-Time Screen & App Monitoring</li>
-                    <li><img src="/assets/images/about-us/icon1.svg" alt="" />Instant Alerts for Suspicious Activity</li>
-                    <li><img src="/assets/images/about-us/icon1.svg" alt="" />Live GPS Location & Safe Zone Alerts</li>
-                  </ul>
-                </div>
-                <div className="mt-50">
-                  <Link to="/about" className="luminix-default-btn pill">About Us
-                    <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <section className="luminix-counter-wrap">
-            <div className="luminix-counter-item">
-              <h2 className="luminix-counter-data" aria-label="50K+">50K+</h2>
-              <p>Families Protected</p>
-            </div>
-            <div className="luminix-counter-item">
-              <h2 className="luminix-counter-data" aria-label="98%">98%</h2>
-              <p>Parent Satisfaction Rate</p>
-            </div>
-            <div className="luminix-counter-item">
-              <h2 className="luminix-counter-data" aria-label="3M+">3M+</h2>
-              <p>Threats Blocked Monthly</p>
-            </div>
-            <div className="luminix-counter-item">
-              <h2 className="luminix-counter-data" aria-label="24/7">24/7</h2>
-              <p>Live Expert Support</p>
-            </div>
-          </section>
-        </div>
-      </div>
-
-      <div className="luminix-padding-section2 light-bg1">
-        <div className="container">
-          <div className="luminix-section-title">
-            <div className="row">
-              <div className="col-xl-7 col-lg-8">
-                <h6>Everything You Need</h6>
-                <h2 className="title pb-0 ml-20">Complete Protection for Every Family</h2>
-              </div>
-              <div className="col-xl-5 col-lg-4 d-flex align-items-center justify-content-end">
-                <div className="luminix-title-btn">
-                  <Link to="/service" className="luminix-default-btn pill">Explore All Features
-                    <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-6">
-              <div className="luminix-about-thumb" data-aos="fade-up" data-aos-duration="700">
-                <img src="/assets/images/v1/thumb-01.png" alt="" />
-                <div className="luminix-service-card">
-                  <img src="/assets/images/v1/thumb-02.png" alt="" />
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="luminix-list-icon-wraper">
-                <div className="luminix-list-icon-wrap">
-                  <div className="luminix-list-icon-icon2"><img src="/assets/images/iconbox/icon1.svg" alt="" /></div>
-                  <div className="luminix-list-icon-data">
-                    <Link to="/service"><h5>Smart Screen Monitoring</h5></Link>
-                    <p>See every app, text, and website your child visits — in real time, from any device, anywhere in the world.</p>
-                  </div>
-                </div>
-                <div className="luminix-list-icon-btn">
-                  <Link to="/service">
-                    <svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M25.1667 2.41602L39.75 16.9993M39.75 16.9993L25.1667 31.5827M39.75 16.9993L2.25 16.9993" stroke="#001A3D" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M25.1667 2.41602L39.75 16.9993M39.75 16.9993L25.1667 31.5827M39.75 16.9993L2.25 16.9993" stroke="#001A3D" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-              <div className="luminix-list-icon-wraper">
-                <div className="luminix-list-icon-wrap">
-                  <div className="luminix-list-icon-icon2"><img src="/assets/images/iconbox/icon2.svg" alt="" /></div>
-                  <div className="luminix-list-icon-data">
-                    <Link to="/service"><h5>Instant Danger Alerts</h5></Link>
-                    <p>Get notified the moment your child encounters cyberbullying, adult content, or unsafe contacts — before it's too late.</p>
-                  </div>
-                </div>
-                <div className="luminix-list-icon-btn">
-                  <Link to="/service">
-                    <svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M25.1667 2.41602L39.75 16.9993M39.75 16.9993L25.1667 31.5827M39.75 16.9993L2.25 16.9993" stroke="#001A3D" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M25.1667 2.41602L39.75 16.9993M39.75 16.9993L25.1667 31.5827M39.75 16.9993L2.25 16.9993" stroke="#001A3D" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-              <div className="luminix-list-icon-wraper">
-                <div className="luminix-list-icon-wrap">
-                  <div className="luminix-list-icon-icon2"><img src="/assets/images/iconbox/icon3.svg" alt="" /></div>
-                  <div className="luminix-list-icon-data">
-                    <Link to="/service"><h5>Content & Web Filtering</h5></Link>
-                    <p>Block thousands of harmful websites, restrict adult content, and customize safe browsing rules for each child by age.</p>
-                  </div>
-                </div>
-                <div className="luminix-list-icon-btn">
-                  <Link to="/service">
-                    <svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M25.1667 2.41602L39.75 16.9993M39.75 16.9993L25.1667 31.5827M39.75 16.9993L2.25 16.9993" stroke="#001A3D" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M25.1667 2.41602L39.75 16.9993M39.75 16.9993L25.1667 31.5827M39.75 16.9993L2.25 16.9993" stroke="#001A3D" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-              <div className="luminix-list-icon-wraper">
-                <div className="luminix-list-icon-wrap">
-                  <div className="luminix-list-icon-icon2"><img src="/assets/images/iconbox/icon4.svg" alt="" /></div>
-                  <div className="luminix-list-icon-data">
-                    <Link to="/service"><h5>Weekly Family Reports</h5></Link>
-                    <p>Receive easy-to-read weekly summaries of your child's screen time, top apps used, and any flagged activity — sent straight to your inbox.</p>
-                  </div>
-                </div>
-                <div className="luminix-list-icon-btn">
-                  <Link to="/service">
-                    <svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M25.1667 2.41602L39.75 16.9993M39.75 16.9993L25.1667 31.5827M39.75 16.9993L2.25 16.9993" stroke="#001A3D" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M25.1667 2.41602L39.75 16.9993M39.75 16.9993L25.1667 31.5827M39.75 16.9993L2.25 16.9993" stroke="#001A3D" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="luminix-padding-section">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-6 order-lg-2">
-              <div className="luminix-video-thumb">
-                <img src="/assets/images/v1/thumb-03.png" alt="" />
-                <a className="luminix-popup-video video-init" href="https://www.youtube.com/watch?v=zE_WFiHnSlY">
-                  <img src="/assets/images/v2/play-btn1.svg" alt="" />
-                  <div className="waves wave-1"></div>
-                  <div className="waves wave-2"></div>
-                  <div className="waves wave-3"></div>
-                </a>
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="luminix-default-content">
-                <h6>Why Parents Choose Vigil</h6>
-                <h2 className="title">Protection That Works As Hard As You Do</h2>
-                <p className="text">Vigil is built for modern families, with military-grade data privacy, global safety standards, and a simple dashboard that any parent can use — no tech skills required.</p>
-                <div className="luminix-skill-wrap mt-50">
-                  <div className="luminix-skill-item">
-                    <div className="luminix-skill-title"><h5>Threat Detection Accuracy</h5></div>
-                    <div className="luminix-skill-line"><div className="luminix-skill-bar bar-one"></div></div>
-                  </div>
-                  <div className="luminix-skill-item">
-                    <div className="luminix-skill-title"><h5>Parent Ease of Use</h5></div>
-                    <div className="luminix-skill-line2"><div className="luminix-skill-bar2 bar-two"></div></div>
-                  </div>
-                  <div className="luminix-skill-item">
-                    <div className="luminix-skill-title"><h5>Child Privacy Protection</h5></div>
-                    <div className="luminix-skill-line2"><div className="luminix-skill-bar2 bar-three"></div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="luminix-padding-section3 light-bg1">
-        <div className="container">
-          <div className="luminix-section-title center">
-            <h6>Real Parents. Real Stories.</h6>
-            <h2 className="title">Trusted by Families Worldwide</h2>
-            <p className="text2">From busy cities to quiet suburbs, thousands of parents rely on Vigil every day to keep their children safe online. Here's what some of them have to say.</p>
-          </div>
-        </div>
-        <div className="luminix-testimonial-slider">
-          <div className="luminix-t-wrap">
-            <div className="luminix-t-header">
-              <img src="/assets/images/v1/rating.svg" alt="" />
-              <img src="/assets/images/v1/quote1.svg" alt="" />
-            </div>
-            <div className="luminix-t-content">
-              <p>"Vigil gave me peace of mind I didn't know I was missing. I can see exactly what my 13-year-old is doing online without invading her privacy. It's been a total game-changer for our family."</p>
-            </div>
-            <div className="luminix-t-author">
-              <div className="luminix-t-author-thumb"><img src="/assets/images/v1/test1.png" alt="" /></div>
-              <div className="luminix-t-author-data"><h6>Daniel Turner</h6><p>Father of 2</p></div>
-            </div>
-          </div>
-          <div className="luminix-t-wrap">
-            <div className="luminix-t-header">
-              <img src="/assets/images/v1/rating.svg" alt="" />
-              <img src="/assets/images/v1/quote1.svg" alt="" />
-            </div>
-            <div className="luminix-t-content">
-              <p>"I set it up in under 10 minutes and immediately started getting alerts. When Vigil flagged a suspicious contact my son had added, I was able to step in immediately. I can't imagine parenting without it now."</p>
-            </div>
-            <div className="luminix-t-author">
-              <div className="luminix-t-author-thumb"><img src="/assets/images/v1/test2.png" alt="" /></div>
-              <div className="luminix-t-author-data"><h6>Ashley Johnson</h6><p>Mother of 3</p></div>
-            </div>
-          </div>
-          <div className="luminix-t-wrap">
-            <div className="luminix-t-header">
-              <img src="/assets/images/v1/rating.svg" alt="" />
-              <img src="/assets/images/v1/quote1.svg" alt="" />
-            </div>
-            <div className="luminix-t-content">
-              <p>"The location tracking is incredibly accurate and the geofence alerts work flawlessly. I know the moment my daughter leaves school. Vigil has made me a more confident parent in the digital age."</p>
-            </div>
-            <div className="luminix-t-author">
-              <div className="luminix-t-author-thumb"><img src="/assets/images/v1/test3.png" alt="" /></div>
-              <div className="luminix-t-author-data"><h6>Michael Ramirez</h6><p>Father of 1</p></div>
-            </div>
-          </div>
-          <div className="luminix-t-wrap">
-            <div className="luminix-t-header">
-              <img src="/assets/images/v1/rating.svg" alt="" />
-              <img src="/assets/images/v1/quote1.svg" alt="" />
-            </div>
-            <div className="luminix-t-content">
-              <p>"The weekly report is something I actually look forward to reading. It tells me what my kids are into, what to watch out for, and gives me real talking points for family conversations about online safety."</p>
-            </div>
-            <div className="luminix-t-author">
-              <div className="luminix-t-author-thumb"><img src="/assets/images/v1/test4.png" alt="" /></div>
-              <div className="luminix-t-author-data"><h6>Sarah Ferrari</h6><p>Mother of 4</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Team Section */}
-      <div className="luminix-padding-section4">
-        <div className="container">
-          <div className="luminix-section-title center">
-            <h6>The Vigil Team</h6>
-            <h2 className="title">Built by Parents. Engineered by Experts.</h2>
-            <p className="text2">Our team combines deep expertise in child online safety, cybersecurity, and family wellness. We're parents ourselves — and we built the product we wished existed.</p>
-          </div>
-          <div className="row">
-            {/* Member 1 */}
-            <div className="col-xl-3 col-lg-6 col-md-6">
-              <div className="luminix-team-wrap" data-aos="fade-up" data-aos-duration="500">
-                <div className="luminix-team-thumb">
-                  <img src="/assets/images/team/team1.png" alt="" />
-                  <div className="luminix-team-content">
-                    <Link to="/about"><h5>James Bennett</h5></Link>
-                    <p>Founder & CEO — Child Safety Advocate</p>
-                    <div className="luminix-team-social">
-                      <ul>
-                        <li><a href="#"><svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.34435 12.0845V6.72723H0.541504V4.63938H2.34435V3.09965C2.34435 1.31281 3.43569 0.339844 5.02968 0.339844C5.79321 0.339844 6.44943 0.396691 6.64067 0.422099V2.28945L5.53516 2.28995C4.66826 2.28995 4.5004 2.70189 4.5004 3.30638V4.63938H6.56788L6.29868 6.72723H4.5004V12.0845H2.34435Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.18878 5.0021L11.1996 0.339844H10.2492L6.76657 4.38801L3.98503 0.339844H0.776855L4.98309 6.46139L0.776855 11.3505H1.72735L5.40505 7.07548L8.34256 11.3505H11.5507L7.18854 5.0021H7.18878ZM5.88695 6.51533L5.46077 5.90576L2.06982 1.05536H3.52972L6.26626 4.96979L6.69243 5.57935L10.2496 10.6675H8.78971L5.88695 6.51556V6.51533Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.3599 0.607213C7.81519 0.605466 8.27048 0.610042 8.72565 0.620939L8.84669 0.625307C8.98644 0.630298 9.12433 0.636537 9.29091 0.644024C9.95476 0.67522 10.4077 0.780038 10.8052 0.934145C11.2169 1.09262 11.5638 1.30725 11.9107 1.65414C12.2279 1.96585 12.4734 2.34291 12.6301 2.7591C12.7842 3.15653 12.889 3.61012 12.9202 4.27396C12.9277 4.43992 12.934 4.57843 12.9389 4.71819L12.9427 4.83923C12.9538 5.29418 12.9586 5.74927 12.957 6.20435L12.9577 6.6698V7.48712C12.9592 7.94242 12.9544 8.39771 12.9433 8.85287L12.9396 8.97391C12.9346 9.11367 12.9283 9.25155 12.9209 9.41814C12.8897 10.082 12.7836 10.5349 12.6301 10.9324C12.4739 11.349 12.2284 11.7264 11.9107 12.038C11.5988 12.3551 11.2215 12.6006 10.8052 12.7573C10.4077 12.9114 9.95476 13.0163 9.29091 13.0475C9.12433 13.0549 8.98644 13.0612 8.84669 13.0662L8.72565 13.0699C8.27049 13.081 7.81519 13.0858 7.3599 13.0843L6.89446 13.0849H6.07775C5.62246 13.0864 5.16716 13.0816 4.712 13.0705L4.59096 13.0668C4.44285 13.0614 4.29477 13.0552 4.14674 13.0481C3.48289 13.0169 3.02993 12.9108 2.63187 12.7573C2.21552 12.6009 1.8384 12.3554 1.52692 12.038C1.20937 11.7262 0.963662 11.3489 0.806919 10.9324C0.652812 10.5349 0.547995 10.082 0.516799 9.41814C0.50985 9.27009 0.503611 9.12202 0.498081 8.97391L0.494962 8.85287C0.483459 8.39772 0.478259 7.94242 0.479364 7.48712V6.20435C0.477623 5.74927 0.482198 5.29418 0.49309 4.83923L0.497457 4.71819C0.502449 4.57843 0.508688 4.43992 0.516175 4.27396C0.547371 3.60949 0.652188 3.15715 0.806295 2.7591C0.96313 2.34271 1.20932 1.96575 1.52754 1.65477C1.83881 1.33704 2.2157 1.0911 2.63187 0.934145C3.02993 0.780038 3.48227 0.67522 4.14674 0.644024L4.59096 0.625307L4.712 0.622187C5.16695 0.61069 5.62204 0.60549 6.07713 0.606589L7.3599 0.607213ZM6.71851 3.72679C6.30517 3.72094 5.89479 3.79731 5.51122 3.95144C5.12765 4.10557 4.77854 4.33441 4.48418 4.62464C4.18981 4.91487 3.95607 5.26071 3.79652 5.64206C3.63698 6.02341 3.55482 6.43267 3.55482 6.84605C3.55482 7.25943 3.63698 7.66869 3.79652 8.05004C3.95607 8.4314 4.18981 8.77724 4.48418 9.06747C4.77854 9.3577 5.12765 9.58653 5.51122 9.74066C5.89479 9.8948 6.30517 9.97116 6.71851 9.96531C7.54588 9.96531 8.33935 9.63665 8.92439 9.05161C9.50942 8.46658 9.83809 7.6731 9.83809 6.84574C9.83809 6.01838 9.50942 5.2249 8.92439 4.63987C8.33935 4.05483 7.54588 3.72679 6.71851 3.72679ZM6.71851 4.97462C6.96715 4.97004 7.2142 5.01505 7.44525 5.10702C7.67629 5.19899 7.88669 5.33608 8.06416 5.51028C8.24163 5.68448 8.3826 5.89229 8.47885 6.12159C8.5751 6.35088 8.6247 6.59706 8.62474 6.84573C8.62478 7.09441 8.57527 7.3406 8.4791 7.56993C8.38292 7.79925 8.24201 8.00712 8.06461 8.18138C7.8872 8.35563 7.67684 8.49279 7.44583 8.58484C7.21481 8.67689 6.96777 8.72198 6.71914 8.71748C6.22272 8.71748 5.74663 8.52028 5.39561 8.16926C5.04459 7.81824 4.84739 7.34216 4.84739 6.84574C4.84739 6.34932 5.04459 5.87324 5.39561 5.52221C5.74663 5.17119 6.22272 4.97399 6.71914 4.97399L6.71851 4.97462ZM9.99407 2.79092C9.79279 2.79897 9.60243 2.8846 9.46287 3.02986C9.32331 3.17512 9.24536 3.36874 9.24536 3.57018C9.24536 3.77163 9.32331 3.96525 9.46287 4.11051C9.60243 4.25577 9.79279 4.3414 9.99407 4.34945C10.2009 4.34945 10.3993 4.26729 10.5455 4.12103C10.6918 3.97477 10.774 3.7764 10.774 3.56956C10.774 3.36272 10.6918 3.16435 10.5455 3.01809C10.3993 2.87183 10.2009 2.78967 9.99407 2.78967V2.79092Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.52482 1.91199C3.52465 2.25807 3.387 2.5899 3.14217 2.8345C2.89733 3.07909 2.56536 3.2164 2.21928 3.21623C1.8732 3.21606 1.54136 3.07841 1.29677 2.83357C1.05218 2.58874 0.914866 2.25676 0.915039 1.91069C0.915212 1.56461 1.05286 1.23277 1.29769 0.988178C1.54253 0.743586 1.8745 0.606272 2.22058 0.606445C2.56666 0.606619 2.8985 0.744264 3.14309 0.989101C3.38768 1.23394 3.525 1.56591 3.52482 1.91199ZM3.56397 4.1825H0.954186V12.3511H3.56397V4.1825ZM7.68743 4.1825H5.09069V12.3511H7.66133V8.06456C7.66133 5.6766 10.7735 5.45477 10.7735 8.06456V12.3511H13.3507V7.17723C13.3507 3.15164 8.74439 3.3017 7.66133 5.27861L7.68743 4.1825Z" fill="#fff" /></svg></a></li>
-                      </ul>
+          <div className="or-split-layout">
+            {/* Left Column */}
+            <div className="or-left">
+              <h4 className="or-subheading">The Reality for Parents in the USA</h4>
+              <h2 className="or-heading">The Digital World<br />Can Be Risky.<br /><span className="highlight">We Help You Stay Ahead.</span></h2>
+              <p className="or-description">Kids today face online dangers more than ever. Vigil gives you real insights and powerful tools to keep them protected 24/7.</p>
+              
+              {/* Stats Grid */}
+              <div className="or-stats-grid">
+                <div className="or-stat-card">
+                  <div className="or-stat-card-header">
+                    <div className="or-icon-wrap or-icon-blue">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <div>
+                      <div className="or-stat-number">73%</div>
+                      <div className="or-stat-subtitle">of kids in the USA</div>
                     </div>
                   </div>
+                  <p className="or-stat-text">aged 8-17 have experienced some form of online risk.</p>
+                  <p className="or-stat-source">Source: Pew Research Center</p>
+                </div>
+                
+                <div className="or-stat-card">
+                  <div className="or-stat-card-header">
+                    <div className="or-icon-wrap or-icon-red">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                    </div>
+                    <div>
+                      <div className="or-stat-number">50%</div>
+                      <div className="or-stat-subtitle">of online risks</div>
+                    </div>
+                  </div>
+                  <p className="or-stat-text">happen while children are using mobile phones.</p>
+                  <p className="or-stat-source">Source: Bark Technologies</p>
+                </div>
+                
+                <div className="or-stat-card">
+                  <div className="or-stat-card-header">
+                    <div className="or-icon-wrap or-icon-yellow">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    </div>
+                    <div>
+                      <div className="or-stat-number">1 in 3</div>
+                      <div className="or-stat-subtitle">children</div>
+                    </div>
+                  </div>
+                  <p className="or-stat-text">are exposed to inappropriate content before age 12.</p>
+                  <p className="or-stat-source">Source: Common Sense Media</p>
                 </div>
               </div>
-            </div>
-            {/* Member 2 */}
-            <div className="col-xl-3 col-lg-6 col-md-6">
-              <div className="luminix-team-wrap" data-aos="fade-up" data-aos-duration="700">
-                <div className="luminix-team-thumb">
-                  <img src="/assets/images/team/team2.png" alt="" />
-                  <div className="luminix-team-content">
-                    <Link to="/about"><h5>Henry Collins</h5></Link>
-                    <p>Head of Product — Digital Safety Expert</p>
-                    <div className="luminix-team-social">
-                      <ul>
-                        <li><a href="#"><svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.34435 12.0845V6.72723H0.541504V4.63938H2.34435V3.09965C2.34435 1.31281 3.43569 0.339844 5.02968 0.339844C5.79321 0.339844 6.44943 0.396691 6.64067 0.422099V2.28945L5.53516 2.28995C4.66826 2.28995 4.5004 2.70189 4.5004 3.30638V4.63938H6.56788L6.29868 6.72723H4.5004V12.0845H2.34435Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.18878 5.0021L11.1996 0.339844H10.2492L6.76657 4.38801L3.98503 0.339844H0.776855L4.98309 6.46139L0.776855 11.3505H1.72735L5.40505 7.07548L8.34256 11.3505H11.5507L7.18854 5.0021H7.18878ZM5.88695 6.51533L5.46077 5.90576L2.06982 1.05536H3.52972L6.26626 4.96979L6.69243 5.57935L10.2496 10.6675H8.78971L5.88695 6.51556V6.51533Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.3599 0.607213C7.81519 0.605466 8.27048 0.610042 8.72565 0.620939L8.84669 0.625307C8.98644 0.630298 9.12433 0.636537 9.29091 0.644024C9.95476 0.67522 10.4077 0.780038 10.8052 0.934145C11.2169 1.09262 11.5638 1.30725 11.9107 1.65414C12.2279 1.96585 12.4734 2.34291 12.6301 2.7591C12.7842 3.15653 12.889 3.61012 12.9202 4.27396C12.9277 4.43992 12.934 4.57843 12.9389 4.71819L12.9427 4.83923C12.9538 5.29418 12.9586 5.74927 12.957 6.20435L12.9577 6.6698V7.48712C12.9592 7.94242 12.9544 8.39771 12.9433 8.85287L12.9396 8.97391C12.9346 9.11367 12.9283 9.25155 12.9209 9.41814C12.8897 10.082 12.7836 10.5349 12.6301 10.9324C12.4739 11.349 12.2284 11.7264 11.9107 12.038C11.5988 12.3551 11.2215 12.6006 10.8052 12.7573C10.4077 12.9114 9.95476 13.0163 9.29091 13.0475C9.12433 13.0549 8.98644 13.0612 8.84669 13.0662L8.72565 13.0699C8.27049 13.081 7.81519 13.0858 7.3599 13.0843L6.89446 13.0849H6.07775C5.62246 13.0864 5.16716 13.0816 4.712 13.0705L4.59096 13.0668C4.44285 13.0614 4.29477 13.0552 4.14674 13.0481C3.48289 13.0169 3.02993 12.9108 2.63187 12.7573C2.21552 12.6009 1.8384 12.3554 1.52692 12.038C1.20937 11.7262 0.963662 11.3489 0.806919 10.9324C0.652812 10.5349 0.547995 10.082 0.516799 9.41814C0.50985 9.27009 0.503611 9.12202 0.498081 8.97391L0.494962 8.85287C0.483459 8.39772 0.478259 7.94242 0.479364 7.48712V6.20435C0.477623 5.74927 0.482198 5.29418 0.49309 4.83923L0.497457 4.71819C0.502449 4.57843 0.508688 4.43992 0.516175 4.27396C0.547371 3.60949 0.652188 3.15715 0.806295 2.7591C0.96313 2.34271 1.20932 1.96575 1.52754 1.65477C1.83881 1.33704 2.2157 1.0911 2.63187 0.934145C3.02993 0.780038 3.48227 0.67522 4.14674 0.644024L4.59096 0.625307L4.712 0.622187C5.16695 0.61069 5.62204 0.60549 6.07713 0.606589L7.3599 0.607213ZM6.71851 3.72679C6.30517 3.72094 5.89479 3.79731 5.51122 3.95144C5.12765 4.10557 4.77854 4.33441 4.48418 4.62464C4.18981 4.91487 3.95607 5.26071 3.79652 5.64206C3.63698 6.02341 3.55482 6.43267 3.55482 6.84605C3.55482 7.25943 3.63698 7.66869 3.79652 8.05004C3.95607 8.4314 4.18981 8.77724 4.48418 9.06747C4.77854 9.3577 5.12765 9.58653 5.51122 9.74066C5.89479 9.8948 6.30517 9.97116 6.71851 9.96531C7.54588 9.96531 8.33935 9.63665 8.92439 9.05161C9.50942 8.46658 9.83809 7.6731 9.83809 6.84574C9.83809 6.01838 9.50942 5.2249 8.92439 4.63987C8.33935 4.05483 7.54588 3.72679 6.71851 3.72679ZM6.71851 4.97462C6.96715 4.97004 7.2142 5.01505 7.44525 5.10702C7.67629 5.19899 7.88669 5.33608 8.06416 5.51028C8.24163 5.68448 8.3826 5.89229 8.47885 6.12159C8.5751 6.35088 8.6247 6.59706 8.62474 6.84573C8.62478 7.09441 8.57527 7.3406 8.4791 7.56993C8.38292 7.79925 8.24201 8.00712 8.06461 8.18138C7.8872 8.35563 7.67684 8.49279 7.44583 8.58484C7.21481 8.67689 6.96777 8.72198 6.71914 8.71748C6.22272 8.71748 5.74663 8.52028 5.39561 8.16926C5.04459 7.81824 4.84739 7.34216 4.84739 6.84574C4.84739 6.34932 5.04459 5.87324 5.39561 5.52221C5.74663 5.17119 6.22272 4.97399 6.71914 4.97399L6.71851 4.97462ZM9.99407 2.79092C9.79279 2.79897 9.60243 2.8846 9.46287 3.02986C9.32331 3.17512 9.24536 3.36874 9.24536 3.57018C9.24536 3.77163 9.32331 3.96525 9.46287 4.11051C9.60243 4.25577 9.79279 4.3414 9.99407 4.34945C10.2009 4.34945 10.3993 4.26729 10.5455 4.12103C10.6918 3.97477 10.774 3.7764 10.774 3.56956C10.774 3.36272 10.6918 3.16435 10.5455 3.01809C10.3993 2.87183 10.2009 2.78967 9.99407 2.78967V2.79092Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.52482 1.91199C3.52465 2.25807 3.387 2.5899 3.14217 2.8345C2.89733 3.07909 2.56536 3.2164 2.21928 3.21623C1.8732 3.21606 1.54136 3.07841 1.29677 2.83357C1.05218 2.58874 0.914866 2.25676 0.915039 1.91069C0.915212 1.56461 1.05286 1.23277 1.29769 0.988178C1.54253 0.743586 1.8745 0.606272 2.22058 0.606445C2.56666 0.606619 2.8985 0.744264 3.14309 0.989101C3.38768 1.23394 3.525 1.56591 3.52482 1.91199ZM3.56397 4.1825H0.954186V12.3511H3.56397V4.1825ZM7.68743 4.1825H5.09069V12.3511H7.66133V8.06456C7.66133 5.6766 10.7735 5.45477 10.7735 8.06456V12.3511H13.3507V7.17723C13.3507 3.15164 8.74439 3.3017 7.66133 5.27861L7.68743 4.1825Z" fill="#fff" /></svg></a></li>
-                      </ul>
+
+              {/* Progress Stack */}
+              <div className="or-progress-stack">
+                <div className="or-progress-item">
+                  <div className="or-progress-header">
+                    <div className="or-progress-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
                     </div>
+                    <div className="or-progress-text">
+                      <h6>Online Threat Detection</h6>
+                      <p>Detects risky activity before it becomes harmful.</p>
+                    </div>
+                    <div className="or-progress-value">80%</div>
+                  </div>
+                  <div className="or-progress-bar-container">
+                    <div className="or-progress-bar-fill" style={{ width: '80%' }}></div>
+                  </div>
+                </div>
+
+                <div className="or-progress-item">
+                  <div className="or-progress-header">
+                    <div className="or-progress-icon green">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                    </div>
+                    <div className="or-progress-text">
+                      <h6>Parent Peace of Mind</h6>
+                      <p>Parents feel more confident with real-time monitoring.</p>
+                    </div>
+                    <div className="or-progress-value">75%</div>
+                  </div>
+                  <div className="or-progress-bar-container">
+                    <div className="or-progress-bar-fill green" style={{ width: '75%' }}></div>
+                  </div>
+                </div>
+
+                <div className="or-progress-item">
+                  <div className="or-progress-header">
+                    <div className="or-progress-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    </div>
+                    <div className="or-progress-text">
+                      <h6>Child Privacy Protection</h6>
+                      <p>Your child's data is 100% private and never shared.</p>
+                    </div>
+                    <div className="or-progress-value">99.9%</div>
+                  </div>
+                  <div className="or-progress-bar-container">
+                    <div className="or-progress-bar-fill" style={{ width: '99.9%' }}></div>
                   </div>
                 </div>
               </div>
-            </div>
-            {/* Member 3 */}
-            <div className="col-xl-3 col-lg-6 col-md-6">
-              <div className="luminix-team-wrap" data-aos="fade-up" data-aos-duration="900">
-                <div className="luminix-team-thumb">
-                  <img src="/assets/images/team/team3.png" alt="" />
-                  <div className="luminix-team-content">
-                    <Link to="/about"><h5>Oliver Wilson</h5></Link>
-                    <p>Chief Technology Officer — Cybersecurity Lead</p>
-                    <div className="luminix-team-social">
-                      <ul>
-                        <li><a href="#"><svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.34435 12.0845V6.72723H0.541504V4.63938H2.34435V3.09965C2.34435 1.31281 3.43569 0.339844 5.02968 0.339844C5.79321 0.339844 6.44943 0.396691 6.64067 0.422099V2.28945L5.53516 2.28995C4.66826 2.28995 4.5004 2.70189 4.5004 3.30638V4.63938H6.56788L6.29868 6.72723H4.5004V12.0845H2.34435Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.18878 5.0021L11.1996 0.339844H10.2492L6.76657 4.38801L3.98503 0.339844H0.776855L4.98309 6.46139L0.776855 11.3505H1.72735L5.40505 7.07548L8.34256 11.3505H11.5507L7.18854 5.0021H7.18878ZM5.88695 6.51533L5.46077 5.90576L2.06982 1.05536H3.52972L6.26626 4.96979L6.69243 5.57935L10.2496 10.6675H8.78971L5.88695 6.51556V6.51533Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.3599 0.607213C7.81519 0.605466 8.27048 0.610042 8.72565 0.620939L8.84669 0.625307C8.98644 0.630298 9.12433 0.636537 9.29091 0.644024C9.95476 0.67522 10.4077 0.780038 10.8052 0.934145C11.2169 1.09262 11.5638 1.30725 11.9107 1.65414C12.2279 1.96585 12.4734 2.34291 12.6301 2.7591C12.7842 3.15653 12.889 3.61012 12.9202 4.27396C12.9277 4.43992 12.934 4.57843 12.9389 4.71819L12.9427 4.83923C12.9538 5.29418 12.9586 5.74927 12.957 6.20435L12.9577 6.6698V7.48712C12.9592 7.94242 12.9544 8.39771 12.9433 8.85287L12.9396 8.97391C12.9346 9.11367 12.9283 9.25155 12.9209 9.41814C12.8897 10.082 12.7836 10.5349 12.6301 10.9324C12.4739 11.349 12.2284 11.7264 11.9107 12.038C11.5988 12.3551 11.2215 12.6006 10.8052 12.7573C10.4077 12.9114 9.95476 13.0163 9.29091 13.0475C11.2169 1.09262 11.5638 1.30725 11.9107 1.65414C12.2279 1.96585 12.4734 2.34291 12.6301 2.7591C12.7842 3.15653 12.889 3.61012 12.9202 4.27396C12.9277 4.43992 12.934 4.57843 12.9389 4.71819L12.9427 4.83923C12.9538 5.29418 12.9586 5.74927 12.957 6.20435L12.9577 6.6698V7.48712C12.9592 7.94242 12.9544 8.39771 12.9433 8.85287L12.9396 8.97391C12.9346 9.11367 12.9283 9.25155 12.9209 9.41814C12.8897 10.082 12.7836 10.5349 12.6301 10.9324C12.4739 11.349 12.2284 11.7264 11.9107 12.038C11.5988 12.3551 11.2215 12.6006 10.8052 12.7573C10.4077 12.9114 9.95476 13.0163 9.29091 13.0475C9.12433 13.0549 8.98644 13.0612 8.84669 13.0662L8.72565 13.0699C8.27049 13.081 7.81519 13.0858 7.3599 13.0843L6.89446 13.0849H6.07775C5.62246 13.0864 5.16716 13.0816 4.712 13.0705L4.59096 13.0668C4.44285 13.0614 4.29477 13.0552 4.14674 13.0481C3.48289 13.0169 3.02993 12.9108 2.63187 12.7573C2.21552 12.6009 1.8384 12.3554 1.52692 12.038C1.20937 11.7262 0.963662 11.3489 0.806919 10.9324C0.652812 10.5349 0.547995 10.082 0.516799 9.41814C0.50985 9.27009 0.503611 9.12202 0.498081 8.97391L0.494962 8.85287C0.483459 8.39772 0.478259 7.94242 0.479364 7.48712V6.20435C0.477623 5.74927 0.482198 5.29418 0.49309 4.83923L0.497457 4.71819C0.502449 4.57843 0.508688 4.43992 0.516175 4.27396C0.547371 3.60949 0.652188 3.15715 0.806295 2.7591C0.96313 2.34271 1.20932 1.96575 1.52754 1.65477C1.83881 1.33704 2.2157 1.0911 2.63187 0.934145C3.02993 0.780038 3.48227 0.67522 4.14674 0.644024L4.59096 0.625307L4.712 0.622187C5.16695 0.61069 5.62204 0.60549 6.07713 0.606589L7.3599 0.607213ZM6.71851 3.72679C6.30517 3.72094 5.89479 3.79731 5.51122 3.95144C5.12765 4.10557 4.77854 4.33441 4.48418 4.62464C4.18981 4.91487 3.95607 5.26071 3.79652 5.64206C3.63698 6.02341 3.55482 6.43267 3.55482 6.84605C3.55482 7.25943 3.63698 7.66869 3.79652 8.05004C3.95607 8.4314 4.18981 8.77724 4.48418 9.06747C4.77854 9.3577 5.12765 9.58653 5.51122 9.74066C5.89479 9.8948 6.30517 9.97116 6.71851 9.96531C7.54588 9.96531 8.33935 9.63665 8.92439 9.05161C9.50942 8.46658 9.83809 7.6731 9.83809 6.84574C9.83809 6.01838 9.50942 5.2249 8.92439 4.63987C8.33935 4.05483 7.54588 3.72679 6.71851 3.72679ZM6.71851 4.97462C6.96715 4.97004 7.2142 5.01505 7.44525 5.10702C7.67629 5.19899 7.88669 5.33608 8.06416 5.51028C8.24163 5.68448 8.3826 5.89229 8.47885 6.12159C8.5751 6.35088 8.6247 6.59706 8.62474 6.84573C8.62478 7.09441 8.57527 7.3406 8.4791 7.56993C8.38292 7.79925 8.24201 8.00712 8.06461 8.18138C7.8872 8.35563 7.67684 8.49279 7.44583 8.58484C7.21481 8.67689 6.96777 8.72198 6.71914 8.71748C6.22272 8.71748 5.74663 8.52028 5.39561 8.16926C5.04459 7.81824 4.84739 7.34216 4.84739 6.84574C4.84739 6.34932 5.04459 5.87324 5.39561 5.52221C5.74663 5.17119 6.22272 4.97399 6.71914 4.97399L6.71851 4.97462ZM9.99407 2.79092C9.79279 2.79897 9.60243 2.8846 9.46287 3.02986C9.32331 3.17512 9.24536 3.36874 9.24536 3.57018C9.24536 3.77163 9.32331 3.96525 9.46287 4.11051C9.60243 4.25577 9.79279 4.3414 9.99407 4.34945C10.2009 4.34945 10.3993 4.26729 10.5455 4.12103C10.6918 3.97477 10.774 3.7764 10.774 3.56956C10.774 3.36272 10.6918 3.16435 10.5455 3.01809C10.3993 2.87183 10.2009 2.78967 9.99407 2.78967V2.79092Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.52482 1.91199C3.52465 2.25807 3.387 2.5899 3.14217 2.8345C2.89733 3.07909 2.56536 3.2164 2.21928 3.21623C1.8732 3.21606 1.54136 3.07841 1.29677 2.83357C1.05218 2.58874 0.914866 2.25676 0.915039 1.91069C0.915212 1.56461 1.05286 1.23277 1.29769 0.988178C1.54253 0.743586 1.8745 0.606272 2.22058 0.606445C2.56666 0.606619 2.8985 0.744264 3.14309 0.989101C3.38768 1.23394 3.525 1.56591 3.52482 1.91199ZM3.56397 4.1825H0.954186V12.3511H3.56397V4.1825ZM7.68743 4.1825H5.09069V12.3511H7.66133V8.06456C7.66133 5.6766 10.7735 5.45477 10.7735 8.06456V12.3511H13.3507V7.17723C13.3507 3.15164 8.74439 3.3017 7.66133 5.27861L7.68743 4.1825Z" fill="#fff" /></svg></a></li>
-                      </ul>
-                    </div>
+
+              {/* Trust Badge */}
+              <div className="or-trust-badge">
+                <div className="or-trust-left">
+                  <img src="/myimg/us-flag-icon.png" alt="USA Flag" className="or-flag-icon" onError={(e)=>{e.target.onerror = null; e.target.src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png"}} />
+                  <p>Proudly helping <strong>thousands of families across the USA</strong> create a safer digital environment for their children.</p>
+                </div>
+                <div className="or-trust-right">
+                  <div className="or-avatars">
+                    <img src="https://i.pravatar.cc/100?img=11" alt="Avatar 1" className="or-avatar" />
+                    <img src="https://i.pravatar.cc/100?img=12" alt="Avatar 2" className="or-avatar" />
+                    <img src="https://i.pravatar.cc/100?img=13" alt="Avatar 3" className="or-avatar" />
+                    <div className="or-avatar-count">+12K</div>
+                  </div>
+                  <div className="or-trust-text">
+                    Trusted by<br/><strong>12,000+ Parents</strong>
                   </div>
                 </div>
               </div>
+
             </div>
-            {/* Member 4 */}
-            <div className="col-xl-3 col-lg-6 col-md-6">
-              <div className="luminix-team-wrap" data-aos="fade-up" data-aos-duration="1100">
-                <div className="luminix-team-thumb">
-                  <img src="/assets/images/team/team4.png" alt="" />
-                  <div className="luminix-team-content">
-                    <Link to="/about"><h5>Thomas Graham</h5></Link>
-                    <p>VP of Customer Success — Parent Liaison</p>
-                    <div className="luminix-team-social">
-                      <ul>
-                        <li><a href="#"><svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.34435 12.0845V6.72723H0.541504V4.63938H2.34435V3.09965C2.34435 1.31281 3.43569 0.339844 5.02968 0.339844C5.79321 0.339844 6.44943 0.396691 6.64067 0.422099V2.28945L5.53516 2.28995C4.66826 2.28995 4.5004 2.70189 4.5004 3.30638V4.63938H6.56788L6.29868 6.72723H4.5004V12.0845H2.34435Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.18878 5.0021L11.1996 0.339844H10.2492L6.76657 4.38801L3.98503 0.339844H0.776855L4.98309 6.46139L0.776855 11.3505H1.72735L5.40505 7.07548L8.34256 11.3505H11.5507L7.18854 5.0021H7.18878ZM5.88695 6.51533L5.46077 5.90576L2.06982 1.05536H3.52972L6.26626 4.96979L6.69243 5.57935L10.2496 10.6675H8.78971L5.88695 6.51556V6.51533Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.3599 0.607213C7.81519 0.605466 8.27048 0.610042 8.72565 0.620939L8.84669 0.625307C8.98644 0.630298 9.12433 0.636537 9.29091 0.644024C9.95476 0.67522 10.4077 0.780038 10.8052 0.934145C11.2169 1.09262 11.5638 1.30725 11.9107 1.65414C12.2279 1.96585 12.4734 2.34291 12.6301 2.7591C12.7842 3.15653 12.889 3.61012 12.9202 4.27396C12.9277 4.43992 12.934 4.57843 12.9389 4.71819L12.9427 4.83923C12.9538 5.29418 12.9586 5.74927 12.957 6.20435L12.9577 6.6698V7.48712C12.9592 7.94242 12.9544 8.39771 12.9433 8.85287L12.9396 8.97391C12.9346 9.11367 12.9283 9.25155 12.9209 9.41814C12.8897 10.082 12.7836 10.5349 12.6301 10.9324C12.4739 11.349 12.2284 11.7264 11.9107 12.038C11.5988 12.3551 11.2215 12.6006 10.8052 12.7573C10.4077 12.9114 9.95476 13.0163 9.29091 13.0475C9.12433 13.0549 8.98644 13.0612 8.84669 13.0662L8.72565 13.0699C8.27049 13.081 7.81519 13.0858 7.3599 13.0843L6.89446 13.0849H6.07775C5.62246 13.0864 5.16716 13.0816 4.712 13.0705L4.59096 13.0668C4.44285 13.0614 4.29477 13.0552 4.14674 13.0481C3.48289 13.0169 3.02993 12.9108 2.63187 12.7573C2.21552 12.6009 1.8384 12.3554 1.52692 12.038C1.20937 11.7262 0.963662 11.3489 0.806919 10.9324C0.652812 10.5349 0.547995 10.082 0.516799 9.41814C0.50985 9.27009 0.503611 9.12202 0.498081 8.97391L0.494962 8.85287C0.483459 8.39772 0.478259 7.94242 0.479364 7.48712V6.20435C0.477623 5.74927 0.482198 5.29418 0.49309 4.83923L0.497457 4.71819C0.502449 4.57843 0.508688 4.43992 0.516175 4.27396C0.547371 3.60949 0.652188 3.15715 0.806295 2.7591C0.96313 2.34271 1.20932 1.96575 1.52754 1.65477C1.83881 1.33704 2.2157 1.0911 2.63187 0.934145C3.02993 0.780038 3.48227 0.67522 4.14674 0.644024L4.59096 0.625307L4.712 0.622187C5.16695 0.61069 5.62204 0.60549 6.07713 0.606589L7.3599 0.607213ZM6.71851 3.72679C6.30517 3.72094 5.89479 3.79731 5.51122 3.95144C5.12765 4.10557 4.77854 4.33441 4.48418 4.62464C4.18981 4.91487 3.95607 5.26071 3.79652 5.64206C3.63698 6.02341 3.55482 6.43267 3.55482 6.84605C3.55482 7.25943 3.63698 7.66869 3.79652 8.05004C3.95607 8.4314 4.18981 8.77724 4.48418 9.06747C4.77854 9.3577 5.12765 9.58653 5.51122 9.74066C5.89479 9.8948 6.30517 9.97116 6.71851 9.96531C7.54588 9.96531 8.33935 9.63665 8.92439 9.05161C9.50942 8.46658 9.83809 7.6731 9.83809 6.84574C9.83809 6.01838 9.50942 5.2249 8.92439 4.63987C8.33935 4.05483 7.54588 3.72679 6.71851 3.72679ZM6.71851 4.97462C6.96715 4.97004 7.2142 5.01505 7.44525 5.10702C7.67629 5.19899 7.88669 5.33608 8.06416 5.51028C8.24163 5.68448 8.3826 5.89229 8.47885 6.12159C8.5751 6.35088 8.6247 6.59706 8.62474 6.84573C8.62478 7.09441 8.57527 7.3406 8.4791 7.56993C8.38292 7.79925 8.24201 8.00712 8.06461 8.18138C7.8872 8.35563 7.67684 8.49279 7.44583 8.58484C7.21481 8.67689 6.96777 8.72198 6.71914 8.71748C6.22272 8.71748 5.74663 8.52028 5.39561 8.16926C5.04459 7.81824 4.84739 7.34216 4.84739 6.84574C4.84739 6.34932 5.04459 5.87324 5.39561 5.52221C5.74663 5.17119 6.22272 4.97399 6.71914 4.97399L6.71851 4.97462ZM9.99407 2.79092C9.79279 2.79897 9.60243 2.8846 9.46287 3.02986C9.32331 3.17512 9.24536 3.36874 9.24536 3.57018C9.24536 3.77163 9.32331 3.96525 9.46287 4.11051C9.60243 4.25577 9.79279 4.3414 9.99407 4.34945C10.2009 4.34945 10.3993 4.26729 10.5455 4.12103C10.6918 3.97477 10.774 3.7764 10.774 3.56956C10.774 3.36272 10.6918 3.16435 10.5455 3.01809C10.3993 2.87183 10.2009 2.78967 9.99407 2.78967V2.79092Z" fill="#fff" /></svg></a></li>
-                        <li><a href="#"><svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.52482 1.91199C3.52465 2.25807 3.387 2.5899 3.14217 2.8345C2.89733 3.07909 2.56536 3.2164 2.21928 3.21623C1.8732 3.21606 1.54136 3.07841 1.29677 2.83357C1.05218 2.58874 0.914866 2.25676 0.915039 1.91069C0.915212 1.56461 1.05286 1.23277 1.29769 0.988178C1.54253 0.743586 1.8745 0.606272 2.22058 0.606445C2.56666 0.606619 2.8985 0.744264 3.14309 0.989101C3.38768 1.23394 3.525 1.56591 3.52482 1.91199ZM3.56397 4.1825H0.954186V12.3511H3.56397V4.1825ZM7.68743 4.1825H5.09069V12.3511H7.66133V8.06456C7.66133 5.6766 10.7735 5.45477 10.7735 8.06456V12.3511H13.3507V7.17723C13.3507 3.15164 8.74439 3.3017 7.66133 5.27861L7.68743 4.1825Z" fill="#fff" /></svg></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+            {/* Right Column */}
+            <div className="or-right" style={{ position: 'relative' }}>
+              <img src="/myimg/image copy 4.png" alt="Online Risks Map" className="or-asset-image" />
+              {/* Invisible overlay over the baked-in button */}
+              <Link to="/contact" style={{ position: 'absolute', bottom: '4%', right: '4%', width: '40%', height: '10%', zIndex: 10, cursor: 'pointer' }} aria-label="Explore All Features"></Link>
             </div>
           </div>
         </div>
-      </div>
-
-
+      </section>
     </>
   );
 }

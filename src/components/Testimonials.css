@@ -1,0 +1,541 @@
+/* --- SECTION 2: TRUSTED BY FAMILIES ACROSS THE USA --- */
+.vigil-trusted-parents-section {
+  padding: 100px 0;
+  position: relative;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* We don't need the background-image on the section itself because we use decorative SVGs now, but let's keep it clean */
+.vigil-trusted-parents-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 255, 255, 0.96);
+  z-index: 1;
+}
+
+.vigil-trusted-parents-section > .container {
+  position: relative;
+  z-index: 2;
+  max-width: 1500px !important;
+  width: 95%;
+}
+
+.vigil-section-sparkles {
+  position: absolute;
+  top: 40px;
+  left: 10%;
+  color: #3F26D9;
+  opacity: 0.8;
+}
+
+.vigil-section-map {
+  position: absolute;
+  top: 10px;
+  right: 5%;
+  color: #3F26D9;
+  opacity: 0.15;
+}
+
+.vigil-gradient-text-usa {
+  background: linear-gradient(135deg, #3F26D9 0%, #2A12CC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  display: inline-block;
+}
+
+.vigil-stories-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #001A3D;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 18px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* 5-Column Horizontal Row Grid */
+.vigil-testimonials-row-5col {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 16px !important;
+  align-items: stretch !important;
+  margin-top: 45px !important;
+  width: 100%;
+}
+
+/* Card 1: AI Sidebar Card (Light Mode Match) */
+.vigil-ai-sidebar-card {
+  background: #FAFCFF;
+  border-radius: 20px;
+  padding: 20px;
+  color: #001A3D;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #E9D8FD;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.vigil-ai-sidebar-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(63, 38, 217, 0.08);
+  border-color: #D6BCFA;
+}
+
+.vigil-ai-sidebar-header {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 12px;
+  text-align: left;
+}
+
+.vigil-ai-glow-tag {
+  color: #3F26D9;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0px;
+  display: inline-block;
+}
+
+.vigil-ai-sidebar-header h4 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #001A3D;
+  margin: 4px 0 2px 0;
+}
+
+.vigil-ai-sidebar-header p {
+  color: #4A5568;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.vigil-ai-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.vigil-ai-list-item {
+  display: flex;
+  gap: 12px;
+  text-align: left;
+  background: #FFFFFF;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #EDF2F7;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.vigil-ai-list-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+
+.vigil-icon-threat { background-color: #3F26D9 !important; }
+.vigil-icon-chat { background-color: #3B82F6 !important; }
+.vigil-icon-behavior { background-color: #22C55E !important; }
+.vigil-icon-reports { background-color: #F59E0B !important; }
+
+.vigil-ai-list-content h6 {
+  color: #001A3D;
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0 0 3px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.vigil-ai-list-mini-badge {
+  color: #22C55E;
+  border: 1px solid #22C55E;
+  background: transparent;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 10px;
+}
+
+.vigil-ai-list-content p {
+  color: #718096;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+  font-weight: 500;
+}
+
+.vigil-ai-sidebar-footer {
+  margin-top: auto;
+  background: #3F26D9;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(63, 38, 217, 0.25);
+}
+
+.vigil-ai-sidebar-footer span {
+  flex-shrink: 0;
+}
+
+.vigil-ai-sidebar-footer p {
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  text-align: left;
+}
+
+/* Card 2, 3, 4, 5: Testimonial Card */
+.vigil-testimony-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: relative;
+  text-align: left;
+}
+
+.vigil-testimony-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(63, 38, 217, 0.08);
+  border-color: rgba(63, 38, 217, 0.18);
+}
+
+.vigil-testimony-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.vigil-testimony-author-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vigil-testimony-photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #F0F4FF;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.vigil-testimony-author-name {
+  color: #001A3D;
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0 0 3px 0;
+}
+
+.vigil-testimony-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #3F26D9;
+  font-weight: 700;
+  font-size: 12px;
+  background: #F0F4FF;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.vigil-quote-mark {
+  font-size: 48px;
+  font-family: Georgia, serif;
+  color: rgba(63, 38, 217, 0.08);
+  line-height: 1;
+  position: absolute;
+  top: -10px;
+  right: 0;
+  user-select: none;
+}
+
+.vigil-stars-row {
+  color: #FFB800;
+  font-size: 15px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.vigil-testimony-quote {
+  color: #4A5568;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+
+/* Use Case Elements */
+.vigil-use-case-btn {
+  display: inline-block;
+  background-color: #3F26D9;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.vigil-context-bar {
+  background-color: #F8FAFC;
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid #EDF2F7;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.vigil-context-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #F0F4FF;
+  color: #3F26D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.vigil-context-bar p {
+  font-size: 12.5px;
+  color: #4A5568;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  text-align: left;
+}
+
+.vigil-testimony-footer {
+  border-top: 1px solid #EDF2F7;
+  padding-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.vigil-testimony-relation {
+  font-size: 13px;
+  color: #718096;
+  font-weight: 600;
+}
+
+.vigil-testimony-flag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #001A3D;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Bottom Stats Pill Banner */
+.vigil-trust-stats-pill-banner {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 100px;
+  padding: 16px 28px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+  margin-top: 50px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 15px;
+  width: 100%;
+}
+
+.vigil-trust-stats-pill-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 210px;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-banner-left .text-box {
+  text-align: left;
+}
+
+.vigil-trust-stats-pill-banner-left h6 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #001A3D;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.vigil-trust-stats-pill-banner-left p {
+  font-size: 13px;
+  color: #718096;
+  margin: 2px 0 0 0;
+}
+
+.vigil-trust-stats-pill-divider {
+  width: 1px;
+  height: 36px;
+  background-color: #E2E8F0;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px;
+  text-align: left;
+}
+
+.vigil-trust-stats-pill-item .icon-box {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-item .text-box h6 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #001A3D;
+  margin: 0;
+}
+
+.vigil-trust-stats-pill-item .text-box p {
+  font-size: 12px;
+  color: #718096;
+  font-weight: 600;
+  margin: 1px 0 0 0;
+}
+
+.vigil-trust-stats-pill-banner-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 150px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-banner-right .map-icon {
+  color: #3F26D9;
+  margin-bottom: 2px;
+}
+
+.vigil-trust-stats-pill-banner-right p {
+  font-size: 11px;
+  color: #718096;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* ==========================================
+   RESPONSIVE BREAKPOINTS
+   ========================================== */
+
+/* Tablet (1200px and below) */
+@media (max-width: 1200px) {
+  .vigil-testimonials-row-5col {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* Tablet Portrait (991px and below) */
+@media (max-width: 991px) {
+  .vigil-testimonials-row-5col {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .vigil-trust-stats-pill-banner {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+}
+
+/* Mobile (767px and below) */
+@media (max-width: 767px) {
+  .vigil-trusted-parents-section {
+    padding: 60px 0;
+  }
+
+  .vigil-testimonials-row-5col {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .vigil-trust-stats-pill-banner {
+    flex-direction: column !important;
+    border-radius: 20px;
+    padding: 24px;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .vigil-trust-stats-pill-banner-left {
+    flex-direction: column;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .vigil-trust-stats-pill-banner-left .text-box {
+    text-align: center;
+  }
+
+  .vigil-trust-stats-pill-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #E2E8F0;
+  }
+
+  .vigil-trust-stats-pill-item {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  .vigil-trust-stats-pill-banner-right {
+    max-width: 100%;
+    margin-top: 10px;
+  }
+}

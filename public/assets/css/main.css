@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
 
 /*Header Css StaRT*/
 .site-navbar {
@@ -1020,4 +1020,2075 @@ a.log-in-btn:hover:after {
 .log-in-btn.yellow-btn:hover{
   background-color: #fff;
 }
+
+
+/* --- REDESIGNED LUMINIX HERO SECTION --- */
+.luminix-hero-section {
+  position: relative;
+  width: 100%;
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+  padding: 150px 0 120px !important; /* Pushes content down to align text perfectly below the header */
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Gradient overlay on the left side of the hero section to blend the image and text */
+.luminix-hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #001a3d 0%, #001a3d 40%, rgba(0, 26, 61, 0.8) 55%, rgba(0, 26, 61, 0) 80%);
+  z-index: -1;
+}
+
+/* For mobile/tablet, make gradient overlay darker overall so text is perfectly readable */
+@media (max-width: 1199px) {
+  .luminix-hero-section {
+    padding: 130px 0 90px !important;
+  }
+}
+@media (max-width: 991px) {
+  .luminix-hero-section {
+    padding: 110px 0 70px !important;
+    background-position: center;
+  }
+  .luminix-hero-section::before {
+    background: linear-gradient(180deg, rgba(0, 26, 61, 0.95) 0%, rgba(0, 26, 61, 0.9) 100%);
+  }
+}
+@media (max-width: 767px) {
+  .luminix-hero-section {
+    padding: 100px 0 60px !important;
+  }
+}
+
+/* Top Families Pill Badge */
+.vigil-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 18px;
+  border-radius: 50px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 30px;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.vigil-hero-badge:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.vigil-hero-badge svg {
+  color: #39D353;
+}
+
+/* Main Heading styling */
+.vigil-hero-title {
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+  color: #ffffff;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 1199px) {
+  .vigil-hero-title {
+    font-size: 52px;
+  }
+}
+@media (max-width: 767px) {
+  .vigil-hero-title {
+    font-size: 38px;
+    letter-spacing: -0.5px;
+  }
+}
+
+.vigil-text-green {
+  color: #39D353; /* Neon Green */
+}
+
+/* Underline container for "Your Child." */
+.vigil-underline-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.vigil-accent-underline {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* Subtitle paragraph */
+.vigil-hero-subtitle {
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+/* 5 Features row */
+.vigil-features-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 30px;
+  margin-bottom: 45px;
+  padding: 0;
+  list-style: none;
+}
+
+.vigil-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.vigil-feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #39D353;
+  transition: all 0.3s ease;
+}
+
+.vigil-feature-item:hover .vigil-feature-icon {
+  background: #39D353;
+  color: #001a3d;
+  border-color: #39D353;
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Action block (CTA Button + Setup Badge) */
+.vigil-actions-block {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px 30px;
+  margin-top: 40px;
+}
+
+.vigil-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #3F26D9 0%, #3017c2 100%);
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px 36px;
+  border-radius: 50px;
+  box-shadow: 0 8px 30px rgba(63, 38, 217, 0.35);
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.vigil-cta-btn:hover {
+  background: linear-gradient(135deg, #4f36e8 0%, #3F26D9 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(63, 38, 217, 0.5);
+}
+
+.vigil-cta-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.vigil-cta-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* Setup Info Badge next to CTA */
+.vigil-setup-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.vigil-setup-badge svg {
+  color: #39D353;
+  width: 20px;
+  height: 20px;
+}
+
+/* Right Column Shield Area styling */
+.vigil-hero-graphic-area {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 991px) {
+  .vigil-hero-graphic-area {
+    display: none; /* Hide on mobile/tablet since the boy is built into the background and space is restricted */
+  }
+}
+
+.vigil-shield-svg-container {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  top: -10%;
+  left: -10%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vigil-shield-path {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: drawShield 2.5s ease-out forwards;
+}
+
+@keyframes drawShield {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Glassmorphic floating cards */
+.vigil-glass-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  padding: 14px 22px;
+  border-radius: 18px;
+  box-shadow: 0 10px 35px 0 rgba(0, 26, 61, 0.1);
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.vigil-glass-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 40px 0 rgba(0, 26, 61, 0.18);
+}
+
+.vigil-card-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(76, 175, 80, 0.12);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  color: #28a745;
+}
+
+.vigil-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.vigil-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #001a3d;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.vigil-card-sub {
+  font-size: 12px;
+  color: #616e80;
+  margin: 4px 0 0 0;
+  line-height: 1.2;
+}
+
+/* Position for the three floating cards surrounding the boy */
+.vigil-card-location {
+  top: 25%;
+  left: 20px;
+  animation: floatLocation 6s ease-in-out infinite alternate;
+}
+
+.vigil-card-alert {
+  top: 58%;
+  left: -20px;
+  animation: floatAlert 7s ease-in-out infinite alternate;
+}
+
+.vigil-card-screentime {
+  bottom: 20%;
+  right: 20px;
+  animation: floatScreen 8s ease-in-out infinite alternate;
+}
+
+@keyframes floatLocation {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-10px) rotate(1.5deg); }
+}
+
+@keyframes floatAlert {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(12px) rotate(-1.5deg); }
+}
+
+@keyframes floatScreen {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-15px); }
+}
+
+/* Calligraphy section in the bottom right */
+.vigil-calligraphy-area {
+  position: absolute;
+  bottom: 30px;
+  right: 5%;
+  text-align: right;
+  z-index: 5;
+}
+
+@media (max-width: 991px) {
+  .vigil-calligraphy-area {
+    position: static;
+    text-align: center; /* Center align on mobile */
+    margin-top: 50px;
+    padding-bottom: 20px;
+    width: 100%;
+  }
+}
+
+.vigil-calligraphy-text-1 {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 6px;
+}
+
+.vigil-calligraphy-signature {
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 42px;
+  color: #39D353;
+  display: inline-block;
+  transform: rotate(-3deg);
+  margin-top: 5px;
+  position: relative;
+}
+
+.vigil-calligraphy-signature svg {
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .vigil-calligraphy-text-1 {
+    font-size: 14px;
+  }
+  .vigil-calligraphy-signature {
+    font-size: 32px;
+  }
+
+/* ==========================================================================
+   VIGIL CUSTOM PREMIUM HOMEPAGE SECTIONS STYLING
+   ========================================================================== */
+
+/* --- SECTION 1: GET STARTED IN MINUTES --- */
+.vigil-get-started-section {
+  padding: 100px 0 80px;
+  background-color: #FAFCFF;
+  position: relative;
+}
+
+.vigil-section-title-wrap {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.vigil-section-tag {
+  color: #3F26D9;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.vigil-section-main-title {
+  color: #001A3D;
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.vigil-section-desc {
+  color: #5E6E82;
+  font-size: 18px;
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.vigil-steps-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+/* Steps Arrows for Desktop Layout */
+@media (min-width: 1200px) {
+  .vigil-step-card-wrapper {
+    position: relative;
+  }
+  .vigil-step-card-wrapper::after {
+    content: "➔";
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%);
+    color: #E2E8F0;
+    font-size: 20px;
+    z-index: 2;
+  }
+  .vigil-step-card-wrapper:last-child::after {
+    display: none;
+  }
+}
+
+.vigil-step-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.vigil-step-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(63, 38, 217, 0.06);
+  border-color: rgba(63, 38, 217, 0.2);
+}
+
+.vigil-step-badge {
+  width: 36px;
+  height: 36px;
+  background-color: #3F26D9;
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(63, 38, 217, 0.3);
+}
+
+.vigil-mockup-graphic {
+  width: 100%;
+  height: 190px;
+  background-color: #F8FAFC;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #EDF2F7;
+  padding: 10px;
+}
+
+/* Step 1 Sign-Up Card Styling */
+.vigil-step-signup-mock {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+.vigil-step-signup-mock img {
+  height: 25px !important;
+  margin: 0 auto 8px;
+  display: block;
+}
+.vigil-step-input {
+  width: 100%;
+  height: 24px;
+  border: 1px solid #CBD5E0;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  font-size: 9px;
+  padding: 0 6px;
+  color: #4A5568;
+}
+.vigil-step-btn {
+  width: 100%;
+  height: 24px;
+  background: #3F26D9;
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 4px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Step 2 Form Mockup Styling */
+.vigil-step-device-mock {
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.vigil-step-device-mock h6 {
+  font-size: 10px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #001A3D;
+  text-align: left;
+}
+.vigil-step-label {
+  font-size: 8px;
+  color: #A0AEC0;
+  text-align: left;
+  margin-bottom: 2px;
+}
+
+/* Step 3 QR Code Mockup */
+.vigil-step-qr-mock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.vigil-step-qr-mock h6 {
+  font-size: 10px;
+  font-weight: 700;
+  color: #001A3D;
+  margin-bottom: 4px;
+}
+.vigil-qr-code {
+  width: 75px;
+  height: 75px;
+  border: 1px solid #E2E8F0;
+  padding: 4px;
+  background: #FFFFFF;
+  border-radius: 6px;
+}
+.vigil-qr-link {
+  font-size: 8px;
+  color: #3F26D9;
+  text-decoration: underline;
+  margin-top: 4px;
+}
+
+/* Step 4 Device Connected */
+.vigil-step-connected-mock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+}
+.vigil-check-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #DEF7EC;
+  color: #28a745;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.vigil-step-list-mini {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+  width: 100%;
+  text-align: left;
+}
+.vigil-step-list-mini li {
+  font-size: 8px;
+  color: #4A5568;
+  margin-bottom: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.vigil-mini-check {
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Step 5 Dashboard Mockup */
+.vigil-step-dash-mock {
+  width: 100%;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+.vigil-mock-lap {
+  flex: 1;
+  background: #EDF2F7;
+  border: 1px solid #CBD5E0;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 6px;
+  text-align: left;
+}
+.vigil-mock-lap-title {
+  font-weight: 700;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 2px;
+  margin-bottom: 2px;
+}
+.vigil-mock-lap-item {
+  color: #718096;
+}
+.vigil-mock-mob {
+  width: 35px;
+  height: 60px;
+  background: #001A3D;
+  border-radius: 6px;
+  border: 1px solid #CBD5E0;
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.vigil-mock-mob-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #3F26D9;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6px;
+}
+
+.vigil-step-title {
+  color: #001A3D;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.vigil-step-desc {
+  color: #718096;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.vigil-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #F0F4FF;
+  color: #3F26D9;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 30px;
+}
+
+/* Bottom Trust Bar (Pill wrapper) */
+.vigil-trust-banner {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 100px;
+  padding: 20px 40px;
+  display: grid;
+  grid-template-columns: 1fr 2px repeat(5, auto);
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.vigil-trust-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.vigil-trust-shield-svg {
+  width: 48px;
+  height: 48px;
+  color: #3F26D9;
+}
+
+.vigil-trust-banner-left p {
+  color: #001A3D;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+  text-align: left;
+}
+
+.vigil-trust-divider {
+  width: 2px;
+  height: 40px;
+  background-color: #E2E8F0;
+}
+
+.vigil-trust-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.vigil-trust-badge-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vigil-trust-badge-item span {
+  color: #001A3D;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.vigil-trust-badge-item p {
+  color: #718096;
+  font-size: 10px;
+  margin: 0;
+}
+
+/* Responsive Rules for Step 1 */
+@media (max-width: 1199px) {
+  .vigil-steps-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+  .vigil-trust-banner {
+    border-radius: 30px;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+    padding: 30px;
+  }
+  .vigil-trust-divider {
+    display: none;
+  }
+  .vigil-trust-banner-left {
+    justify-content: center;
+    flex-direction: column;
+  }
+  .vigil-trust-banner-left p {
+    text-align: center;
+  }
+  .vigil-trust-badge-item {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+  }
+  .vigil-trust-banner-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .vigil-steps-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .vigil-section-main-title {
+    font-size: 32px;
+  }
+}
+
+
+/* --- SECTION 2: TRUSTED BY FAMILIES ACROSS THE USA --- */
+.vigil-trusted-parents-section {
+  padding: 100px 0;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.vigil-trusted-parents-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.92);
+  z-index: 1;
+}
+
+.vigil-trusted-parents-section > .container {
+  position: relative;
+  z-index: 2;
+}
+
+.vigil-gradient-text-usa {
+  background: linear-gradient(135deg, #3F26D9 0%, #2A12CC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  display: inline-block;
+}
+
+.vigil-stories-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #001A3D;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 18px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+/* 5-Column Horizontal Row Grid */
+.vigil-testimonials-row-5col {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  align-items: stretch;
+  margin-top: 45px;
+}
+
+/* Card 1: AI Sidebar Card (Light Mode Match) */
+.vigil-ai-sidebar-card {
+  background: #FAFCFF;
+  border-radius: 20px;
+  padding: 20px;
+  color: #001A3D;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #E9D8FD;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.vigil-ai-sidebar-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(63, 38, 217, 0.08);
+  border-color: #D6BCFA;
+}
+
+.vigil-ai-sidebar-header {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 12px;
+  text-align: left;
+}
+
+.vigil-ai-glow-tag {
+  color: #3F26D9;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0px;
+  display: inline-block;
+}
+
+.vigil-ai-sidebar-header h4 {
+  font-size: 14px;
+  font-weight: 800;
+  color: #001A3D;
+  margin: 4px 0 2px 0;
+}
+
+.vigil-ai-sidebar-header p {
+  color: #4A5568;
+  font-size: 10px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.vigil-ai-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.vigil-ai-list-item {
+  display: flex;
+  gap: 12px;
+  text-align: left;
+  background: #FFFFFF;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #EDF2F7;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+}
+
+.vigil-ai-list-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+
+.vigil-icon-threat { background: #3F26D9; }
+.vigil-icon-chat { background: #3B82F6; }
+.vigil-icon-behavior { background: #22C55E; }
+.vigil-icon-reports { background: #F59E0B; }
+
+.vigil-ai-list-content h6 {
+  color: #001A3D;
+  font-size: 11px;
+  font-weight: 800;
+  margin: 0 0 3px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.vigil-ai-list-mini-badge {
+  color: #22C55E;
+  border: 1px solid #22C55E;
+  background: transparent;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 10px;
+}
+
+.vigil-ai-list-content p {
+  color: #718096;
+  font-size: 9.5px;
+  line-height: 1.35;
+  margin: 0;
+  font-weight: 500;
+}
+
+.vigil-ai-sidebar-footer {
+  margin-top: auto;
+  background: #3F26D9;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(63, 38, 217, 0.25);
+}
+
+.vigil-ai-sidebar-footer span {
+  flex-shrink: 0;
+}
+
+.vigil-ai-sidebar-footer p {
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0;
+  text-align: left;
+}
+
+/* Card 2, 3, 4, 5: Testimonial Card */
+.vigil-testimony-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: relative;
+  text-align: left;
+}
+
+.vigil-testimony-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(63, 38, 217, 0.08);
+  border-color: rgba(63, 38, 217, 0.18);
+}
+
+.vigil-testimony-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.vigil-testimony-author-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vigil-testimony-photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #F0F4FF;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.vigil-testimony-author-name {
+  color: #001A3D;
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0 0 3px 0;
+}
+
+.vigil-testimony-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #3F26D9;
+  font-weight: 700;
+  font-size: 10px;
+  background: #F0F4FF;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.vigil-quote-mark {
+  font-size: 48px;
+  font-family: Georgia, serif;
+  color: rgba(63, 38, 217, 0.08);
+  line-height: 1;
+  position: absolute;
+  top: -10px;
+  right: 0;
+  user-select: none;
+}
+
+.vigil-stars-row {
+  color: #FFB800;
+  font-size: 13px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.vigil-testimony-quote {
+  color: #4A5568;
+  font-size: 13px;
+  line-height: 1.55;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+
+/* Use Case Elements */
+.vigil-use-case-btn {
+  display: inline-block;
+  background-color: #3F26D9;
+  color: #FFFFFF;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.vigil-context-bar {
+  background-color: #F8FAFC;
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid #EDF2F7;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.vigil-context-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #F0F4FF;
+  color: #3F26D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.vigil-context-bar p {
+  font-size: 10.5px;
+  color: #4A5568;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0;
+  text-align: left;
+}
+
+.vigil-testimony-footer {
+  border-top: 1px solid #EDF2F7;
+  padding-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.vigil-testimony-relation {
+  font-size: 11.5px;
+  color: #718096;
+  font-weight: 600;
+}
+
+.vigil-testimony-flag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #001A3D;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Bottom Stats Pill Banner */
+.vigil-trust-stats-pill-banner {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 100px;
+  padding: 16px 28px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03);
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+}
+
+.vigil-trust-stats-pill-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 210px;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-banner-left .shield-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-banner-left .text-box {
+  text-align: left;
+}
+
+.vigil-trust-stats-pill-banner-left h6 {
+  font-size: 12px;
+  font-weight: 800;
+  color: #001A3D;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.vigil-trust-stats-pill-banner-left p {
+  font-size: 10px;
+  color: #718096;
+  margin: 2px 0 0 0;
+}
+
+.vigil-trust-stats-pill-divider {
+  width: 1px;
+  height: 36px;
+  background-color: #E2E8F0;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.vigil-trust-stats-pill-item .icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-item .text-box h6 {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #001A3D;
+  margin: 0;
+}
+
+.vigil-trust-stats-pill-item .text-box p {
+  font-size: 9.5px;
+  color: #718096;
+  font-weight: 600;
+  margin: 1px 0 0 0;
+  line-height: 1.25;
+}
+
+.vigil-trust-stats-pill-banner-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 170px;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-banner-right .map-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.vigil-trust-stats-pill-banner-right p {
+  font-size: 9.5px;
+  color: #718096;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* Responsive Styles for Section 2 */
+@media (max-width: 1399px) {
+  .vigil-testimonials-row-5col {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .vigil-trust-stats-pill-banner {
+    padding: 16px 20px;
+    gap: 10px;
+  }
+  .vigil-trust-stats-pill-banner-left {
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vigil-trust-stats-pill-banner {
+    border-radius: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 24px;
+    gap: 24px;
+  }
+  .vigil-trust-stats-pill-divider {
+    display: none;
+  }
+  .vigil-trust-stats-pill-banner-left,
+  .vigil-trust-stats-pill-banner-right {
+    max-width: 100%;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .vigil-trust-stats-pill-banner-left .text-box,
+  .vigil-trust-stats-pill-banner-right {
+    text-align: center;
+  }
+}
+
+@media (max-width: 991px) {
+  .vigil-testimonials-row-5col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .vigil-trusted-parents-section {
+    padding: 80px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .vigil-testimonials-row-5col {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .vigil-ai-sidebar-card, .vigil-testimony-card {
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .vigil-trusted-parents-section {
+    padding: 60px 0;
+  }
+}
+
+
+/* --- SECTION 3: THE DIGITAL WORLD CAN BE RISKY --- */
+.vigil-risky-world-section {
+  padding: 100px 0;
+  background-color: #FAFCFF;
+}
+
+.vigil-risky-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.vigil-stat-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.vigil-statistic-mini-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.vigil-statistic-mini-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(63, 38, 217, 0.15);
+}
+
+.vigil-stat-mini-icon-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.vigil-mini-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vigil-mini-alert-icon {
+  width: 24px;
+  height: 24px;
+  background-color: #FFF5F5;
+  border-radius: 50%;
+  color: #E53E3E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.vigil-stat-num {
+  font-size: 26px;
+  font-weight: 800;
+  color: #001A3D;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.vigil-stat-label {
+  font-size: 11.5px;
+  color: #4A5568;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.vigil-stat-source {
+  font-size: 10px;
+  color: #A0AEC0;
+  font-weight: 600;
+}
+
+.vigil-progress-bars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.vigil-progress-bar-item {
+  text-align: left;
+}
+
+.vigil-progress-bar-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.vigil-progress-bar-info h6 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #001A3D;
+  margin: 0;
+}
+
+.vigil-progress-bar-desc {
+  font-size: 11px;
+  color: #718096;
+  font-weight: 500;
+}
+
+.vigil-progress-bar-percent {
+  font-size: 14px;
+  font-weight: 800;
+  color: #001A3D;
+}
+
+.vigil-progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: #E2E8F0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.vigil-progress-fill {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.vigil-avatars-trust-badge {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 50px;
+  padding: 12px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+  align-self: flex-start;
+}
+
+.vigil-avatar-group {
+  display: flex;
+  align-items: center;
+}
+
+.vigil-avatar-group-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  margin-left: -10px;
+  object-fit: cover;
+}
+
+.vigil-avatar-group-img:first-child {
+  margin-left: 0;
+}
+
+.vigil-avatar-group-plus {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #3F26D9;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  margin-left: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.vigil-avatar-trust-text {
+  font-size: 12px;
+  color: #001A3D;
+  font-weight: 700;
+  margin: 0;
+  text-align: left;
+}
+
+/* Glowing Right Side Container */
+.vigil-truth-glowing-card {
+  background: linear-gradient(135deg, #001A3D 0%, #000F26 100%);
+  border-radius: 24px;
+  padding: 40px;
+  color: #FFFFFF;
+  box-shadow: 0 10px 40px rgba(0, 26, 61, 0.4);
+  border: 1px solid rgba(63, 38, 217, 0.2);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vigil-truth-header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 20px;
+}
+
+.vigil-truth-header h4 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.vigil-truth-header p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  margin: 0;
+}
+
+.vigil-truth-map-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  margin-bottom: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* USA contour vector outline graphic */
+.vigil-usa-contour-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.vigil-alert-phone-mockup {
+  width: 100px;
+  height: 180px;
+  background: #0B132B;
+  border: 3px solid rgba(255,255,255,0.25);
+  border-radius: 18px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.vigil-phone-notch {
+  width: 40px;
+  height: 8px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 0 0 4px 4px;
+  position: absolute;
+  top: 0;
+}
+
+.vigil-phone-alert-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(229, 62, 62, 0.15);
+  color: #E53E3E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(229, 62, 62, 0.3);
+  animation: pulse-alert 2s infinite;
+}
+
+@keyframes pulse-alert {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.4); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); }
+}
+
+.vigil-phone-radar {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 1px dashed rgba(63, 38, 217, 0.3);
+  z-index: 1;
+  animation: rotate-radar 20s linear infinite;
+}
+
+@keyframes rotate-radar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.vigil-truth-metric-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.vigil-truth-metric-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: #FFFFFF;
+  width: 60px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.vigil-truth-metric-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vigil-truth-metric-desc {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.vigil-truth-metric-desc strong {
+  color: #FFFFFF;
+}
+
+.vigil-truth-footer-row {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.vigil-truth-footer-row svg {
+  color: #39D353;
+  flex-shrink: 0;
+}
+
+.vigil-truth-footer-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: left;
+}
+
+.vigil-truth-footer-left p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.vigil-truth-white-btn {
+  background-color: #FFFFFF;
+  color: #001A3D;
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.vigil-truth-white-btn:hover {
+  background-color: #EDF2F7;
+  transform: translateY(-2px);
+}
+
+/* Responsive Rules Section 3 */
+@media (max-width: 1199px) {
+  .vigil-stat-cards-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 991px) {
+  .vigil-risky-left {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  .vigil-stat-cards-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .vigil-truth-footer-row {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .vigil-truth-footer-left {
+    justify-content: center;
+  }
+  .vigil-truth-white-btn {
+    justify-content: center;
+  }
+}
+
+
+/* --- SECTION 4: POWERFUL FEATURES. TOTAL PEACE OF MIND --- */
+.vigil-features-grid-section {
+  padding: 100px 0;
+  background-color: #FFFFFF;
+}
+
+.vigil-dual-phones-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.vigil-phone-mock-left {
+  width: 180px;
+  height: 340px;
+  background: #FFFFFF;
+  border: 6px solid #001A3D;
+  border-radius: 30px;
+  box-shadow: -10px 20px 40px rgba(0,0,0,0.15);
+  position: absolute;
+  left: 20px;
+  bottom: 0;
+  z-index: 1;
+  overflow: hidden;
+  padding: 15px;
+}
+
+.vigil-phone-mock-right {
+  width: 180px;
+  height: 340px;
+  background: #FFFFFF;
+  border: 6px solid #001A3D;
+  border-radius: 30px;
+  box-shadow: 10px 20px 40px rgba(0,0,0,0.15);
+  position: absolute;
+  right: 20px;
+  top: 0;
+  z-index: 2;
+  overflow: hidden;
+  padding: 15px;
+}
+
+.vigil-checklist-wrap {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.vigil-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.vigil-checklist-icon-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #F0F4FF;
+  color: #3F26D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vigil-checklist-item span {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #001A3D;
+}
+
+.vigil-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.vigil-feature-grid-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+  text-align: left;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.vigil-feature-grid-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(63, 38, 217, 0.06);
+  border-color: rgba(63, 38, 217, 0.2);
+}
+
+.vigil-feature-grid-card:hover .vigil-feature-card-link svg {
+  transform: translateX(4px);
+}
+
+.vigil-feature-card-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.vigil-feature-grid-card h5 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #001A3D;
+  margin-bottom: 8px;
+}
+
+.vigil-feature-grid-card p {
+  color: #718096;
+  font-size: 12.5px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.vigil-feature-card-link {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #3F26D9;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  transition: all 0.3s ease;
+}
+
+.vigil-feature-card-link svg {
+  transition: transform 0.2s ease;
+}
+
+/* Bottom Full-Width Banner Section 4 */
+.vigil-footer-banner {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 100px;
+  padding: 25px 50px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: 3.5fr 1fr repeat(3, auto) 1fr 2.5fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.vigil-footer-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.vigil-footer-banner-left h5 {
+  color: #001A3D;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  text-align: left;
+}
+
+.vigil-footer-banner-left p {
+  color: #718096;
+  font-size: 12.5px;
+  margin: 0;
+  text-align: left;
+}
+
+.vigil-footer-stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vigil-footer-stat-num {
+  font-size: 16px;
+  font-weight: 800;
+  color: #001A3D;
+}
+
+.vigil-footer-stat-box p {
+  font-size: 10px;
+  color: #718096;
+  font-weight: 600;
+  margin: 0;
+}
+
+.vigil-footer-blue-btn {
+  background-color: #3F26D9;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 16px 36px;
+  border-radius: 100px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(63, 38, 217, 0.3);
+  justify-content: center;
+}
+
+.vigil-footer-blue-btn:hover {
+  background-color: #3017c2;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(63, 38, 217, 0.4);
+}
+
+/* Responsive Rules Section 4 */
+@media (max-width: 1199px) {
+  .vigil-footer-banner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    border-radius: 30px;
+    padding: 40px;
+    gap: 30px;
+  }
+  .vigil-footer-banner-left {
+    flex-direction: column;
+  }
+  .vigil-footer-banner-left h5, .vigil-footer-banner-left p {
+    text-align: center;
+  }
+  .vigil-footer-banner-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+  .vigil-footer-blue-btn {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 991px) {
+  .vigil-features-left {
+    margin-bottom: 40px;
+  }
+  .vigil-dual-phones-container {
+    height: 360px;
+    margin-top: 20px;
+  }
+  .vigil-phone-mock-left, .vigil-phone-mock-right {
+    width: 140px;
+    height: 260px;
+  }
+  .vigil-phone-mock-left {
+    left: 40px;
+  }
+  .vigil-phone-mock-right {
+    right: 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  .vigil-feature-grid {
+    grid-template-columns: 1fr;
+  }
+  .vigil-footer-banner-stats {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+
 
