@@ -8,6 +8,10 @@ import Contact from './components/Contact';
 import Service from './components/Service';
 import Terms from './components/Terms';
 import Pricing from './components/Pricing';
+import Register from './components/Register';
+import Success from './components/Success';
+import Dashboard from './components/Dashboard';
+import ChildSetup from './components/ChildSetup';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -60,6 +64,10 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/service" element={<Service />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/child-setup" element={<ChildSetup />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-conditions" element={<Terms />} />
       </Routes>
