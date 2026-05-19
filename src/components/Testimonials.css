@@ -1,6 +1,6 @@
 /* --- SECTION 2: TRUSTED BY FAMILIES ACROSS THE USA --- */
 .vigil-trusted-parents-section {
-  padding: 100px 0;
+  padding: 40px 0;
   position: relative;
   background-color: #ffffff;
   overflow: hidden;
@@ -67,7 +67,7 @@
   grid-template-columns: repeat(5, 1fr) !important;
   gap: 16px !important;
   align-items: stretch !important;
-  margin-top: 45px !important;
+  margin-top: 30px !important;
   width: 100%;
 }
 
@@ -290,8 +290,8 @@
 
 .vigil-testimony-quote {
   color: #4A5568;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 16.5px;
+  line-height: 1.7;
   margin-bottom: 18px;
   flex-grow: 1;
 }
@@ -335,10 +335,10 @@
 }
 
 .vigil-context-bar p {
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: #4A5568;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.5;
   margin: 0;
   text-align: left;
 }
@@ -374,7 +374,7 @@
   border-radius: 100px;
   padding: 16px 28px;
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -497,7 +497,7 @@
 /* Mobile (767px and below) */
 @media (max-width: 767px) {
   .vigil-trusted-parents-section {
-    padding: 60px 0;
+    padding: 30px 0;
   }
 
   .vigil-testimonials-row-5col {

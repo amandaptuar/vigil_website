@@ -3,7 +3,7 @@
    ========================================== */
 
 .vigil-features-section {
-  padding: 100px 0;
+  padding: 60px 0;
   position: relative;
   background-size: cover;
   background-position: center;
@@ -306,7 +306,7 @@
 
 @media (max-width: 768px) {
   .vigil-features-section {
-    padding: 60px 0;
+    padding: 40px 0;
   }
   .vigil-features-left h2 {
     font-size: 36px;
