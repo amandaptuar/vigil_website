@@ -6,76 +6,11 @@ export default function DashboardShowcase() {
   return (
     <section className="vigil-dashboard-showcase-section">
       <div className="container">
-        <div className="row align-items-stretch">
+        <div className="row align-items-center">
           
-          {/* Left Column - Clean Device Mockup */}
-          <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
-            <div className="vigil-mockup-container h-100" data-aos="fade-right" data-aos-duration="1000">
-              
-              {/* Clean Browser Mockup filling height */}
-              <div className="vigil-mockup-landscape-frame h-100 d-flex flex-column">
-                <div className="vigil-browser-header">
-                  <span className="vigil-dot bg-danger"></span>
-                  <span className="vigil-dot bg-warning"></span>
-                  <span className="vigil-dot bg-success"></span>
-                </div>
-                <div className="vigil-browser-inner flex-grow-1">
-                  <img 
-                    src="/myimg/WhatsApp Image 2026-05-19 at 5.42.15 AM.jpeg" 
-                    alt="Vigil App Dashboard" 
-                    className="vigil-browser-screen-img"
-                  />
-                  
-                  {/* Floating Alert Card A: Top Left */}
-                  <div className="vigil-float-card vigil-card-a">
-                    <div className="vigil-fc-icon bg-orange">!</div>
-                    <div className="vigil-fc-content">
-                      <strong>Suspicious Alert!</strong>
-                      <span>Potential inappropriate content • 2m ago</span>
-                    </div>
-                  </div>
-
-                  {/* Floating Alert Card B: Middle Left */}
-                  <div className="vigil-float-card vigil-card-b">
-                    <div className="vigil-fc-icon bg-green">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                    </div>
-                    <div className="vigil-fc-content">
-                      <strong>Live Location</strong>
-                      <span>Home • 2 min ago</span>
-                    </div>
-                  </div>
-
-                  {/* Floating Alert Card C: Bottom Left */}
-                  <div className="vigil-float-card vigil-card-c">
-                    <div className="vigil-fc-icon bg-purple">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    </div>
-                    <div className="vigil-fc-content">
-                      <strong>Screen Time</strong>
-                      <span>2h 15m Today</span>
-                    </div>
-                  </div>
-
-                  {/* Floating Alert Card D: Middle Right */}
-                  <div className="vigil-float-card vigil-card-d">
-                    <div className="vigil-fc-icon bg-skyblue">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    </div>
-                    <div className="vigil-fc-content">
-                      <strong>New Message</strong>
-                      <span>On Social App • Just now</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Right Column - Content */}
-          <div className="col-lg-6 ps-lg-5">
-            <div className="vigil-showcase-content" data-aos="fade-left" data-aos-duration="1000">
+          {/* Left Column - Content */}
+          <div className="col-lg-6 mb-5 mb-lg-0">
+            <div className="vigil-showcase-content" data-aos="fade-right" data-aos-duration="1000">
               
               <div className="vigil-showcase-pill">
                 MADE FOR PARENTS. BUILT FOR SAFETY.
@@ -142,6 +77,17 @@ export default function DashboardShowcase() {
                 </div>
               </div>
 
+            </div>
+          </div>
+
+          {/* Right Column - Clean Image Showcase */}
+          <div className="col-lg-6 position-relative">
+            <div className="vigil-image-showcase-container" data-aos="fade-left" data-aos-duration="1000">
+              <img 
+                src="/myimg/image copy 6.png" 
+                alt="Vigil Parents and Child Safety Mockup" 
+                className="vigil-showcase-main-img img-fluid"
+              />
             </div>
           </div>
           
