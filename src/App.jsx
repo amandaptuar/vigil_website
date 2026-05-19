@@ -35,14 +35,6 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="luminix-preloader-wrap">
-        <div className="luminix-preloader">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
 
       <div className="progress-bar-container">
         <div className="progress-bar"></div>

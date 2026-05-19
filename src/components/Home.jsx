@@ -46,7 +46,7 @@ function Home() {
 
   return (
     <>
-      <div className="luminix-hero-section section" style={{ backgroundImage: 'url("/myimg/image copy.png")' }}>
+      <div className="luminix-hero-section section" style={{ backgroundImage: 'url("/myimg/image copy 7.png")' }}>
         <div className="container">
           <div className="row align-items-center">
             {/* Left Column - Content */}

@@ -49,11 +49,11 @@ function Header() {
           background: #fff !important;
         }
         .luminix-hero-section, .breadcrumb-wrapper {
-          margin-top: 90px !important;
+          margin-top: 75px !important; /* Reduced from 90px */
         }
         @media (max-width: 1199px) {
           .luminix-hero-section, .breadcrumb-wrapper {
-            margin-top: 80px !important;
+            margin-top: 65px !important; /* Reduced from 80px */
           }
         }
         .luminix-menu-wrapper {

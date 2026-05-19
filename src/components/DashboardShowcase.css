@@ -1,10 +1,41 @@
 /* Dashboard Showcase Section */
 .vigil-dashboard-showcase-section {
-  padding: 60px 0;
-  background-color: #FFFFFF;
+  padding: 80px 0 60px 0;
+  background-color: #FAFAFC;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; Removed so floating cards don't get clipped horizontally */
   font-family: 'Inter', sans-serif;
+  z-index: 1;
+}
+
+.vigil-dashboard-showcase-section > .container {
+  position: relative;
+  z-index: 2; /* Keep content above background blobs */
+}
+
+/* Background Blobs for modern depth */
+.vigil-dashboard-showcase-section::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(200, 215, 245, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  z-index: 0; /* Changed from -1 so they show above the section background color */
+}
+
+.vigil-dashboard-showcase-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0%;
+  left: 20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(220, 205, 245, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  z-index: 0; /* Changed from -1 so they show above the section background color */
 }
 
 /* -------------------------------------
@@ -131,6 +162,12 @@
   margin-top: 4px;
 }
 
+.fc-time {
+  font-size: 11px !important;
+  color: #94A3B8 !important;
+  margin-top: 2px !important;
+}
+
 /* Card Positioning (inside .vigil-browser-inner relative container) */
 .vigil-card-a {
   top: 10%;
@@ -205,11 +242,40 @@
   font-weight: 700;
 }
 
+/* Title Wrapper for absolute positioning context */
+.vigil-title-wrapper {
+  position: relative;
+  display: inline-block; /* So the wrapper is only as wide as the text */
+  margin-bottom: 20px;
+}
+
+/* Handwritten Text Overlay next to title */
+.vigil-handwritten-overlay {
+  position: absolute;
+  top: -20px;
+  right: -170px;
+  transform: rotate(8deg);
+  font-family: 'Caveat', cursive, sans-serif;
+  color: #2C3EC9;
+  font-size: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.vigil-hw-arrow {
+  position: absolute;
+  bottom: -22px;
+  left: -20px;
+  color: #2C3EC9;
+  transform: rotate(20deg);
+}
+
 /* Features List */
 .vigil-showcase-features-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px 20px;
   margin-bottom: 40px;
 }
 
@@ -232,6 +298,7 @@
 .bg-light-blue { background: #EBF8FF; }
 .bg-light-red { background: #FFF5F5; }
 .bg-light-green { background: #F0FFF4; }
+.bg-light-orange { background: #FFFAF0; }
 
 .vigil-sfi-text h5 {
   font-size: 17px;
@@ -249,7 +316,10 @@
 
 /* CTA */
 .vigil-showcase-cta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   background: #2C3EC9;
   color: #FFFFFF;
   font-size: 16px;
@@ -260,6 +330,11 @@
   transition: all 0.3s ease;
   box-shadow: 0 8px 20px rgba(44, 62, 201, 0.2);
   margin-bottom: 30px;
+}
+
+.vigil-cta-icon-left, .vigil-cta-icon-right {
+  display: flex;
+  align-items: center;
 }
 
 .vigil-showcase-cta:hover {
@@ -273,21 +348,23 @@
 .vigil-showcase-trust-row {
   display: flex;
   align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  gap: 12px;
+  flex-wrap: nowrap; /* Force 1 line */
+  white-space: nowrap;
 }
 
 .vstr-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #718096;
+  gap: 6px;
+  font-size: 12px;
+  color: #4A5568;
   font-weight: 600;
 }
 
 .vstr-item svg {
-  color: #A0AEC0;
+  color: #2C3EC9;
+  flex-shrink: 0;
 }
 
 /* Responsive adjustments */
@@ -310,13 +387,16 @@
 .vigil-image-showcase-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
+  height: 100%;
 }
 
 .vigil-showcase-main-img {
   width: 100%;
-  max-width: 680px;
+  height: 100%;
+  min-height: 550px; /* Ensures it has a tall, premium appearance matching the content height */
+  object-fit: cover;
   border-radius: 24px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
@@ -324,4 +404,230 @@
 
 .vigil-showcase-main-img:hover {
   transform: translateY(-5px);
+}
+
+/* Real Floating Cards positioning on Showcase container */
+.vigil-card-showcase-alert {
+  top: 10%;
+  left: -20px;
+  animation-delay: 0s;
+}
+
+.vigil-card-showcase-location {
+  top: 38%;
+  left: -35px;
+  animation-delay: 1.5s;
+}
+
+.vigil-card-showcase-screentime {
+  bottom: 25%;
+  left: -15px;
+  animation-delay: 3s;
+}
+
+.vigil-card-showcase-message {
+  top: 15%;
+  right: -10px;
+  animation-delay: 4.5s;
+}
+
+.vigil-card-showcase-trust {
+  bottom: 8%;
+  right: -25px;
+  animation-delay: 2.2s;
+}
+
+/* Glassmorphism effect for all float cards in this showcase to feel extremely premium */
+.vigil-dashboard-showcase-section .vigil-float-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 15px 35px rgba(0, 26, 61, 0.12);
+  transition: all 0.3s ease;
+}
+
+.vigil-dashboard-showcase-section .vigil-float-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  background: #ffffff !important;
+  box-shadow: 0 20px 45px rgba(0, 26, 61, 0.2);
+}
+
+/* Responsive optimization for smaller desktop viewports */
+@media (max-width: 1199px) {
+  .vigil-dashboard-showcase-section .vigil-float-card {
+    padding: 8px 14px;
+    border-radius: 14px;
+    gap: 10px;
+  }
+  .vigil-fc-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .vigil-fc-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+  .vigil-fc-content strong {
+    font-size: 12px;
+  }
+  .vigil-fc-content span {
+    font-size: 10px;
+  }
+  .vigil-card-showcase-alert { left: -10px; top: 18%; }
+  .vigil-card-showcase-location { left: -20px; top: 46%; }
+  .vigil-card-showcase-screentime { left: -5px; bottom: 14%; }
+  .vigil-card-showcase-message { right: -5px; top: 12%; }
+  .vigil-card-showcase-trust { right: -15px; bottom: 10%; }
+}
+
+/* Hide real floating widgets on mobile screens so they don't block layout flow */
+@media (max-width: 991px) {
+  .vigil-dashboard-showcase-section .vigil-float-card {
+    display: none !important;
+  }
+  .vigil-showcase-trust-badge {
+    display: none !important;
+  }
+  .vigil-showcase-features-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Custom Alert Icon Colors matching mockup */
+.bg-alert-red { background: #FF4D4D !important; color: #FFFFFF !important; }
+.bg-alert-green { background: #2ECC71 !important; color: #FFFFFF !important; }
+.bg-alert-purple { background: #9B59B6 !important; color: #FFFFFF !important; }
+.bg-alert-blue { background: #3498DB !important; color: #FFFFFF !important; }
+
+/* Real Trust Badge Overlay (Stacked) */
+.vigil-showcase-trust-badge {
+  position: absolute;
+  bottom: 5%;
+  right: 0;
+  background: #2C3EC9; /* Vibrant blue background matching mockup */
+  border-radius: 16px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 12px 35px rgba(44, 62, 201, 0.4);
+  z-index: 10;
+  animation: floatBadge 5s ease-in-out infinite alternate;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+@keyframes floatBadge {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-8px); }
+}
+
+.vstb-icon {
+  background: #FFFFFF;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vstb-content {
+  display: flex;
+  flex-direction: column;
+  color: #FFFFFF;
+}
+
+.vstb-text-top {
+  font-size: 13px;
+  opacity: 0.9;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.vstb-text-mid {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.vstb-text-bot {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.95;
+  margin-bottom: 6px;
+}
+
+.vstb-stars {
+  display: flex;
+  gap: 3px;
+  color: #FFC107; /* Gold stars */
+  font-size: 16px;
+}
+
+/* Responsive adjustment for trust badge on mid-sizes */
+@media (max-width: 1199px) {
+  .vigil-showcase-trust-badge {
+    padding: 12px 18px;
+    bottom: 3%;
+    right: 0;
+    gap: 12px;
+  }
+  .vstb-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .vstb-text-mid { font-size: 20px; }
+  .vstb-text-top, .vstb-text-bot { font-size: 11px; }
+  .vstb-stars { font-size: 14px; }
+}
+
+/* -------------------------------------
+   BOTTOM BANNER
+---------------------------------------- */
+.vigil-showcase-bottom-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 60px;
+  background-color: #F0F4FF;
+  border-radius: 16px;
+  padding: 20px 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.vsbb-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.vsbb-left svg {
+  flex-shrink: 0;
+}
+
+.vsbb-right {
+  font-family: 'Caveat', cursive, sans-serif;
+  color: #2C3EC9;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+@media (max-width: 991px) {
+  .vigil-showcase-bottom-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  .vsbb-left {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
 }

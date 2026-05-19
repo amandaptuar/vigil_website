@@ -1029,7 +1029,7 @@ a.log-in-btn:hover:after {
   background-size: cover;
   background-position: right center;
   background-repeat: no-repeat;
-  padding: 150px 0 120px !important; /* Pushes content down to align text perfectly below the header */
+  padding: 65px 0 50px !important; /* Reduced top padding to 65px to decrease height */
   overflow: hidden;
   z-index: 1;
 }
@@ -1049,12 +1049,12 @@ a.log-in-btn:hover:after {
 /* For mobile/tablet, make gradient overlay darker overall so text is perfectly readable */
 @media (max-width: 1199px) {
   .luminix-hero-section {
-    padding: 130px 0 90px !important;
+    padding: 55px 0 40px !important; /* Reduced top padding to 55px */
   }
 }
 @media (max-width: 991px) {
   .luminix-hero-section {
-    padding: 110px 0 70px !important;
+    padding: 45px 0 35px !important; /* Reduced top padding to 45px */
     background-position: center;
   }
   .luminix-hero-section::before {
@@ -1063,7 +1063,7 @@ a.log-in-btn:hover:after {
 }
 @media (max-width: 767px) {
   .luminix-hero-section {
-    padding: 100px 0 60px !important;
+    padding: 35px 0 30px !important; /* Reduced top padding to 35px */
   }
 }
 
@@ -1079,7 +1079,7 @@ a.log-in-btn:hover:after {
   color: #ffffff;
   font-size: 14px;
   font-weight: 500;
-  margin-bottom: 30px;
+  margin-bottom: 15px; /* Reduced from 30px to 15px */
   backdrop-filter: blur(5px);
   transition: all 0.3s ease;
 }
@@ -1101,7 +1101,7 @@ a.log-in-btn:hover:after {
   line-height: 1.15;
   letter-spacing: -1.5px;
   color: #ffffff;
-  margin-bottom: 25px;
+  margin-bottom: 15px; /* Reduced from 25px to 15px */
 }
 
 @media (max-width: 1199px) {
@@ -1140,7 +1140,7 @@ a.log-in-btn:hover:after {
   font-size: 18px;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 40px;
+  margin-bottom: 20px; /* Reduced from 40px to 20px */
   max-width: 600px;
 }
 
@@ -1148,8 +1148,8 @@ a.log-in-btn:hover:after {
 .vigil-features-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px 30px;
-  margin-bottom: 45px;
+  gap: 15px 25px; /* Compacter gaps */
+  margin-bottom: 25px; /* Reduced from 45px to 25px */
   padding: 0;
   list-style: none;
 }
