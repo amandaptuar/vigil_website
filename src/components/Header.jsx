@@ -124,7 +124,7 @@ function Header() {
                 <Link to="/about" onClick={closeMenu}>About Vigil</Link>
               </li>
               <li>
-                <Link to="/service" onClick={closeMenu}>Our Features</Link>
+                <Link to="/features" onClick={closeMenu}>Our Features</Link>
               </li>
               <li>
                 <Link to="/pricing" onClick={closeMenu}>Pricing Plans</Link>
@@ -162,7 +162,7 @@ function Header() {
                         <Link to="/about">About Vigil</Link>
                       </li>
                       <li>
-                        <Link to="/service">Our Features</Link>
+                        <Link to="/features">Our Features</Link>
                       </li>
                       <li>
                         <Link to="/pricing">Pricing Plans</Link>

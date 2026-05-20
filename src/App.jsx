@@ -12,6 +12,7 @@ import Register from './components/Register';
 import Success from './components/Success';
 import Dashboard from './components/Dashboard';
 import ChildSetup from './components/ChildSetup';
+import Features from './components/Features';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -62,7 +63,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/service" element={<Service />} />
+        <Route path="/service" element={<Features />} />
+        <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/register" element={<Register />} />
         <Route path="/success" element={<Success />} />

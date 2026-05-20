@@ -55,7 +55,7 @@ function Footer() {
                 <ul>
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/about">About Vigil</Link></li>
-                  <li><Link to="/service">Our Features</Link></li>
+                  <li><Link to="/features">Our Features</Link></li>
                   <li><Link to="/pricing">Pricing Plans</Link></li>
                   <li><Link to="/contact">Contact Us</Link></li>
                 </ul>
@@ -67,11 +67,11 @@ function Footer() {
                   <h5>Our Services</h5>
                 </div>
                 <ul>
-                  <li><Link to="/service">Screen Monitoring</Link></li>
-                  <li><Link to="/service">GPS Location Tracking</Link></li>
-                  <li><Link to="/service">App & Screen Time Control</Link></li>
-                  <li><Link to="/service">Smart Web Filtering</Link></li>
-                  <li><Link to="/service">Cyberbullying Detection</Link></li>
+                  <li><Link to="/features">Screen Monitoring</Link></li>
+                  <li><Link to="/features">GPS Location Tracking</Link></li>
+                  <li><Link to="/features">App & Screen Time Control</Link></li>
+                  <li><Link to="/features">Smart Web Filtering</Link></li>
+                  <li><Link to="/features">Cyberbullying Detection</Link></li>
                 </ul>
               </div>
             </div>

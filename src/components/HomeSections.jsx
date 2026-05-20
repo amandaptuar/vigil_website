@@ -644,7 +644,7 @@ export default function HomeSections() {
                     </svg>
                     <p>Vigil keeps you informed, so you can take action before it's too late.</p>
                   </div>
-                  <Link to="/service" className="vigil-truth-white-btn">
+                  <Link to="/features" className="vigil-truth-white-btn">
                     Explore All Features <span>➔</span>
                   </Link>
                 </div>
@@ -732,7 +732,7 @@ export default function HomeSections() {
                   </div>
                   <h5>Call Access</h5>
                   <p>View incoming and outgoing calls on their device with exact contact names, call timestamps, and call durations.</p>
-                  <Link to="/service" className="vigil-feature-card-link">
+                  <Link to="/features" className="vigil-feature-card-link">
                     Learn More <span>➔</span>
                   </Link>
                 </div>
@@ -746,7 +746,7 @@ export default function HomeSections() {
                   </div>
                   <h5>SMS Access</h5>
                   <p>See all sent and received SMS messages. Get instant alerts if texts contain cyberbullying, drugs, or unsafe context.</p>
-                  <Link to="/service" className="vigil-feature-card-link">
+                  <Link to="/features" className="vigil-feature-card-link">
                     Learn More <span>➔</span>
                   </Link>
                 </div>
@@ -758,7 +758,7 @@ export default function HomeSections() {
                   </div>
                   <h5>WhatsApp Access</h5>
                   <p>Track WhatsApp chats, shared photos, audio recordings, and calls. Keep tabs on their main modern communications.</p>
-                  <Link to="/service" className="vigil-feature-card-link">
+                  <Link to="/features" className="vigil-feature-card-link">
                     Learn More <span>➔</span>
                   </Link>
                 </div>
@@ -772,7 +772,7 @@ export default function HomeSections() {
                   </div>
                   <h5>Social Media Access</h5>
                   <p>Monitor social chats and posts on Instagram, Snapchat, Facebook Messenger, TikTok, and more with our custom AI tool.</p>
-                  <Link to="/service" className="vigil-feature-card-link">
+                  <Link to="/features" className="vigil-feature-card-link">
                     Learn More <span>➔</span>
                   </Link>
                 </div>
@@ -786,7 +786,7 @@ export default function HomeSections() {
                   </div>
                   <h5>Child Phone Gallery</h5>
                   <p>Remotely browse all photos and video files stored on their device. Flag inappropriate media uploads instantly.</p>
-                  <Link to="/service" className="vigil-feature-card-link">
+                  <Link to="/features" className="vigil-feature-card-link">
                     Learn More <span>➔</span>
                   </Link>
                 </div>
@@ -800,7 +800,7 @@ export default function HomeSections() {
                   </div>
                   <h5>Live Location</h5>
                   <p>View live GPS coordinates on an interactive map. Set custom virtual boundary zones and receive entry/exit notifications.</p>
-                  <Link to="/service" className="vigil-feature-card-link">
+                  <Link to="/features" className="vigil-feature-card-link">
                     Learn More <span>➔</span>
                   </Link>
                 </div>
@@ -814,7 +814,7 @@ export default function HomeSections() {
                   </div>
                   <h5>Call Recording</h5>
                   <p>Record phone calls made on their device and listen to recordings remotely anytime from your dashboard.</p>
-                  <Link to="/service" className="vigil-feature-card-link">
+                  <Link to="/features" className="vigil-feature-card-link">
                     Learn More <span>➔</span>
                   </Link>
                 </div>
@@ -828,7 +828,7 @@ export default function HomeSections() {
                   </div>
                   <h5>And Much More</h5>
                   <p>Vigil provides browser history logs, app blocking, wifi logs, calendar events, contact logs, device status tracking, and more.</p>
-                  <Link to="/service" className="vigil-feature-card-link">
+                  <Link to="/features" className="vigil-feature-card-link">
                     Explore All Features <span>➔</span>
                   </Link>
                 </div>
