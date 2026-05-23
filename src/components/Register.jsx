@@ -212,7 +212,7 @@ export default function Register() {
         .inp-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; width: 18px; height: 18px; pointer-events: none; }
         
         .reg-inp {
-          width: 100%; padding: 14px 14px 14px 44px; box-sizing: border-box;
+          width: 100%; padding: 14px 14px 14px 44px !important; box-sizing: border-box;
           border: 1px solid #cbd5e1; border-radius: 12px; background: #fff;
           color: #0f172a; font-size: 14px; outline: none; transition: all 0.2s; font-weight: 500;
           height: auto !important; line-height: normal; margin: 0;
@@ -361,7 +361,7 @@ export default function Register() {
 
               <div className="pw-wrap">
                 <svg className="pw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} placeholder="Password" className="reg-inp" style={{ paddingRight: '48px' }} />
+                <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} placeholder="Password" className="reg-inp" style={{ paddingRight: '48px !important' }} />
                 <div className="pw-eye" onClick={() => setShowPassword(!showPassword)}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     {showPassword ? <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></> : <><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></>}
