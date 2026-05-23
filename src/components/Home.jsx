@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import './Testimonials.css';
 import './Features.css';
@@ -46,6 +47,10 @@ function Home() {
 
   return (
     <>
+      <Helmet>
+        <title>Best Parental Control App for Child Safety in USA | Vigil1</title>
+        <meta name="description" content="Protect your family with Vigil1, the best parental control app for child safety, online protection, and smart family monitoring in the USA." />
+      </Helmet>
       <div className="luminix-hero-section section" style={{ backgroundImage: 'url("/myimg/image copy 7.png")' }}>
         <div className="container">
           <div className="row align-items-center">
@@ -133,7 +138,7 @@ function Home() {
 
                 {/* Actions (CTA Button + Setup Info) */}
                 <div className="vigil-actions-block">
-                  <Link to="/contact" className="vigil-cta-btn">
+                  <Link to="/pricing" className="vigil-cta-btn">
                     <span>Start Protecting Your Child Today</span>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14" />
@@ -255,7 +260,7 @@ function Home() {
             {/* Right Column: 4x2 Grid */}
             <div className="vigil-features-right">
               <div className="vigil-features-header-flex">
-                <Link to="/contact" className="vigil-features-right-top-pill">
+                <Link to="/features" className="vigil-features-right-top-pill">
                   Explore All Features →
                 </Link>
               </div>
@@ -268,7 +273,7 @@ function Home() {
                   </div>
                   <h5>Call Access</h5>
                   <p>View all incoming, outgoing & missed calls to ensure your child is communicating safely with known contacts.</p>
-                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                  <Link to="/features" className="vigil-feature-link">Learn More →</Link>
                 </div>
                 {/* Card 2 */}
                 <div className="vigil-feature-card">
@@ -277,7 +282,7 @@ function Home() {
                   </div>
                   <h5>SMS Access</h5>
                   <p>Read sent, received & deleted text messages to quickly identify bullying or inappropriate conversations.</p>
-                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                  <Link to="/features" className="vigil-feature-link">Learn More →</Link>
                 </div>
                 {/* Card 3 */}
                 <div className="vigil-feature-card">
@@ -286,7 +291,7 @@ function Home() {
                   </div>
                   <h5>WhatsApp Access</h5>
                   <p>Monitor WhatsApp chats, media, and voice notes to keep an eye on their most active messaging app.</p>
-                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                  <Link to="/features" className="vigil-feature-link">Learn More →</Link>
                 </div>
                 {/* Card 4 */}
                 <div className="vigil-feature-card">
@@ -295,7 +300,7 @@ function Home() {
                   </div>
                   <h5>Social Media Access</h5>
                   <p>Track activity on Instagram, Facebook, and Snapchat to protect them from dangerous online predators.</p>
-                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                  <Link to="/features" className="vigil-feature-link">Learn More →</Link>
                 </div>
                 {/* Card 5 */}
                 <div className="vigil-feature-card">
@@ -304,7 +309,7 @@ function Home() {
                   </div>
                   <h5>Child Phone Gallery</h5>
                   <p>View photos and videos stored on their device to ensure they are not exposed to explicit material.</p>
-                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                  <Link to="/features" className="vigil-feature-link">Learn More →</Link>
                 </div>
                 {/* Card 6 */}
                 <div className="vigil-feature-card">
@@ -313,7 +318,7 @@ function Home() {
                   </div>
                   <h5>Live Location</h5>
                   <p>Track your child's real-time location on a map so you always know exactly where they are.</p>
-                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                  <Link to="/features" className="vigil-feature-link">Learn More →</Link>
                 </div>
                 {/* Card 7 */}
                 <div className="vigil-feature-card">
@@ -322,7 +327,7 @@ function Home() {
                   </div>
                   <h5>Call Recording</h5>
                   <p>Record and listen to phone calls happening on the device if you suspect dangerous interactions.</p>
-                  <Link to="/contact" className="vigil-feature-link">Learn More →</Link>
+                  <Link to="/features" className="vigil-feature-link">Learn More →</Link>
                 </div>
                 {/* Card 8 */}
                 <div className="vigil-feature-card">
@@ -331,7 +336,7 @@ function Home() {
                   </div>
                   <h5>And Much More</h5>
                   <p>Web filtering, screen time control, keylogger, and dozens of other features designed for safety.</p>
-                  <Link to="/contact" className="vigil-feature-link" style={{color: '#4F46E5'}}>Explore All Features →</Link>
+                  <Link to="/features" className="vigil-feature-link" style={{color: '#4F46E5'}}>Explore All Features →</Link>
                 </div>
               </div>
             </div>
@@ -510,7 +515,7 @@ function Home() {
             <div className="or-right" style={{ position: 'relative' }}>
               <img src="/myimg/image copy 4.png" alt="Online Risks Map" className="or-asset-image" />
               {/* Invisible overlay over the baked-in button */}
-              <Link to="/contact" style={{ position: 'absolute', bottom: '4%', right: '4%', width: '40%', height: '10%', zIndex: 10, cursor: 'pointer' }} aria-label="Explore All Features"></Link>
+              <Link to="/features" style={{ position: 'absolute', bottom: '4%', right: '4%', width: '40%', height: '10%', zIndex: 10, cursor: 'pointer' }} aria-label="Explore All Features"></Link>
             </div>
           </div>
         </div>

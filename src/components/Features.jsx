@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import './FeaturesPage.css';
 
@@ -51,6 +52,10 @@ function Features() {
 
   return (
     <div className="features-page-wrapper">
+      <Helmet>
+        <title>Parental Control Features with Live Location &amp; AI Alerts | Vigil1</title>
+        <meta name="description" content="Explore Vigil1 parental control features including live location tracking, AI safety alerts, and tools to monitor teenager online activity safely." />
+      </Helmet>
       {/* 1. HERO SECTION */}
       <section className="features-hero-section">
         <div className="features-container">

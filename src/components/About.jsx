@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import './About.css';
 
@@ -14,6 +15,10 @@ function About() {
 
   return (
     <div className="about-page-wrapper">
+      <Helmet>
+        <title>About Vigil1 – Child Safety &amp; Family Monitoring App USA</title>
+        <meta name="description" content="Learn how Vigil1 helps American parents protect children online with trusted family monitoring and digital safety solutions across the USA." />
+      </Helmet>
       {/* 1. HERO SECTION */}
       <section className="about-hero-section">
         <div className="about-container">

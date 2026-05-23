@@ -81,10 +81,9 @@ function Footer() {
                   <h5>Contact Info</h5>
                 </div>
                 <ul className="footer-contact-info">
-                   <li><a href="mailto:support@vigilapp.com">support@vigilapp.com</a></li>
-                   <li>Digital Safety Plaza, Global Support Center</li>
-                   <li>Mon – Fri: 8:00 AM – 8:00 PM</li>
-                   <li>24/7 Expert Support Hotline Available</li>
+                   <li><a href="mailto:support@vigil-1.com">support@vigil-1.com</a></li>
+                   <li>1934 Old Gallows Road, Fairfax, VA. 22182, United States</li>
+                   <li><a href="tel:+14045550293" style={{ color: 'inherit' }}>+1 (404) 555-0293</a></li>
                 </ul>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import './Contact.css';
 
 function Contact() {
@@ -11,6 +12,10 @@ function Contact() {
 
   return (
     <div className="contact-page-wrapper">
+      <Helmet>
+        <title>Contact Vigil1 – Best Parental Control App in USA</title>
+        <meta name="description" content="Contact Vigil1 for trusted child safety and family monitoring solutions designed to keep children safe online across the USA." />
+      </Helmet>
 
       {/* ── HERO BANNER — uses contactbanner.png as background ── */}
       <section
@@ -53,7 +58,7 @@ function Contact() {
                     </div>
                     <div className="contact-info-text">
                       <h6>Phone</h6>
-                      <p>+1 (888) 123-4567</p>
+                      <p>+1 (404) 555-0293</p>
                     </div>
                   </div>
 
@@ -66,7 +71,7 @@ function Contact() {
                     </div>
                     <div className="contact-info-text">
                       <h6>Email</h6>
-                      <p>support@vigil.com</p>
+                      <p>support@vigil-1.com</p>
                     </div>
                   </div>
 
@@ -79,22 +84,11 @@ function Contact() {
                     </div>
                     <div className="contact-info-text">
                       <h6>Address</h6>
-                      <p>123 Security Lane, Suite 100<br />Austin, TX 73301, USA</p>
+                      <p>1934 Old Gallows Road<br />Fairfax, VA. 22182<br />United States</p>
                     </div>
                   </div>
 
-                  <div className="contact-info-card">
-                    <div className="contact-info-icon">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12 6 12 12 16 14"/>
-                      </svg>
-                    </div>
-                    <div className="contact-info-text">
-                      <h6>Business Hours</h6>
-                      <p>Mon - Fri: 9:00 AM - 6:00 PM (CT)<br />Sat - Sun: Closed</p>
-                    </div>
-                  </div>
+
 
                 </div>
               </div>
@@ -109,7 +103,12 @@ function Contact() {
                   <p>Fill out the form below and we'll get back to you shortly.</p>
                 </div>
 
-                <form>
+                <form action="https://formsubmit.co/matrikaventures2020@gmail.com" method="POST">
+                  {/* Honeypot for spam */}
+                  <input type="text" name="_honey" style={{ display: 'none' }} />
+                  {/* Disable Captcha */}
+                  <input type="hidden" name="_captcha" value="false" />
+                  
                   {/* Row 1: Full Name + Email */}
                   <div className="row g-3 mb-3">
                     <div className="col-md-6">
@@ -117,8 +116,10 @@ function Contact() {
                         <label>Full Name</label>
                         <input
                           type="text"
+                          name="Full Name"
                           className="premium-input"
                           placeholder="Enter your full name"
+                          required
                         />
                       </div>
                     </div>
@@ -127,8 +128,10 @@ function Contact() {
                         <label>Email Address</label>
                         <input
                           type="email"
+                          name="Email Address"
                           className="premium-input"
                           placeholder="Enter your email address"
+                          required
                         />
                       </div>
                     </div>
@@ -137,7 +140,7 @@ function Contact() {
                   {/* Row 2: Subject */}
                   <div className="form-field-group mb-3">
                     <label>Subject</label>
-                    <select className="premium-input premium-select" defaultValue="">
+                    <select name="Subject" className="premium-input premium-select" defaultValue="" required>
                       <option value="" disabled>Select a subject</option>
                       <option value="support">General Support</option>
                       <option value="billing">Billing Inquiry</option>
@@ -150,9 +153,11 @@ function Contact() {
                   <div className="form-field-group mb-4">
                     <label>Message</label>
                     <textarea
+                      name="Message"
                       className="premium-input premium-textarea"
                       rows="5"
                       placeholder="Type your message here..."
+                      required
                     ></textarea>
                   </div>
 

@@ -183,7 +183,7 @@ function Header() {
                     <div className="luminix-header-info-content">
                       <ul>
                         <li>Call Any Time</li>
-                        <li><a href="tel:+18881234567">+1 (888) 123-4567</a></li>
+                        <li><a href="tel:+14045550293" style={{ color: '#000000' }}>+1 (404) 555-0293</a></li>
                       </ul>
                     </div>
                   </div>

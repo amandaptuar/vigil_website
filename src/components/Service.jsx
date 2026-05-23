@@ -83,7 +83,7 @@ function Service() {
                   <p>Your family's data is encrypted end-to-end and never sold. Vigil is fully privacy-compliant — built to meet the strictest global child safety standards.</p>
                 </div>
                 <div className="luminix-blog-btn">
-                  <Link to="/contact">Read More
+                  <Link to="/features">Read More
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -102,7 +102,7 @@ function Service() {
                   <p>Block adult content, gambling sites, and social dangers automatically. Create custom allow/block lists tailored to each child's age and maturity level.</p>
                 </div>
                 <div className="luminix-blog-btn">
-                  <Link to="/contact">Read More
+                  <Link to="/features">Read More
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -121,7 +121,7 @@ function Service() {
                   <p>Get plain-English weekly summaries of your child's screen time, top apps, and flagged activity — emailed directly to you every Sunday morning.</p>
                 </div>
                 <div className="luminix-blog-btn">
-                  <Link to="/contact">Read More
+                  <Link to="/features">Read More
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -140,7 +140,7 @@ function Service() {
                   <p>Know exactly where your child is at any moment. Set safe zones around home, school, and friends' houses — get instant alerts if they leave.</p>
                 </div>
                 <div className="luminix-blog-btn">
-                  <Link to="/contact">Read More
+                  <Link to="/features">Read More
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -159,7 +159,7 @@ function Service() {
                   <p>Set daily limits for specific apps, block distracting games during homework hours, and schedule device-free family time — all from your parent dashboard.</p>
                 </div>
                 <div className="luminix-blog-btn">
-                  <Link to="/contact">Read More
+                  <Link to="/features">Read More
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -178,7 +178,7 @@ function Service() {
                   <p>Force safe search mode on Google, Bing, and YouTube across all devices so your child's search results stay clean, no matter what they look up.</p>
                 </div>
                 <div className="luminix-blog-btn">
-                  <Link to="/contact">Read More
+                  <Link to="/features">Read More
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -197,7 +197,7 @@ function Service() {
                   <p>Vigil's AI scans texts and social messages for signs of bullying, predatory behavior, or emotional distress — alerting you the moment something concerning appears.</p>
                 </div>
                 <div className="luminix-blog-btn">
-                  <Link to="/contact">Read More
+                  <Link to="/features">Read More
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -216,7 +216,7 @@ function Service() {
                   <p>Manage every phone, tablet, laptop, and gaming console in your home from one unified parent dashboard. Works on iOS, Android, Windows, and Mac.</p>
                 </div>
                 <div className="luminix-blog-btn">
-                  <Link to="/contact">Read More
+                  <Link to="/features">Read More
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -235,7 +235,7 @@ function Service() {
                   <p>Get real-time push notifications the moment your child encounters adult content, receives a message from an unknown contact, or crosses a safe zone boundary.</p>
                 </div>
                 <div className="luminix-blog-btn">
-                  <Link to="/contact">Read More
+                  <Link to="/features">Read More
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M9.50024 0.75L14.7502 6M14.7502 6L9.50024 11.25M14.7502 6L1.25024 6" stroke="#001A3D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

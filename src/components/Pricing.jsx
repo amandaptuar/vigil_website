@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import './Pricing.css';
 
@@ -14,6 +15,10 @@ function Pricing() {
 
   return (
     <>
+      <Helmet>
+        <title>Affordable Parental Control Plans for Families in USA | Vigil1</title>
+        <meta name="description" content="Choose Vigil1 pricing plans for child safety, family protection, and smart parental controls designed to keep children safe online in the USA." />
+      </Helmet>
       {/* ── HERO BANNER ── */}
       <section 
         className="pricing-hero-section"

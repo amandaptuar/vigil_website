@@ -103,7 +103,7 @@ function Terms() {
                 </div>
                 <div className="luminix-term-condition-content">
                   <h3>Your Privacy Rights:</h3>
-                  <p>Regardless of your location, you have the right to request access to the personal data we hold about you, request deletion of that data, and opt out of any future data usage. We do not sell your personal data to third parties. To exercise these rights, contact us at privacy@vigilapp.com.</p>
+                  <p>Regardless of your location, you have the right to request access to the personal data we hold about you, request deletion of that data, and opt out of any future data usage. We do not sell your personal data to third parties. To exercise these rights, contact us at support@vigil-1.com.</p>
                 </div>
                 <div className="luminix-term-condition-content">
                   <h3>Security:</h3>
@@ -111,7 +111,7 @@ function Terms() {
                 </div>
                 <div className="luminix-term-condition-content">
                   <h3>Contact Our Privacy Team:</h3>
-                  <p>For any privacy-related questions or requests, please contact us at privacy@vigilapp.com or through our global support center as listed on our Contact page.</p>
+                  <p>For any privacy-related questions or requests, please contact us at support@vigil-1.com or through our global support center as listed on our Contact page.</p>
                 </div>
               </section>
             </div>
