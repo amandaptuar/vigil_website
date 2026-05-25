@@ -57,7 +57,7 @@ function Home() {
             {/* Left Column - Content */}
             <div className="col-lg-6 col-md-12">
               <div className="vigil-hero-content" data-aos="fade-right" data-aos-duration="1000">
-                
+
                 {/* Families Pill Badge */}
                 <div className="vigil-hero-badge">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -72,7 +72,7 @@ function Home() {
                 {/* Title */}
                 <h1 className="vigil-hero-title">
                   Peace of Mind for You.<br />
-                  <span className="vigil-text-green">A Safer Online World</span><br />
+                  <span className="vigil-text-green">A Safer World</span><br />
                   <span className="vigil-text-green vigil-underline-wrapper">
                     for Your Child.
                     <svg className="vigil-accent-underline" width="220" height="15" viewBox="0 0 220 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -160,7 +160,7 @@ function Home() {
             {/* Right Column - Shield and Floating Badges */}
             <div className="col-lg-6 col-md-12 position-relative">
               <div className="vigil-hero-graphic-area" data-aos="fade-left" data-aos-duration="1000">
-                
+
                 {/* Cyber-Security glowing SVG shield outline overlay */}
                 <div className="vigil-shield-svg-container">
                   <svg width="100%" height="100%" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,7 +168,7 @@ function Home() {
                     <path className="vigil-shield-path" d="M250 80 C 190 55, 130 55, 120 55 C 80 180, 90 340, 250 460 C 410 340, 420 180, 380 55 C 370 55, 310 55, 250 80 Z" stroke="rgba(255, 255, 255, 0.4)" strokeWidth="3" strokeLinecap="round" filter="url(#shieldGlow)" />
                     {/* Glowing inner shield */}
                     <path className="vigil-shield-path" d="M250 100 C 200 78, 150 78, 140 78 C 105 190, 115 325, 250 435 C 385 325, 395 190, 360 78 C 350 78, 300 78, 250 100 Z" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1.5" strokeLinecap="round" />
-                    
+
                     <defs>
                       <filter id="shieldGlow" x="-20%" y="-20%" width="140%" height="140%">
                         <feGaussianBlur stdDeviation="8" result="blur" />
@@ -252,8 +252,8 @@ function Home() {
             {/* Left Column: Branding */}
             <div className="vigil-features-left">
               <h2>
-                <span style={{color: '#0F172A'}}>Powerful Features.</span> <br />
-                <span style={{color: '#4F46E5'}}>Total Peace of Mind.</span>
+                <span style={{ color: '#0F172A', whiteSpace: 'nowrap' }}>Powerful Features.</span> <br />
+                <span style={{ color: '#4F46E5', whiteSpace: 'nowrap' }}>Total Peace of Mind.</span>
               </h2>
             </div>
 
@@ -264,12 +264,12 @@ function Home() {
                   Explore All Features →
                 </Link>
               </div>
-              
+
               <div className="vigil-features-grid">
                 {/* Card 1 */}
                 <div className="vigil-feature-card">
                   <div className="vigil-feature-icon-wrap bg-pastel-green">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                   </div>
                   <h5>Call Access</h5>
                   <p>View all incoming, outgoing & missed calls to ensure your child is communicating safely with known contacts.</p>
@@ -278,7 +278,7 @@ function Home() {
                 {/* Card 2 */}
                 <div className="vigil-feature-card">
                   <div className="vigil-feature-icon-wrap bg-pastel-blue">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
                   </div>
                   <h5>SMS Access</h5>
                   <p>Read sent, received & deleted text messages to quickly identify bullying or inappropriate conversations.</p>
@@ -287,7 +287,7 @@ function Home() {
                 {/* Card 3 */}
                 <div className="vigil-feature-card">
                   <div className="vigil-feature-icon-wrap bg-pastel-green">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>
                   </div>
                   <h5>WhatsApp Access</h5>
                   <p>Monitor WhatsApp chats, media, and voice notes to keep an eye on their most active messaging app.</p>
@@ -296,7 +296,7 @@ function Home() {
                 {/* Card 4 */}
                 <div className="vigil-feature-card">
                   <div className="vigil-feature-icon-wrap bg-pastel-purple">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
                   </div>
                   <h5>Social Media Access</h5>
                   <p>Track activity on Instagram, Facebook, and Snapchat to protect them from dangerous online predators.</p>
@@ -305,7 +305,7 @@ function Home() {
                 {/* Card 5 */}
                 <div className="vigil-feature-card">
                   <div className="vigil-feature-icon-wrap bg-pastel-purple">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
                   </div>
                   <h5>Child Phone Gallery</h5>
                   <p>View photos and videos stored on their device to ensure they are not exposed to explicit material.</p>
@@ -314,7 +314,7 @@ function Home() {
                 {/* Card 6 */}
                 <div className="vigil-feature-card">
                   <div className="vigil-feature-icon-wrap bg-pastel-green">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                   </div>
                   <h5>Live Location</h5>
                   <p>Track your child's real-time location on a map so you always know exactly where they are.</p>
@@ -323,7 +323,7 @@ function Home() {
                 {/* Card 7 */}
                 <div className="vigil-feature-card">
                   <div className="vigil-feature-icon-wrap bg-pastel-red">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="22" /></svg>
                   </div>
                   <h5>Call Recording</h5>
                   <p>Record and listen to phone calls happening on the device if you suspect dangerous interactions.</p>
@@ -332,11 +332,11 @@ function Home() {
                 {/* Card 8 */}
                 <div className="vigil-feature-card">
                   <div className="vigil-feature-icon-wrap bg-pastel-blue">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M9 12l2 2 4-4" /></svg>
                   </div>
                   <h5>And Much More</h5>
                   <p>Web filtering, screen time control, keylogger, and dozens of other features designed for safety.</p>
-                  <Link to="/features" className="vigil-feature-link" style={{color: '#4F46E5'}}>Explore All Features →</Link>
+                  <Link to="/features" className="vigil-feature-link" style={{ color: '#4F46E5' }}>Explore All Features →</Link>
                 </div>
               </div>
             </div>
@@ -347,9 +347,9 @@ function Home() {
             <div className="vigil-fb-left">
               <div className="vigil-fb-stat-icon-custom">
                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                  <circle cx="20" cy="20" r="18" stroke="#16A34A" strokeWidth="2.5" fill="none"/>
-                  <path d="M20 5C20 5 13 8 13 16C13 24 20 33 20 33C20 33 27 24 27 16C27 8 20 5 20 5Z" fill="#1E3A8A"/>
-                  <path d="M17 17L19.5 19.5L24 14" stroke="#16A34A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="20" cy="20" r="18" stroke="#16A34A" strokeWidth="2.5" fill="none" />
+                  <path d="M20 5C20 5 13 8 13 16C13 24 20 33 20 33C20 33 27 24 27 16C27 8 20 5 20 5Z" fill="#1E3A8A" />
+                  <path d="M17 17L19.5 19.5L24 14" stroke="#16A34A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
               <div className="vigil-fb-stat-text">
@@ -357,7 +357,7 @@ function Home() {
                 <p>Vigil is 100% legal, discreet, and designed for parents who care.</p>
               </div>
             </div>
-            
+
             <div className="vigil-fb-center">
               <div className="vigil-fb-stat">
                 <h6>100%</h6>
@@ -374,7 +374,7 @@ function Home() {
                 <p>Secure & Private</p>
               </div>
             </div>
-            
+
             <div className="vigil-fb-right">
               <Link to="/pricing" className="vigil-btn-solid">
                 Get Started Now →
@@ -391,9 +391,9 @@ function Home() {
             {/* Left Column */}
             <div className="or-left">
               <h4 className="or-subheading">The Reality for Parents in the USA</h4>
-              <h2 className="or-heading">The Digital World<br />Can Be Risky.<br /><span className="highlight">We Help You Stay Ahead.</span></h2>
+              <h2 className="or-heading">The World<br />Can Be Risky.<br /><span className="highlight">We Help You Stay Ahead.</span></h2>
               <p className="or-description">Kids today face online dangers more than ever. Vigil gives you real insights and powerful tools to keep them protected 24/7.</p>
-              
+
               {/* Stats Grid */}
               <div className="or-stats-grid">
                 <div className="or-stat-card">
@@ -409,7 +409,7 @@ function Home() {
                   <p className="or-stat-text">aged 8-17 have experienced some form of online risk.</p>
                   <p className="or-stat-source">Source: Pew Research Center</p>
                 </div>
-                
+
                 <div className="or-stat-card">
                   <div className="or-stat-card-header">
                     <div className="or-icon-wrap or-icon-red">
@@ -423,7 +423,7 @@ function Home() {
                   <p className="or-stat-text">happen while children are using mobile phones.</p>
                   <p className="or-stat-source">Source: Bark Technologies</p>
                 </div>
-                
+
                 <div className="or-stat-card">
                   <div className="or-stat-card-header">
                     <div className="or-icon-wrap or-icon-yellow">
@@ -493,7 +493,7 @@ function Home() {
               {/* Trust Badge */}
               <div className="or-trust-badge">
                 <div className="or-trust-left">
-                  <img src="/myimg/us-flag-icon.png" alt="USA Flag" className="or-flag-icon" onError={(e)=>{e.target.onerror = null; e.target.src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png"}} />
+                  <img src="/myimg/us-flag-icon.png" alt="USA Flag" className="or-flag-icon" onError={(e) => { e.target.onerror = null; e.target.src = "https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" }} />
                   <p>Proudly helping <strong>thousands of families across the USA</strong> create a safer digital environment for their children.</p>
                 </div>
                 <div className="or-trust-right">
@@ -504,7 +504,7 @@ function Home() {
                     <div className="or-avatar-count">+12K</div>
                   </div>
                   <div className="or-trust-text">
-                    Trusted by<br/><strong>12,000+ Parents</strong>
+                    Trusted by<br /><strong>12,000+ Parents</strong>
                   </div>
                 </div>
               </div>
@@ -527,56 +527,56 @@ function Home() {
           <div className="vigil-section-title-wrap text-center">
             <div className="vigil-stories-badge mx-auto">
               <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: '6px' }}>
-                <rect width="16" height="12" rx="1" fill="white"/>
+                <rect width="16" height="12" rx="1" fill="white" />
                 <mask id="flag_mask" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
-                  <rect width="16" height="12" rx="1" fill="white"/>
+                  <rect width="16" height="12" rx="1" fill="white" />
                 </mask>
                 <g mask="url(#flag_mask)">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
-                  <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
-                  <circle cx="1.5" cy="1.5" r="0.4" fill="white"/>
-                  <circle cx="3.5" cy="1.5" r="0.4" fill="white"/>
-                  <circle cx="5.5" cy="1.5" r="0.4" fill="white"/>
-                  <circle cx="2.5" cy="3" r="0.4" fill="white"/>
-                  <circle cx="4.5" cy="3" r="0.4" fill="white"/>
-                  <circle cx="1.5" cy="4.5" r="0.4" fill="white"/>
-                  <circle cx="3.5" cy="4.5" r="0.4" fill="white"/>
-                  <circle cx="5.5" cy="4.5" r="0.4" fill="white"/>
+                  <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C" />
+                  <rect width="7.61905" height="6.85714" fill="#1D2F6F" />
+                  <circle cx="1.5" cy="1.5" r="0.4" fill="white" />
+                  <circle cx="3.5" cy="1.5" r="0.4" fill="white" />
+                  <circle cx="5.5" cy="1.5" r="0.4" fill="white" />
+                  <circle cx="2.5" cy="3" r="0.4" fill="white" />
+                  <circle cx="4.5" cy="3" r="0.4" fill="white" />
+                  <circle cx="1.5" cy="4.5" r="0.4" fill="white" />
+                  <circle cx="3.5" cy="4.5" r="0.4" fill="white" />
+                  <circle cx="5.5" cy="4.5" r="0.4" fill="white" />
                 </g>
               </svg>
               Real Parents. Real Stories. Real Protection.
             </div>
-            
+
             {/* Sparkles Decorative SVG */}
             <svg className="vigil-section-sparkles" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
 
             {/* Dotted Map Decorative SVG */}
             <svg className="vigil-section-map" width="120" height="80" viewBox="0 0 120 80" fill="currentColor">
-              <circle cx="10" cy="20" r="1.5"/>
-              <circle cx="20" cy="15" r="1.5"/>
-              <circle cx="30" cy="25" r="1.5"/>
-              <circle cx="15" cy="35" r="1.5"/>
-              <circle cx="25" cy="45" r="1.5"/>
-              <circle cx="40" cy="10" r="1.5"/>
-              <circle cx="50" cy="20" r="1.5"/>
-              <circle cx="60" cy="15" r="1.5"/>
-              <circle cx="45" cy="30" r="1.5"/>
-              <circle cx="55" cy="40" r="1.5"/>
-              <circle cx="70" cy="25" r="1.5"/>
-              <circle cx="80" cy="15" r="1.5"/>
-              <circle cx="90" cy="20" r="1.5"/>
-              <circle cx="75" cy="35" r="1.5"/>
-              <circle cx="85" cy="45" r="1.5"/>
-              <circle cx="100" cy="10" r="1.5"/>
-              <circle cx="110" cy="25" r="1.5"/>
-              <circle cx="105" cy="40" r="1.5"/>
-              <circle cx="35" cy="55" r="1.5"/>
-              <circle cx="45" cy="65" r="1.5"/>
-              <circle cx="65" cy="55" r="1.5"/>
-              <circle cx="75" cy="65" r="1.5"/>
-              <circle cx="95" cy="55" r="1.5"/>
+              <circle cx="10" cy="20" r="1.5" />
+              <circle cx="20" cy="15" r="1.5" />
+              <circle cx="30" cy="25" r="1.5" />
+              <circle cx="15" cy="35" r="1.5" />
+              <circle cx="25" cy="45" r="1.5" />
+              <circle cx="40" cy="10" r="1.5" />
+              <circle cx="50" cy="20" r="1.5" />
+              <circle cx="60" cy="15" r="1.5" />
+              <circle cx="45" cy="30" r="1.5" />
+              <circle cx="55" cy="40" r="1.5" />
+              <circle cx="70" cy="25" r="1.5" />
+              <circle cx="80" cy="15" r="1.5" />
+              <circle cx="90" cy="20" r="1.5" />
+              <circle cx="75" cy="35" r="1.5" />
+              <circle cx="85" cy="45" r="1.5" />
+              <circle cx="100" cy="10" r="1.5" />
+              <circle cx="110" cy="25" r="1.5" />
+              <circle cx="105" cy="40" r="1.5" />
+              <circle cx="35" cy="55" r="1.5" />
+              <circle cx="45" cy="65" r="1.5" />
+              <circle cx="65" cy="55" r="1.5" />
+              <circle cx="75" cy="65" r="1.5" />
+              <circle cx="95" cy="55" r="1.5" />
             </svg>
 
             <h2 className="vigil-section-main-title">
@@ -653,8 +653,8 @@ function Home() {
               </div>
               <div className="vigil-ai-sidebar-footer">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-3.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2Z"/>
-                  <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-3.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2Z"/>
+                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-3.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2Z" />
+                  <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-3.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2Z" />
                 </svg>
                 <p>Vigil's AI works 24/7 so you don't have to. Smarter protection for a safer digital world.</p>
               </div>
@@ -705,13 +705,13 @@ function Home() {
                 <span className="vigil-testimony-relation">Mother of 2</span>
                 <div className="vigil-testimony-flag-pill">
                   <svg width="12" height="9" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-                    <rect width="16" height="12" rx="1" fill="white"/>
+                    <rect width="16" height="12" rx="1" fill="white" />
                     <mask id="flag_mask2" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
-                      <rect width="16" height="12" rx="1" fill="white"/>
+                      <rect width="16" height="12" rx="1" fill="white" />
                     </mask>
                     <g mask="url(#flag_mask2)">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
-                      <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C" />
+                      <rect width="7.61905" height="6.85714" fill="#1D2F6F" />
                     </g>
                   </svg>
                   USA
@@ -765,13 +765,13 @@ function Home() {
                 <span className="vigil-testimony-relation">Father of 1</span>
                 <div className="vigil-testimony-flag-pill">
                   <svg width="12" height="9" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-                    <rect width="16" height="12" rx="1" fill="white"/>
+                    <rect width="16" height="12" rx="1" fill="white" />
                     <mask id="flag_mask3" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
-                      <rect width="16" height="12" rx="1" fill="white"/>
+                      <rect width="16" height="12" rx="1" fill="white" />
                     </mask>
                     <g mask="url(#flag_mask3)">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
-                      <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C" />
+                      <rect width="7.61905" height="6.85714" fill="#1D2F6F" />
                     </g>
                   </svg>
                   USA
@@ -825,13 +825,13 @@ function Home() {
                 <span className="vigil-testimony-relation">Mother of 3</span>
                 <div className="vigil-testimony-flag-pill">
                   <svg width="12" height="9" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-                    <rect width="16" height="12" rx="1" fill="white"/>
+                    <rect width="16" height="12" rx="1" fill="white" />
                     <mask id="flag_mask4" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
-                      <rect width="16" height="12" rx="1" fill="white"/>
+                      <rect width="16" height="12" rx="1" fill="white" />
                     </mask>
                     <g mask="url(#flag_mask4)">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
-                      <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C" />
+                      <rect width="7.61905" height="6.85714" fill="#1D2F6F" />
                     </g>
                   </svg>
                   USA
@@ -874,8 +874,8 @@ function Home() {
                 <div className="vigil-context-bar">
                   <div className="vigil-context-icon">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
-                      <circle cx="12" cy="12" r="10"/>
-                      <path d="m8.5 12.5 3 3 6-6"/>
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="m8.5 12.5 3 3 6-6" />
                     </svg>
                   </div>
                   <p>AI Web Protection blocked access to explicit content in real time.</p>
@@ -885,13 +885,13 @@ function Home() {
                 <span className="vigil-testimony-relation">Father of 2</span>
                 <div className="vigil-testimony-flag-pill">
                   <svg width="12" height="9" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-                    <rect width="16" height="12" rx="1" fill="white"/>
+                    <rect width="16" height="12" rx="1" fill="white" />
                     <mask id="flag_mask5" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="12">
-                      <rect width="16" height="12" rx="1" fill="white"/>
+                      <rect width="16" height="12" rx="1" fill="white" />
                     </mask>
                     <g mask="url(#flag_mask5)">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C"/>
-                      <rect width="7.61905" height="6.85714" fill="#1D2F6F"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V1.71429H0V0ZM0 3.42857H16V5.14286H0V3.42857ZM0 6.85714H16V8.57143H0V6.85714ZM0 10.2857H16V12H0V10.2857Z" fill="#E31D1C" />
+                      <rect width="7.61905" height="6.85714" fill="#1D2F6F" />
                     </g>
                   </svg>
                   USA
@@ -914,7 +914,7 @@ function Home() {
                 <p>Because your child's safety deserves the best.</p>
               </div>
             </div>
-            
+
             <div className="vigil-trust-stats-pill-divider"></div>
 
             <div className="vigil-trust-stats-pill-item">
@@ -994,10 +994,10 @@ function Home() {
             <div className="vigil-trust-stats-pill-banner-right">
               <div className="map-icon">
                 <svg width="32" height="20" viewBox="0 0 40 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                  <circle cx="8" cy="8" r="2" fill="currentColor"/>
-                  <circle cx="16" cy="14" r="2" fill="currentColor"/>
-                  <circle cx="24" cy="6" r="2" fill="currentColor"/>
-                  <circle cx="32" cy="16" r="2" fill="currentColor"/>
+                  <circle cx="8" cy="8" r="2" fill="currentColor" />
+                  <circle cx="16" cy="14" r="2" fill="currentColor" />
+                  <circle cx="24" cy="6" r="2" fill="currentColor" />
+                  <circle cx="32" cy="16" r="2" fill="currentColor" />
                   <line x1="8" y1="8" x2="16" y2="14" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
                   <line x1="16" y1="14" x2="24" y2="6" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
                   <line x1="24" y1="6" x2="32" y2="16" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
