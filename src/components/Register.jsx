@@ -6,6 +6,8 @@ export default function Register() {
   const [formData, setFormData] = useState({ fullName: '', email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,20 +36,47 @@ export default function Register() {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError('');
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     
-    const username = formData.email.split('@')[0].toLowerCase() + Math.floor(Math.random() * 1000);
-    navigate('/success', {
-      state: {
-        accountDetails: {
-          username, password: formData.password, plan: 'Free Family Protection',
-          devices: '1 Device', status: 'Active', parentName: formData.fullName, email: formData.email
-        }
+    setLoading(true);
+    try {
+      const response = await fetch('http://160-153-179-249.sslip.io/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed. Please try again.');
       }
-    });
+
+      const username = formData.email.split('@')[0].toLowerCase() + Math.floor(Math.random() * 1000);
+      navigate('/success', {
+        state: {
+          accountDetails: {
+            username, password: formData.password, plan: 'Free Family Protection',
+            devices: '1 Device', status: 'Active', parentName: formData.fullName, email: formData.email,
+            token: data.token || (data.data && data.data.token)
+          }
+        }
+      });
+    } catch (error) {
+      setApiError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const features = [
@@ -381,9 +410,19 @@ export default function Register() {
                 ))}
               </div>
 
-              <button type="submit" className="reg-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-                Create My Account
+              {apiError && (
+                <div style={{ color: '#ef4444', fontSize: '13px', fontWeight: '500', marginBottom: '16px', textAlign: 'center', background: '#fef2f2', padding: '10px', borderRadius: '8px', border: '1px solid #fee2e2' }}>
+                  {apiError}
+                </div>
+              )}
+
+              <button type="submit" className="reg-btn" disabled={loading} style={{ opacity: loading ? 0.7 : 1 }}>
+                {loading ? 'Creating Account...' : (
+                  <>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                    Create My Account
+                  </>
+                )}
               </button>
 
               <p className="terms-txt">
