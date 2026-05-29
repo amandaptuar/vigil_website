@@ -15,6 +15,7 @@ import ChildSetup from './components/ChildSetup';
 import Features from './components/Features';
 import BlogPost from './components/BlogPost';
 import CaseStudy from './components/CaseStudy';
+import CaseStudySingle from './components/CaseStudySingle';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -75,6 +76,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-conditions" element={<Terms />} />
         <Route path="/casestudy" element={<CaseStudy />} />
+        <Route path="/casestudy/:id" element={<CaseStudySingle />} />
         <Route path="/blog/how-to-keep-children-safe-online-2026" element={<BlogPost />} />
       </Routes>
 

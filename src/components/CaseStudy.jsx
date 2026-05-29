@@ -110,8 +110,6 @@ function CaseStudy() {
 
       {/* 1. HERO SECTION */}
       <section className="cs-hero-section">
-        <div className="cs-bg-orbits"></div>
-        <div className="cs-bg-radial"></div>
         
         <div className="container-fluid px-4 px-xl-5" style={{ position: 'relative', zIndex: 2 }}>
           <div className="cs-hero-row">
@@ -125,7 +123,7 @@ function CaseStudy() {
               </h1>
               <div className="cs-hero-underline"></div>
               <p className="cs-body-18">
-                See how parents across the USA used Vigil to protect their children and bring peace of mind back to their homes.
+                Online fraud targeting children in the USA has surged, with the FBI reporting over 13,000 complaints from minors in 2025 alone, totaling more than $12 million in financial losses. Scammers often exploit children's active digital presence to access family data or commit long-term identity theft.
               </p>
               
               <div className="cs-hero-minicards">
@@ -152,9 +150,6 @@ function CaseStudy() {
             
           </div>
         </div>
-        
-        {/* Soft bottom fade effect */}
-        <div className="cs-hero-bottom-glow"></div>
       </section>
 
       {/* 2. CATEGORY FILTER BAR */}
@@ -196,15 +191,15 @@ function CaseStudy() {
                   <ShieldIcon />
                 </div>
                 <div className="cs-card-header-text">
-                  <h3 className="cs-card-title">Stopped Cyberbullying</h3>
+                  <h3 className="cs-card-title">Sextortion & Coercion</h3>
                   <div className="cs-card-location">
-                    <LocationIcon /> Austin, Texas
+                    <LocationIcon /> National Trend
                   </div>
                 </div>
               </div>
-              <span className="cs-category-pill">Cyberbullying</span>
-              <p className="cs-card-desc">Using Vigil's AI alerts, Sarah's parents were able to detect and stop online bullying before it escalated into a major real-world issue at school.</p>
-              <Link to="/contact" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
+              <span className="cs-category-pill">Sextortion</span>
+              <p className="cs-card-desc">A critical rising trend where predators threaten to release explicit images unless the victim sends money or more content. Some violent groups escalate this to coercing self-harm.</p>
+              <Link to="/casestudy/sextortion" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
             </div>
 
             {/* Card 2 */}
@@ -214,15 +209,15 @@ function CaseStudy() {
                   <EyeOffIcon />
                 </div>
                 <div className="cs-card-header-text">
-                  <h3 className="cs-card-title">Blocked Inappropriate Content</h3>
+                  <h3 className="cs-card-title">Gaming Scams</h3>
                   <div className="cs-card-location">
-                    <LocationIcon /> Miami, Florida
+                    <LocationIcon /> Online Platforms
                   </div>
                 </div>
               </div>
-              <span className="cs-category-pill">Inappropriate Content</span>
-              <p className="cs-card-desc">A proactive content filter prevented a 10-year-old from accessing explicit adult sites, providing a much-needed safety net for a busy single parent.</p>
-              <Link to="/contact" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
+              <span className="cs-category-pill">Gaming Fraud</span>
+              <p className="cs-card-desc">Fraudsters offer fake in-game currency (e.g., free V-Bucks or Robux) to trick kids into sharing login credentials or parent credit card details.</p>
+              <Link to="/casestudy/gaming-scams" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
             </div>
 
             {/* Card 3 */}
@@ -232,15 +227,15 @@ function CaseStudy() {
                   <UserAlertIcon />
                 </div>
                 <div className="cs-card-header-text">
-                  <h3 className="cs-card-title">Avoided Online Predator</h3>
+                  <h3 className="cs-card-title">Identity Theft</h3>
                   <div className="cs-card-location">
-                    <LocationIcon /> Chicago, Illinois
+                    <LocationIcon /> Nationwide Risk
                   </div>
                 </div>
               </div>
-              <span className="cs-category-pill">Online Predators</span>
-              <p className="cs-card-desc">When a suspicious stranger attempted to groom a young teen via a popular gaming app, Vigil immediately flagged the dangerous messaging patterns.</p>
-              <Link to="/contact" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
+              <span className="cs-category-pill">Identity Theft</span>
+              <p className="cs-card-desc">Because children have "clean" credit histories and their credit is rarely monitored, they are 50 times more likely to be targets for long-term identity fraud used to open accounts.</p>
+              <Link to="/casestudy/identity-theft" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
             </div>
 
             {/* Card 4 */}
@@ -250,15 +245,15 @@ function CaseStudy() {
                   <ClockIcon />
                 </div>
                 <div className="cs-card-header-text">
-                  <h3 className="cs-card-title">Balanced Screen Time</h3>
+                  <h3 className="cs-card-title">Cyber Kidnapping</h3>
                   <div className="cs-card-location">
-                    <LocationIcon /> Seattle, Washington
+                    <LocationIcon /> Global Scam
                   </div>
                 </div>
               </div>
-              <span className="cs-category-pill">Screen Time</span>
-              <p className="cs-card-desc">A family eliminated bedtime arguments by automating screen time restrictions, drastically improving their 14-year-old's sleep quality and grades.</p>
-              <Link to="/contact" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
+              <span className="cs-category-pill">Cyber Kidnapping</span>
+              <p className="cs-card-desc">A sophisticated scam where perpetrators convince a child to isolate themselves and then send fake ransom demands and photos to parents.</p>
+              <Link to="/casestudy/cyber-kidnapping" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
             </div>
 
             {/* Card 5 */}
@@ -268,33 +263,15 @@ function CaseStudy() {
                   <BellIcon />
                 </div>
                 <div className="cs-card-header-text">
-                  <h3 className="cs-card-title">Protected on Social Media</h3>
+                  <h3 className="cs-card-title">Social Media Deception</h3>
                   <div className="cs-card-location">
-                    <LocationIcon /> New York, New York
+                    <LocationIcon /> Social Networks
                   </div>
                 </div>
               </div>
               <span className="cs-category-pill">Social Media Risks</span>
-              <p className="cs-card-desc">Discovering toxic trends on TikTok early allowed parents to step in with positive guidance without completely banning the app.</p>
-              <Link to="/contact" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
-            </div>
-
-            {/* Card 6 */}
-            <div className="cs-card theme-trust">
-              <div className="cs-card-header">
-                <div className="cs-card-icon-wrap">
-                  <HeartIcon />
-                </div>
-                <div className="cs-card-header-text">
-                  <h3 className="cs-card-title">Built Trust, Not Fear</h3>
-                  <div className="cs-card-location">
-                    <LocationIcon /> Denver, Colorado
-                  </div>
-                </div>
-              </div>
-              <span className="cs-category-pill">Trust & Communication</span>
-              <p className="cs-card-desc">By maintaining open dialogues driven by Vigil’s weekly activity reports, a family transitioned from strict policing to healthy mutual trust.</p>
-              <Link to="/contact" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
+              <p className="cs-card-desc">Scammers use fake friend requests or AI-cloned voices to impersonate peers or relatives, often leading to phishing or financial extortion.</p>
+              <Link to="/casestudy/social-media-deception" className="cs-card-link">Read full story <ArrowRightIcon /></Link>
             </div>
 
           </div>

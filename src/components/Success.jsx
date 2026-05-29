@@ -30,6 +30,8 @@ function Success() {
         to_name: accountDetails.parentName,
         username: accountDetails.username,
         password: accountDetails.password,
+        subject: 'Welcome to Vigil – Your Account Has Been Created Successfully',
+        message: `Hi ${accountDetails.parentName},\n\nYour Vigil account has been created successfully. You’re now ready to start protecting and monitoring your child with Vigil.\n\nHere are your login details:\n\nUsername: ${accountDetails.username}\nPassword: ${accountDetails.password}\n\nFor security reasons, we recommend changing your password after your first login.\n\nIf you need any assistance, feel free to contact our support team.\n\nWelcome aboard!\n\nBest regards,\nTeam Vigil`
       };
 
       // REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL EMAILJS KEYS

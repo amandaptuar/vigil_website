@@ -66,11 +66,12 @@
 
 /* 1. HERO SECTION */
 .cs-hero-section {
-  padding: 100px 0 50px;
+  padding: 140px 0 60px;
   background-image: url('/demotxts/casestudyherobg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  border-bottom: 1px solid #E5E7EB;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -834,4 +835,168 @@
   .cs-testi-text { font-size: 22px; }
   .cs-stats-container { padding: 40px 20px; }
   .cs-hero-minicards { flex-direction: column; }
+}
+
+.cs-single-content h2 { font-size: 32px; color: #111827; margin-top: 40px; margin-bottom: 20px; font-weight: 600; }
+.cs-single-content p { color: #4B5563; margin-bottom: 24px; }
+
+.cs-split-layout { display: flex; align-items: flex-start; gap: 50px; }
+.cs-split-image-col {
+  flex: 1;
+  position: sticky;
+  top: 120px;
+}
+
+.cs-split-content-col {
+  flex: 1.3;
+}
+
+.cs-detail-image-wrapper {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid #E5E7EB;
+}
+
+.cs-detail-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.cs-detail-image-wrapper:hover .cs-detail-image {
+  transform: scale(1.02);
+}
+
+.cs-sidebar-card {
+  background-color: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 30px;
+}
+
+.cs-sidebar-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cs-sidebar-title svg {
+  color: #4F46E5;
+}
+
+.cs-sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cs-sidebar-list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 15px;
+  color: #4B5563;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.cs-sidebar-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #10B981;
+  font-weight: 700;
+}
+
+.cs-single-hero {
+  padding: 140px 0 60px;
+  background-color: #F8F9FF;
+  border-bottom: 1px solid #E5E7EB;
+  position: relative;
+}
+
+.cs-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #6B7280;
+  margin-bottom: 24px;
+}
+
+.cs-breadcrumb a {
+  color: #4F46E5;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.cs-breadcrumb a:hover {
+  color: #4338CA;
+}
+
+.cs-single-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  margin-top: 24px;
+  color: #6B7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cs-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cs-meta-item svg {
+  color: #9CA3AF;
+}
+
+.cs-split-section {
+  background-color: #FFFFFF;
+}
+
+.cs-back-btn {
+  display: inline-flex;
+  align-items: center;
+  color: #4B5563;
+  background-color: transparent;
+  border: 1px solid #D1D5DB;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-top: 40px;
+}
+
+.cs-back-btn:hover {
+  background-color: #F3F4F6;
+  border-color: #9CA3AF;
+  color: #111827;
+}
+
+@media (max-width: 1024px) {
+  .cs-split-layout {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .cs-split-image-col {
+    position: static;
+    width: 100%;
+  }
 }
