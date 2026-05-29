@@ -137,7 +137,7 @@ export default function Login() {
         }
 
         .reg-logo {
-          display: flex; align-items: center; gap: 12px; position: relative; z-index: 2; margin-bottom: 40px;
+          display: flex; align-items: center; gap: 12px; position: relative; z-index: 2; margin-bottom: 40px; margin-left: 30px;
         }
         .reg-logo-icon {
           width: 44px; height: 44px; border-radius: 12px;
@@ -288,15 +288,9 @@ export default function Login() {
           
           {/* Logo */}
           <div className="reg-logo">
-            <div className="reg-logo-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
-              </svg>
-            </div>
-            <div>
-              <div style={{ fontSize: '24px', fontWeight: '800', letterSpacing: '2px', color: '#fff', lineHeight: 1 }}>VIGIL</div>
-              <div style={{ fontSize: '11px', color: '#94a3b8', letterSpacing: '0.5px', marginTop: '4px' }}>For a Safer Digital Tomorrow</div>
-            </div>
+            <Link to="/">
+              <img src="/myimg/image.png" alt="Vigil" style={{ height: '50px', width: 'auto' }} />
+            </Link>
           </div>
 
           <div className="reg-content-row">
