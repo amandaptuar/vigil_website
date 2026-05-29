@@ -62,7 +62,7 @@ export default function Register() {
         throw new Error(data.message || 'Registration failed. Please try again.');
       }
 
-      const username = formData.email.split('@')[0].toLowerCase() + Math.floor(Math.random() * 1000);
+      const username = formData.email;
       navigate('/success', {
         state: {
           accountDetails: {

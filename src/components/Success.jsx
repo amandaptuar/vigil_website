@@ -9,7 +9,7 @@ function Success() {
   const emailSent = useRef(false);
 
   const accountDetails = location.state?.accountDetails || {
-    username: '98765johns',
+    username: 'parent@example.com',
     password: '54321',
     plan: 'Free Family Protection',
     devices: '1 Device',
@@ -124,7 +124,7 @@ function Success() {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span style={{ color: '#4b5563', fontWeight: 500, fontSize: '14px' }}>Username</span>
+                <span style={{ color: '#4b5563', fontWeight: 500, fontSize: '14px' }}>Email (Username)</span>
                 <span style={{
                   backgroundColor: '#eef2f6',
                   color: '#4f46e5',
@@ -243,7 +243,7 @@ function Success() {
             Welcome to Vigil, {accountDetails.parentName}! Your free subscription has been activated successfully.
           </p>
           <div style={{ background: '#f8f9fa', padding: '12px', borderRadius: '8px', fontSize: '13px', color: '#000', marginBottom: '12px', border: '1px solid #EBEBEB' }}>
-            <div style={{ marginBottom: '4px' }}><strong>Username:</strong> {accountDetails.username}</div>
+            <div style={{ marginBottom: '4px' }}><strong>Email (Username):</strong> {accountDetails.username}</div>
             <div><strong>Password:</strong> {accountDetails.password}</div>
           </div>
           <p style={{ color: '#ef4444', fontSize: '11px', margin: 0 }}>* For security reasons, please change your password after first login.</p>
