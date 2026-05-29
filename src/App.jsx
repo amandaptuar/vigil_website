@@ -9,6 +9,7 @@ import Service from './components/Service';
 import Terms from './components/Terms';
 import Pricing from './components/Pricing';
 import Register from './components/Register';
+import Login from './components/Login';
 import Success from './components/Success';
 import Dashboard from './components/Dashboard';
 import ChildSetup from './components/ChildSetup';
@@ -70,6 +71,7 @@ function App() {
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/success" element={<Success />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/child-setup" element={<ChildSetup />} />
