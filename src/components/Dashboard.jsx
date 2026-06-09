@@ -81,7 +81,7 @@ export default function Dashboard() {
         .db-signout:hover { background: #fef2f2; color: #ef4444; }
 
         /* ── CONTENT ── */
-        .db-content { max-width: 1100px; margin: 0 auto; padding: 36px 24px 60px; }
+        .db-content { max-width: 1380px; margin: 0 auto; padding: 40px 32px 60px; }
 
         /* ── HERO BANNER ── */
         .db-hero {
@@ -120,8 +120,8 @@ export default function Dashboard() {
           border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 700;
           color: #fff; letter-spacing: 0.5px; margin-bottom: 14px;
         }
-        .db-hero-title { font-size: 30px; font-weight: 900; color: #fff; margin: 0 0 8px; line-height: 1.2; }
-        .db-hero-sub { font-size: 14px; color: rgba(255,255,255,0.75); margin: 0; }
+        .db-hero-title { font-size: 36px; font-weight: 900; color: #fff; margin: 0 0 10px; line-height: 1.2; }
+        .db-hero-sub { font-size: 16px; color: rgba(255,255,255,0.75); margin: 0; }
         .db-hero-card {
           background: rgba(255,255,255,0.12);
           border: 1px solid rgba(255,255,255,0.2);
@@ -129,8 +129,8 @@ export default function Dashboard() {
           text-align: center; backdrop-filter: blur(10px);
           position: relative; z-index: 1; flex-shrink: 0;
         }
-        .db-hero-card-label { color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin: 0 0 8px; }
-        .db-hero-card-value { color: #fff; font-size: 18px; font-weight: 800; margin: 0; }
+        .db-hero-card-label { color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin: 0 0 8px; }
+        .db-hero-card-value { color: #fff; font-size: 20px; font-weight: 800; margin: 0; }
 
         /* ── STAT CARDS ── */
         .db-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
@@ -148,8 +148,8 @@ export default function Dashboard() {
           display: flex; align-items: center; justify-content: center;
           font-size: 24px; flex-shrink: 0;
         }
-        .db-stat-label { font-size: 12px; color: #94a3b8; font-weight: 600; margin: 0 0 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .db-stat-value { font-size: 22px; font-weight: 800; color: #0f172a; margin: 0; }
+        .db-stat-label { font-size: 14px; color: #94a3b8; font-weight: 600; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .db-stat-value { font-size: 26px; font-weight: 800; color: #0f172a; margin: 0; }
 
         /* ── TWO-COL GRID ── */
         .db-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
@@ -169,13 +169,13 @@ export default function Dashboard() {
           background: #f0f0ff;
           display: flex; align-items: center; justify-content: center;
         }
-        .db-card-title { font-size: 15px; font-weight: 800; color: #0f172a; margin: 0; }
+        .db-card-title { font-size: 18px; font-weight: 800; color: #0f172a; margin: 0; }
 
         /* Account rows */
         .db-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-bottom: 1px solid #f1f5f9; }
         .db-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .db-row-label { font-size: 13px; color: #94a3b8; font-weight: 500; }
-        .db-row-value { font-size: 13px; font-weight: 700; color: #1e293b; }
+        .db-row-label { font-size: 15px; color: #94a3b8; font-weight: 500; }
+        .db-row-value { font-size: 15px; font-weight: 700; color: #1e293b; }
         .db-plan-badge {
           display: inline-flex; align-items: center; gap: 6px;
           background: linear-gradient(135deg, #4f46e5, #7c3aed);
@@ -198,15 +198,15 @@ export default function Dashboard() {
         }
         .db-benefit:hover { background: #f0f0ff; border-color: #c7d2fe; }
         .db-benefit-emoji { font-size: 20px; }
-        .db-benefit-name { font-size: 12px; font-weight: 700; color: #1e293b; margin: 0 0 2px; }
-        .db-benefit-sub { font-size: 11px; color: #94a3b8; margin: 0; }
+        .db-benefit-name { font-size: 14px; font-weight: 700; color: #1e293b; margin: 0 0 3px; }
+        .db-benefit-sub { font-size: 13px; color: #94a3b8; margin: 0; }
 
         /* Device section */
         .db-device-empty {
           background: #f8fafc; border: 2px dashed #e2e8f0;
           border-radius: 16px; padding: 36px 24px; text-align: center;
         }
-        .db-device-empty p { color: #94a3b8; font-size: 14px; margin: 0 0 20px; line-height: 1.6; }
+        .db-device-empty p { color: #94a3b8; font-size: 16px; margin: 0 0 20px; line-height: 1.6; }
         .db-btn-primary {
           display: inline-flex; align-items: center; gap: 8px;
           background: linear-gradient(135deg, #4f46e5, #7c3aed);
@@ -234,8 +234,8 @@ export default function Dashboard() {
           display: flex; align-items: center; justify-content: center;
           margin-top: 1px;
         }
-        .db-step-title { font-size: 13px; font-weight: 700; color: #1e293b; margin: 0 0 2px; }
-        .db-step-sub { font-size: 12px; color: #94a3b8; margin: 0; }
+        .db-step-title { font-size: 15px; font-weight: 700; color: #1e293b; margin: 0 0 3px; }
+        .db-step-sub { font-size: 14px; color: #94a3b8; margin: 0; }
 
         .db-qr-box {
           margin-top: 20px; background: #f8fafc;
