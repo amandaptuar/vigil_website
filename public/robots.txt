@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vigil-1.com/sitemap.xml

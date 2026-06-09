@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import SchemaMarkup from './SchemaMarkup';
 import './About.css';
 
 function About() {
@@ -13,8 +14,44 @@ function About() {
     }
   }, []);
 
+  const aboutSchemas = [
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About Vigil",
+      "url": "https://vigil-1.com/#/about",
+      "description": "Learn more about Vigil, our mission, and how we help families stay safe through parental monitoring and digital protection solutions."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Vigil",
+      "url": "https://vigil-1.com/",
+      "logo": "https://vigil-1.com/myimg/image.png",
+      "email": "support@vigil-1.com",
+      "telephone": "+1 (404) 555-0293",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "7454 Old Alexandria Ferry Road",
+        "addressLocality": "Clinton",
+        "addressRegion": "MD",
+        "postalCode": "20744",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vigil-1.com/" },
+        { "@type": "ListItem", "position": 2, "name": "About", "item": "https://vigil-1.com/#/about" }
+      ]
+    }
+  ];
+
   return (
     <div className="about-page-wrapper">
+      <SchemaMarkup schemas={aboutSchemas} />
       <Helmet>
         <title>About Vigil1 – Child Safety &amp; Family Monitoring App USA</title>
         <meta name="description" content="Learn how Vigil1 helps American parents protect children online with trusted family monitoring and digital safety solutions across the USA." />

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import SchemaMarkup from './SchemaMarkup';
 import './Testimonials.css';
 import './Features.css';
 import './OnlineRisks.css';
@@ -51,6 +52,45 @@ function Home() {
         <title>Best Parental Control App for Child Safety in USA | Vigil1</title>
         <meta name="description" content="Protect your family with Vigil1, the best parental control app for child safety, online protection, and smart family monitoring in the USA." />
       </Helmet>
+      <SchemaMarkup schemas={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Vigil",
+          "url": "https://vigil-1.com/",
+          "logo": "https://vigil-1.com/myimg/image.png",
+          "email": "support@vigil-1.com",
+          "telephone": "+1 (404) 555-0293"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Vigil",
+          "url": "https://vigil-1.com/",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Vigil",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://vigil-1.com/myimg/image.png"
+            }
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Vigil",
+          "applicationCategory": "SecurityApplication",
+          "operatingSystem": "Android, iOS",
+          "url": "https://vigil-1.com/",
+          "image": "https://vigil-1.com/myimg/image.png",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Vigil"
+          },
+          "description": "Vigil is a parental monitoring and family safety application designed to help parents monitor children's online activities, location tracking, device usage, and digital safety."
+        }
+      ]} />
       <div className="luminix-hero-section section" style={{ backgroundImage: 'url("/myimg/image copy 7.png")' }}>
         <div className="container">
           <div className="row align-items-center">

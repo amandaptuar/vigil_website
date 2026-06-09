@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import SchemaMarkup from './SchemaMarkup';
 import './FeaturesPage.css';
 
 function Features() {
@@ -52,6 +53,34 @@ function Features() {
 
   return (
     <div className="features-page-wrapper">
+      <SchemaMarkup schemas={[
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Vigil Features",
+          "url": "https://vigil-1.com/#/features",
+          "description": "Explore Vigil's parental monitoring, location tracking, screen monitoring, and family safety features."
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Vigil",
+          "applicationCategory": "SecurityApplication",
+          "operatingSystem": "Android, iOS",
+          "url": "https://vigil-1.com/",
+          "image": "https://vigil-1.com/myimg/image.png",
+          "publisher": { "@type": "Organization", "name": "Vigil" },
+          "description": "Vigil is a parental monitoring and family safety application that helps parents monitor device activity, location tracking, screen usage, and online safety."
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vigil-1.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Features", "item": "https://vigil-1.com/#/features" }
+          ]
+        }
+      ]} />
       <Helmet>
         <title>Parental Control Features with Live Location &amp; AI Alerts | Vigil1</title>
         <meta name="description" content="Explore Vigil1 parental control features including live location tracking, AI safety alerts, and tools to monitor teenager online activity safely." />

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import SchemaMarkup from './SchemaMarkup';
 import './CaseStudy.css';
 
 // ---------------------------------------------------------
@@ -103,6 +104,40 @@ function CaseStudy() {
 
   return (
     <div className="casestudy-modern-wrapper">
+      <SchemaMarkup schemas={[
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Vigil Case Studies",
+          "url": "https://vigil-1.com/#/casestudy",
+          "description": "Explore real-world case studies and success stories showing how Vigil helps families with parental monitoring, digital safety, device tracking, and online protection."
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Vigil",
+          "url": "https://vigil-1.com/",
+          "logo": "https://vigil-1.com/myimg/image.png",
+          "email": "support@vigil-1.com",
+          "telephone": "+1 (404) 555-0293",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "7454 Old Alexandria Ferry Road",
+            "addressLocality": "Clinton",
+            "addressRegion": "MD",
+            "postalCode": "20744",
+            "addressCountry": "US"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vigil-1.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Case Studies", "item": "https://vigil-1.com/#/casestudy" }
+          ]
+        }
+      ]} />
       <Helmet>
         <title>Case Studies | Vigil - Real Stories. Real Impact.</title>
         <meta name="description" content="See how parents across the USA used Vigil to protect their children and bring peace of mind back to their homes." />

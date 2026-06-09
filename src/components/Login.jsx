@@ -57,18 +57,27 @@ export default function Login() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Login failed. Please try again.');
+        throw new Error(data.message || data.msg || 'Login failed. Please try again.');
       }
 
-      const username = formData.email;
-      navigate('/dashboard', {
-        state: {
-          accountDetails: {
-            username, 
-            token: data.token || (data.data && data.data.token)
+      const token = data.token || (data.data && data.data.token);
+
+      if (data.must_reset_password) {
+        navigate('/set-password', {
+          state: { token }
+        });
+      } else {
+        navigate('/dashboard', {
+          state: {
+            user: {
+              name: data.userName || formData.email,
+              email: data.userEmail || formData.email,
+              userId: data.userId || '',
+              token
+            }
           }
-        }
-      });
+        });
+      }
     } catch (error) {
       setApiError(error.message);
     } finally {

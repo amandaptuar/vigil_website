@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
@@ -10,7 +10,8 @@ import Terms from './components/Terms';
 import Pricing from './components/Pricing';
 import Register from './components/Register';
 import Login from './components/Login';
-import Success from './components/Success';
+import RegistrationSuccess from './components/RegistrationSuccess';
+import SetPassword from './components/SetPassword';
 import Dashboard from './components/Dashboard';
 import ChildSetup from './components/ChildSetup';
 import Features from './components/Features';
@@ -71,8 +72,9 @@ function App() {
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/register/success" element={<RegistrationSuccess />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/success" element={<Success />} />
+        <Route path="/set-password" element={<SetPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/child-setup" element={<ChildSetup />} />
         <Route path="/contact" element={<Contact />} />

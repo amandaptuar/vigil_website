@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-export default function Register() {
+export default function SetPassword() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ fullName: '', email: '' });
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [apiError, setApiError] = useState('');
+  const location = useLocation();
+  const token = location.state?.token;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -15,11 +13,21 @@ export default function Register() {
     if (header) header.style.display = 'none';
     if (footer) footer.style.display = 'none';
     
+    if (!token) {
+      navigate('/login');
+    }
+
     return () => {
       if (header) header.style.display = '';
       if (footer) footer.style.display = '';
     };
-  }, []);
+  }, [token, navigate]);
+
+  const [formData, setFormData] = useState({ newPassword: '', confirmPassword: '' });
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,8 +37,17 @@ export default function Register() {
 
   const validate = () => {
     const e = {};
-    if (!formData.fullName.trim()) e.fullName = 'Required';
-    if (!/\S+@\S+\.\S+/.test(formData.email)) e.email = 'Valid email required';
+    const pw = formData.newPassword;
+    
+    if (pw.length < 8) e.newPassword = 'Min 8 characters';
+    else if (!/[A-Z]/.test(pw)) e.newPassword = 'Must contain uppercase';
+    else if (!/[a-z]/.test(pw)) e.newPassword = 'Must contain lowercase';
+    else if (!/[0-9]/.test(pw)) e.newPassword = 'Must contain number';
+    else if (!/[^A-Za-z0-9]/.test(pw)) e.newPassword = 'Must contain symbol';
+    
+    if (pw !== formData.confirmPassword) {
+      e.confirmPassword = 'Passwords do not match';
+    }
     return e;
   };
 
@@ -42,28 +59,28 @@ export default function Register() {
     
     setLoading(true);
     try {
-      const response = await fetch('http://160-153-179-249.sslip.io/api/auth/register-website', {
+      const response = await fetch('http://160-153-179-249.sslip.io/api/auth/change-password-first-time', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          name: formData.fullName,
-          email: formData.email
+          newPassword: formData.newPassword
         })
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.msg || data.message || 'Registration failed. Please try again.');
+        throw new Error(data.message || data.msg || 'Failed to update password. Please try again.');
       }
 
-      navigate('/register/success', {
+      navigate('/dashboard', {
         state: {
-          name: formData.fullName,
-          email: formData.email,
-          message: data.msg
+          accountDetails: {
+            token
+          }
         }
       });
     } catch (error) {
@@ -113,7 +130,6 @@ export default function Register() {
           overflow: hidden;
         }
 
-        /* Overlay to make text readable */
         .reg-left-overlay {
           position: absolute;
           inset: 0;
@@ -121,26 +137,8 @@ export default function Register() {
           z-index: 1;
         }
 
-        /* Decorative glows */
-        .reg-left::before {
-          content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 60%;
-          background: radial-gradient(circle, rgba(79,70,229,0.15) 0%, transparent 60%);
-          border-radius: 50%; pointer-events: none;
-        }
-        .reg-left::after {
-          content: ''; position: absolute; bottom: -20%; right: -10%; width: 60%; height: 60%;
-          background: radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 60%);
-          border-radius: 50%; pointer-events: none;
-        }
-
         .reg-logo {
           display: flex; align-items: center; gap: 12px; position: relative; z-index: 2; margin-bottom: 40px; margin-left: 30px;
-        }
-        .reg-logo-icon {
-          width: 44px; height: 44px; border-radius: 12px;
-          background: linear-gradient(135deg, #4f46e5, #7c3aed);
-          display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 4px 15px rgba(79,70,229,0.3);
         }
 
         .reg-content-row {
@@ -203,10 +201,6 @@ export default function Register() {
           width: 100%; max-width: 480px;
         }
 
-        .form-badge {
-          display: inline-flex; align-items: center; gap: 6px; background: #f3e8ff; color: #7c3aed;
-          padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.5px;
-        }
         .form-h2 {
           font-size: 28px; font-weight: 800; color: #0f172a; margin: 0 0 6px;
         }
@@ -225,15 +219,10 @@ export default function Register() {
         }
         .form-divider svg { margin: 0 12px; color: #cbd5e1; }
 
-        .sec-label {
-          display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
-        }
-        .sec-label span { font-weight: 700; color: #1e293b; font-size: 14px; }
+        .pw-wrap { position: relative; margin-bottom: 24px; }
+        .pw-eye { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94a3b8; display: flex; z-index: 10; }
+        .pw-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; width: 18px; height: 18px; pointer-events: none; z-index: 10; }
 
-        .inputs-row { display: flex; gap: 16px; margin-bottom: 16px; }
-        .inp-wrap { position: relative; flex: 1; }
-        .inp-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; width: 18px; height: 18px; pointer-events: none; }
-        
         .reg-inp {
           width: 100%; padding: 14px 14px 14px 44px !important; box-sizing: border-box;
           border: 1px solid #cbd5e1; border-radius: 12px; background: #fff;
@@ -243,10 +232,6 @@ export default function Register() {
         .reg-inp::placeholder { color: #94a3b8; font-weight: 400; }
         .reg-inp:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
         .err { color: #ef4444; font-size: 11px; font-weight: 500; display: block; margin-top: 4px; padding-left: 4px; }
-
-        .pw-wrap { position: relative; margin-bottom: 16px; }
-        .pw-eye { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94a3b8; display: flex; z-index: 10; }
-        .pw-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; width: 18px; height: 18px; pointer-events: none; z-index: 10; }
 
         .hints { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
         .hint { display: flex; align-items: center; gap: 8px; color: #64748b; font-size: 13px; }
@@ -262,13 +247,6 @@ export default function Register() {
         }
         .reg-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(79,70,229,0.4); }
 
-        .terms-txt { color: #64748b; font-size: 12px; text-align: center; line-height: 1.5; }
-        .terms-txt a { color: #4f46e5; font-weight: 600; text-decoration: none; }
-
-        .login-box { margin-top: 32px; padding: 20px; background: #f8fafc; border-radius: 16px; text-align: center; border: 1px solid #f1f5f9; }
-        .login-box p { color: #64748b; font-size: 13px; margin: 0 0 6px; }
-        .login-box a { color: #4f46e5; font-weight: 700; font-size: 14px; text-decoration: none; }
-
         .privacy-note { display: flex; align-items: center; justify-content: center; gap: 6px; color: #94a3b8; font-size: 12px; margin-top: 24px; text-align: center; }
 
         @media (max-width: 1024px) {
@@ -278,16 +256,12 @@ export default function Register() {
           .reg-text-col { max-width: 100%; }
           .feat-item { text-align: left; }
           .reg-badges { flex-direction: column; }
-          .inputs-row { flex-direction: column; }
         }
       `}</style>
 
       <div className="reg-wrapper">
-        {/* LEFT PANEL */}
         <div className="reg-left">
           <div className="reg-left-overlay"></div>
-          
-          {/* Logo */}
           <div className="reg-logo">
             <Link to="/">
               <img src="/myimg/image.png" alt="Vigil" style={{ height: '50px', width: 'auto' }} />
@@ -295,7 +269,6 @@ export default function Register() {
           </div>
 
           <div className="reg-content-row">
-            {/* Text & Features */}
             <div className="reg-text-col">
               <p className="reg-tag">Welcome to VIGIL</p>
               <h2 className="reg-title">Peace of Mind<br/>for <span>Every Parent.</span></h2>
@@ -319,7 +292,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Badges */}
           <div className="reg-badges">
             {[
               { icon: 'M3 11h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V11z M7 11V7a5 5 0 0 1 10 0v4', color: '#a855f7', label: '100% Secure', desc: 'Your data is safe and encrypted' },
@@ -339,18 +311,13 @@ export default function Register() {
           </div>
         </div>
 
-        {/* RIGHT PANEL */}
         <div className="reg-right">
           <div className="form-card">
             
             <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-              <span className="form-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                QUICK &amp; EASY
-              </span>
-              <h2 className="form-h2">Create Your Parent Account</h2>
-              <h3 className="form-h3">One step to get started</h3>
-              <p className="form-p">Join VIGIL and take the first step towards your child's digital safety.</p>
+              <h2 className="form-h2">Secure Your Account</h2>
+              <h3 className="form-h3">Set New Password</h3>
+              <p className="form-p">For your security, please choose a new, strong password.</p>
             </div>
 
             <div className="form-divider">
@@ -358,49 +325,57 @@ export default function Register() {
             </div>
 
             <form onSubmit={handleSubmit}>
-                <div className="sec-label">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  <span>Parent Details</span>
+              <div className="pw-wrap" style={{ marginBottom: '16px' }}>
+                <svg className="pw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type={showPassword ? 'text' : 'password'} name="newPassword" value={formData.newPassword} onChange={handleChange} placeholder="New Password" className="reg-inp" style={{ paddingRight: '48px !important' }} />
+                <div className="pw-eye" onClick={() => setShowPassword(!showPassword)}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {showPassword ? <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></> : <><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></>}
+                  </svg>
                 </div>
+                {errors.newPassword && <span className="err">{errors.newPassword}</span>}
+              </div>
 
-                <div className="inputs-row">
-                  <div className="inp-wrap">
-                    <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name" className="reg-inp" />
-                    {errors.fullName && <span className="err">{errors.fullName}</span>}
-                  </div>
-                  <div className="inp-wrap">
-                    <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" className="reg-inp" />
-                    {errors.email && <span className="err">{errors.email}</span>}
-                  </div>
+              <div className="pw-wrap">
+                <svg className="pw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type={showPassword ? 'text' : 'password'} name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirm Password" className="reg-inp" style={{ paddingRight: '48px !important' }} />
+                {errors.confirmPassword && <span className="err">{errors.confirmPassword}</span>}
+              </div>
+
+              <div className="hints">
+                {['At least 8 characters', 'Include uppercase & lowercase letters', 'Include a number or special character'].map((h, i) => {
+                  let isMet = false;
+                  const pw = formData.newPassword;
+                  if (i === 0) isMet = pw.length >= 8;
+                  if (i === 1) isMet = /[A-Z]/.test(pw) && /[a-z]/.test(pw);
+                  if (i === 2) isMet = /[0-9]/.test(pw) || /[^A-Za-z0-9]/.test(pw);
+
+                  return (
+                    <div className="hint" key={i}>
+                      <div className="hint-check" style={{ background: isMet ? '#dcfce7' : '#f1f5f9' }}>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={isMet ? '#16a34a' : '#cbd5e1'} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      </div>
+                      {h}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {apiError && (
+                <div style={{ color: '#ef4444', fontSize: '13px', fontWeight: '500', marginBottom: '16px', textAlign: 'center', background: '#fef2f2', padding: '10px', borderRadius: '8px', border: '1px solid #fee2e2' }}>
+                  {apiError}
                 </div>
+              )}
 
-                {apiError && (
-                  <div style={{ color: '#ef4444', fontSize: '13px', fontWeight: '500', marginBottom: '16px', textAlign: 'center', background: '#fef2f2', padding: '10px', borderRadius: '8px', border: '1px solid #fee2e2' }}>
-                    {apiError}
-                  </div>
+              <button type="submit" className="reg-btn" disabled={loading} style={{ opacity: loading ? 0.7 : 1 }}>
+                {loading ? 'Updating...' : (
+                  <>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                    Set Password & Access Dashboard
+                  </>
                 )}
-
-                <button type="submit" className="reg-btn" disabled={loading} style={{ opacity: loading ? 0.7 : 1 }}>
-                  {loading ? 'Creating Account...' : (
-                    <>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-                      Create My Account
-                    </>
-                  )}
-                </button>
-
-                <p className="terms-txt">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  By signing up, you agree to our <Link to="/terms-conditions">Terms of Service</Link> and <Link to="/terms-conditions">Privacy Policy</Link>.
-                </p>
-              </form>
-
-            <div className="login-box">
-              <p>Already have an account?</p>
-              <Link to="/login">Login to VIGIL &rarr;</Link>
-            </div>
+              </button>
+            </form>
 
             <p className="privacy-note">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>

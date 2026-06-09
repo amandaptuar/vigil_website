@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import SchemaMarkup from './SchemaMarkup';
 import './Pricing.css';
 
 function Pricing() {
@@ -15,6 +16,34 @@ function Pricing() {
 
   return (
     <>
+      <SchemaMarkup schemas={[
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Vigil Pricing",
+          "url": "https://vigil-1.com/#/pricing",
+          "description": "Explore Vigil pricing plans for parental monitoring, family safety, and device tracking solutions."
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Vigil",
+          "applicationCategory": "SecurityApplication",
+          "operatingSystem": "Android, iOS",
+          "url": "https://vigil-1.com/",
+          "image": "https://vigil-1.com/myimg/image.png",
+          "publisher": { "@type": "Organization", "name": "Vigil" },
+          "description": "Vigil is a parental monitoring and family safety application designed to help parents monitor children's online activities and device usage."
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vigil-1.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Pricing", "item": "https://vigil-1.com/#/pricing" }
+          ]
+        }
+      ]} />
       <Helmet>
         <title>Affordable Parental Control Plans for Families in USA | Vigil1</title>
         <meta name="description" content="Choose Vigil1 pricing plans for child safety, family protection, and smart parental controls designed to keep children safe online in the USA." />

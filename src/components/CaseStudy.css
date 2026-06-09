@@ -1000,3 +1000,72 @@
     width: 100%;
   }
 }
+
+/* Real Story Banner */
+.cs-realstory-banner {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #FEF3C7, #FFFBEB);
+  border: 1px solid #F59E0B;
+  border-radius: 10px;
+  padding: 12px 20px;
+  margin-bottom: 32px;
+  margin-top: 8px;
+}
+
+.cs-realstory-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #92400E;
+  letter-spacing: 0.3px;
+}
+
+/* Source Link */
+.cs-source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4F46E5;
+  text-decoration: none;
+  background: #F4F2FF;
+  border: 1px solid #DDD9FF;
+  border-radius: 8px;
+  padding: 8px 14px;
+  transition: all 0.2s ease;
+}
+
+.cs-source-link:hover {
+  background: #E8E4FF;
+  color: #4338CA;
+}
+
+/* Enriched single content styles */
+.cs-single-content h2 {
+  font-size: 24px;
+  color: #111827;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  border-left: 4px solid #5B4DFF;
+  padding-left: 16px;
+}
+
+.cs-single-content p {
+  color: #374151;
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.cs-single-content em {
+  font-style: italic;
+  color: #4B5563;
+}
+
+.cs-single-content strong {
+  color: #111827;
+  font-weight: 700;
+}
