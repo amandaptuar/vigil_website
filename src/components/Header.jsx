@@ -237,8 +237,20 @@ function Header() {
               </li>
             </ul>
           </div>
-          <div className="luminix-mobile-menu-btn">
-            <Link className="luminix-default-btn sm-size" to="/contact" onClick={closeMenu} data-text="Contact Us"><span className="btn-wraper">Contact Us</span></Link>
+          <div className="luminix-mobile-menu-btn" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px', padding: '0 20px' }}>
+            <Link to="/login" onClick={closeMenu} style={{
+              display: 'flex', justifyContent: 'center', alignItems: 'center',
+              padding: '12px 20px', borderRadius: '8px', fontWeight: '600',
+              background: '#f1f5f9', color: '#4f46e5', border: '1px solid #c7d2fe',
+              textDecoration: 'none'
+            }}>Login to VIGIL</Link>
+            
+            <Link to="/register" onClick={closeMenu} style={{
+              display: 'flex', justifyContent: 'center', alignItems: 'center',
+              padding: '12px 20px', borderRadius: '8px', fontWeight: '600',
+              background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', color: '#fff',
+              border: 'none', textDecoration: 'none'
+            }}>Create Account</Link>
           </div>
         </div>
       </div>
