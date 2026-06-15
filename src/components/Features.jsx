@@ -6,6 +6,18 @@ import './FeaturesPage.css';
 
 function Features() {
   const [activeFaq, setActiveFaq] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentVideo, setCurrentVideo] = useState(null);
+
+  const openVideoModal = (videoUrl) => {
+    setCurrentVideo(videoUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeVideoModal = () => {
+    setIsModalOpen(false);
+    setCurrentVideo(null);
+  };
 
   useEffect(() => {
     if (window.AOS) {
@@ -186,6 +198,32 @@ function Features() {
               </ul>
             </div>
 
+            {/* Card 1.5 (New) */}
+            <div className="features-card">
+              <div className="features-card-icon-wrap bg-light-blue" style={{ backgroundColor: '#F0F9FF', color: '#0284C7' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+              </div>
+              <h3 className="features-card-title">Device Information</h3>
+              <ul className="features-card-bullets">
+                <li className="features-card-bullet-item">
+                  <span style={{ color: '#10B981', marginRight: '8px' }}>✓</span>
+                  Access detailed device statistics and battery levels
+                </li>
+                <li className="features-card-bullet-item">
+                  <span style={{ color: '#10B981', marginRight: '8px' }}>✓</span>
+                  Check network connectivity and active SIM status
+                </li>
+                <li className="features-card-bullet-item">
+                  <span style={{ color: '#10B981', marginRight: '8px' }}>✓</span>
+                  Monitor installed applications and system health
+                </li>
+              </ul>
+              <button className="demo-video-btn" onClick={() => openVideoModal('/videos/deviceeinfo.mp4')}>
+                Watch How It Works
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </button>
+            </div>
+
             {/* Card 2 */}
             <div className="features-card">
               <div className="features-card-icon-wrap bg-light-green">
@@ -206,6 +244,10 @@ function Features() {
                   Block spam and restricted caller numbers remotely
                 </li>
               </ul>
+              <button className="demo-video-btn" onClick={() => openVideoModal('/videos/callactivity.mp4')}>
+                Watch How It Works
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </button>
             </div>
 
             {/* Card 3 */}
@@ -228,6 +270,10 @@ function Features() {
                   Keyword alerts for custom flagged words
                 </li>
               </ul>
+              <button className="demo-video-btn" onClick={() => openVideoModal('/videos/smsapp.mp4')}>
+                Watch How It Works
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </button>
             </div>
 
             {/* Card 4 */}
@@ -628,6 +674,26 @@ function Features() {
           </div>
         </div>
       </section>
+
+      {/* VIDEO MODAL */}
+      {isModalOpen && (
+        <div className="video-modal-overlay" onClick={closeVideoModal}>
+          <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="video-modal-close" onClick={closeVideoModal}>
+              &times;
+            </button>
+            <video 
+              className="video-modal-video" 
+              src={currentVideo} 
+              controls 
+              autoPlay 
+              playsInline
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

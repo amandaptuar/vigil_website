@@ -4,6 +4,15 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   base: '/', // Use absolute base path for BrowserRouter
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://160-153-179-249.sslip.io',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  },
   plugins: [
     react(),
     {

@@ -42,7 +42,7 @@ export default function Register() {
     
     setLoading(true);
     try {
-      const response = await fetch('http://160-153-179-249.sslip.io/api/auth/register-website', {
+      const response = await fetch('/api/auth/register-website', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -59,7 +59,7 @@ export default function SetPassword() {
     
     setLoading(true);
     try {
-      const response = await fetch('http://160-153-179-249.sslip.io/api/auth/change-password-first-time', {
+      const response = await fetch('/api/auth/change-password-first-time', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

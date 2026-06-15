@@ -252,7 +252,15 @@ export default function Dashboard() {
           .db-hero { flex-direction: column; align-items: flex-start; }
         }
         @media (max-width: 600px) {
-          .db-top { padding: 0 20px; }
+          .db-top { padding: 0 16px; height: 60px; }
+          .db-logo { height: 32px; }
+          .db-top-right { gap: 10px; }
+          .db-user-name { display: none; }
+          .db-avatar-pill { padding: 0; background: transparent; border: none; }
+          .db-avatar { width: 34px; height: 34px; font-size: 13px; }
+          .db-signout { padding: 8px; border-radius: 8px; }
+          .db-signout span { display: none; }
+          .db-signout svg { width: 18px; height: 18px; }
           .db-content { padding: 20px 16px 48px; }
           .db-stats { grid-template-columns: 1fr; }
           .db-hero { padding: 28px 24px; }
@@ -271,7 +279,7 @@ export default function Dashboard() {
             </div>
             <button className="db-signout" onClick={() => navigate('/')}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-              Sign Out
+              <span>Sign Out</span>
             </button>
           </div>
         </div>

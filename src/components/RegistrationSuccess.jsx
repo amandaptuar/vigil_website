@@ -121,36 +121,73 @@ export default function RegistrationSuccess() {
               </div>
             </div>
 
-            {/* Back to Home Button */}
-            <Link
-              to="/"
-              style={{
-                backgroundColor: '#4f46e5',
-                color: '#ffffff',
-                fontWeight: 600,
-                fontSize: '15px',
-                padding: '14px 24px',
-                borderRadius: '8px',
-                width: '100%',
-                border: 'none',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: '8px',
-                cursor: 'pointer',
-                textDecoration: 'none',
-                transition: 'background-color 0.2s ease',
-                boxSizing: 'border-box'
-              }}
-              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#4338ca'}
-              onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#4f46e5'}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline points="9 22 9 12 15 12 15 22" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Back to Home
-            </Link>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {/* Back to Home Button */}
+              <Link
+                to="/"
+                style={{
+                  backgroundColor: '#ffffff',
+                  color: '#4f46e5',
+                  border: '2px solid #e0d9ff',
+                  fontWeight: 600,
+                  fontSize: '15px',
+                  padding: '13px 24px',
+                  borderRadius: '8px',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '8px',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  transition: 'all 0.2s ease',
+                  boxSizing: 'border-box'
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#f5f3ff'; e.currentTarget.style.borderColor = '#c7d2fe'; }}
+                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.borderColor = '#e0d9ff'; }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2-2H5a2 2 0 0 1-2-2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Back to Home
+              </Link>
+
+              {/* Move to Dashboard Button */}
+              <Link
+                to="/dashboard"
+                state={{ user: { name, email } }}
+                style={{
+                  backgroundColor: '#4f46e5',
+                  color: '#ffffff',
+                  fontWeight: 600,
+                  fontSize: '15px',
+                  padding: '14px 24px',
+                  borderRadius: '8px',
+                  width: '100%',
+                  border: 'none',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '8px',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  transition: 'background-color 0.2s ease',
+                  boxSizing: 'border-box',
+                  boxShadow: '0 4px 12px rgba(79,70,229,0.2)'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#4338ca'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#4f46e5'}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                Move to your Dashboard
+              </Link>
+            </div>
           </div>
         </div>
       </div>

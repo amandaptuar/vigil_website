@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "/api/*"
+  to = "http://160-153-179-249.sslip.io/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

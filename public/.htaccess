@@ -24,6 +24,9 @@ DirectoryIndex index.html
   AddType font/woff2             .woff2
 </IfModule>
 
+# ─── API Proxy ──────────────────────────────────────────────────────────────
+RewriteRule ^api/(.*)$ http://160-153-179-249.sslip.io/api/$1 [P,L]
+
 # ─── React Router Fallback (Fixes 404 errors) ──────────────────────────────
 # Routes any missing pages to index.html so React can handle them.
 # The third condition ensures it NEVER redirects missing CSS/JS assets, 

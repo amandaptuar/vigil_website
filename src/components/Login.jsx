@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ export default function Login() {
 
   const validate = () => {
     const e = {};
-    if (!/\S+@\S+\.\S+/.test(formData.email)) e.email = 'Valid email required';
+    if (!formData.username.trim()) e.username = 'Username is required';
     if (formData.password.length < 8) e.password = 'Min 8 characters';
     return e;
   };
@@ -43,13 +43,13 @@ export default function Login() {
     
     setLoading(true);
     try {
-      const response = await fetch('http://160-153-179-249.sslip.io/api/auth/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: formData.email,
+          username: formData.username,
           password: formData.password
         })
       });
@@ -70,8 +70,8 @@ export default function Login() {
         navigate('/dashboard', {
           state: {
             user: {
-              name: data.userName || formData.email,
-              email: data.userEmail || formData.email,
+              name: data.userName || formData.username,
+              email: data.userEmail || '',
               userId: data.userId || '',
               token
             }
@@ -364,9 +364,9 @@ export default function Login() {
             <form onSubmit={handleSubmit}>
               <div className="inputs-row">
                 <div className="inp-wrap">
-                  <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                  <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" className="reg-inp" />
-                  {errors.email && <span className="err">{errors.email}</span>}
+                  <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" className="reg-inp" />
+                  {errors.username && <span className="err">{errors.username}</span>}
                 </div>
               </div>
 
