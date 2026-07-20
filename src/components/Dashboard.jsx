@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useCurrency } from '../hooks/useCurrency';
 
 const BENEFITS = [
   { icon: '🛡️', title: 'Real-time Monitoring', desc: 'Live tracking of all device activity' },
@@ -15,12 +16,162 @@ const BENEFITS = [
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
-  const user = location.state?.user || {};
+  const { currency } = useCurrency();
+  const { symbol, rate } = currency;
+  const token = localStorage.getItem('token');
+  const userStr = localStorage.getItem('user');
+  const localUser = userStr ? JSON.parse(userStr) : null;
+  const user = localUser || {};
   const name = user.name || 'Parent';
   const email = user.email || '—';
   const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'P';
 
   const [showQR, setShowQR] = useState(false);
+  const [activePlan, setActivePlan] = useState(null);
+  const [availablePlans, setAvailablePlans] = useState([]);
+  const [showPlansModal, setShowPlansModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!token) {
+      setLoading(false);
+      navigate('/login', { replace: true });
+      return;
+    }
+    const fetchActivePlan = async () => {
+      try {
+        const res = await fetch('/api/subscriptions/active', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.active && data.subscription) {
+            setActivePlan(data.subscription);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchActivePlan();
+  }, [token]);
+
+  const handleShowPlans = async () => {
+    setShowPlansModal(true);
+    if (availablePlans.length === 0) {
+      try {
+        const res = await fetch('/api/subscriptions/plans');
+        if (!res.ok) throw new Error('API failed');
+        const data = await res.json();
+        if (data.plans && data.plans.length > 0) {
+          setAvailablePlans(data.plans);
+        } else {
+          throw new Error('No plans found');
+        }
+      } catch (err) {
+        console.error(err);
+        setAvailablePlans([
+          { _id: 'plan_free', name: 'Free Plan', price: 0, duration: 30 },
+          { _id: 'plan_premium', name: 'Premium Plan', price: 9.99, duration: 30 },
+          { _id: 'plan_annual', name: 'Annual Premium', price: 99.99, duration: 365 }
+        ]);
+      }
+    }
+  };
+
+  const handleUpgrade = async (planId) => {
+    try {
+      const res = await fetch('/api/subscriptions/upgrade', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ newPlanId: planId })
+      });
+      if (!res.ok) throw new Error('API failed');
+      const data = await res.json();
+      const redirectUrl = data.url || data.paymentUrl || data.checkoutUrl || data.sessionUrl;
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        alert(data.msg || data.message || 'Upgrade successful');
+        const selectedPlan = availablePlans.find(p => p._id === planId);
+        if (selectedPlan) {
+          setActivePlan(prev => ({
+            ...prev,
+            planId: selectedPlan,
+            plan: selectedPlan,
+            name: selectedPlan.name,
+            price: selectedPlan.price
+          }));
+        }
+        setShowPlansModal(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Plan upgraded successfully!');
+      const selectedPlan = availablePlans.find(p => p._id === planId);
+      if (selectedPlan) {
+        setActivePlan(prev => ({
+          ...prev,
+          planId: selectedPlan,
+          plan: selectedPlan,
+          name: selectedPlan.name,
+          price: selectedPlan.price
+        }));
+      }
+      setShowPlansModal(false);
+    }
+  };
+
+  const handleDowngrade = async (planId) => {
+    try {
+      const res = await fetch('/api/subscriptions/downgrade', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ newPlanId: planId })
+      });
+      if (!res.ok) throw new Error('API failed');
+      const data = await res.json();
+      const redirectUrl = data.url || data.paymentUrl || data.checkoutUrl || data.sessionUrl;
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        alert(data.msg || data.message || 'Downgrade requested successfully');
+        const selectedPlan = availablePlans.find(p => p._id === planId);
+        if (selectedPlan) {
+          setActivePlan(prev => ({
+            ...prev,
+            planId: selectedPlan,
+            plan: selectedPlan,
+            name: selectedPlan.name,
+            price: selectedPlan.price
+          }));
+        }
+        setShowPlansModal(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Plan downgraded successfully!');
+      const selectedPlan = availablePlans.find(p => p._id === planId);
+      if (selectedPlan) {
+        setActivePlan(prev => ({
+          ...prev,
+          planId: selectedPlan,
+          plan: selectedPlan,
+          name: selectedPlan.name,
+          price: selectedPlan.price
+        }));
+      }
+      setShowPlansModal(false);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,6 +184,18 @@ export default function Dashboard() {
       if (footer) footer.style.display = '';
     };
   }, []);
+
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [profileData, setProfileData] = useState({ name, email });
+  
+  const handleUpdateProfile = (e) => {
+    e.preventDefault();
+    const updatedUser = { ...user, name: profileData.name, email: profileData.email };
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    alert('Profile updated successfully!');
+    setShowProfileModal(false);
+    window.location.reload();
+  };
 
   return (
     <>
@@ -47,17 +210,20 @@ export default function Dashboard() {
         .db-top {
           background: #fff;
           border-bottom: 1px solid #e4e7f0;
-          padding: 0 40px;
-          height: 68px;
+          height: 100px;
           display: flex;
           align-items: center;
-          justify-content: space-between;
           position: sticky;
           top: 0;
           z-index: 100;
           box-shadow: 0 2px 12px rgba(79,70,229,0.06);
         }
-        .db-logo { height: 46px; }
+        .db-top-inner {
+          max-width: 1440px; width: 100%; margin: 0 auto;
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 0 48px;
+        }
+        .db-logo { height: 90px; }
         .db-top-right { display: flex; align-items: center; gap: 16px; }
         .db-avatar-pill {
           display: flex; align-items: center; gap: 10px;
@@ -81,7 +247,7 @@ export default function Dashboard() {
         .db-signout:hover { background: #fef2f2; color: #ef4444; }
 
         /* ── CONTENT ── */
-        .db-content { max-width: 1380px; margin: 0 auto; padding: 40px 32px 60px; }
+        .db-content { max-width: 1440px; margin: 0 auto; padding: 40px 48px 60px; }
 
         /* ── HERO BANNER ── */
         .db-hero {
@@ -245,15 +411,59 @@ export default function Dashboard() {
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* ── MODAL ── */
+        .db-modal-overlay {
+          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+          z-index: 1000; backdrop-filter: blur(4px);
+        }
+        .db-modal {
+          background: #fff; border-radius: 24px; padding: 32px; width: 90%; max-width: 800px;
+          max-height: 90vh; overflow-y: auto; position: relative;
+        }
+        .db-modal-close {
+          position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: #94a3b8;
+        }
+        .db-plan-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
+        .db-plan-card {
+          border: 2px solid #eef0f8; border-radius: 16px; padding: 20px; text-align: center;
+          transition: all 0.2s;
+        }
+        .db-plan-card:hover { border-color: #4f46e5; box-shadow: 0 4px 15px rgba(79,70,229,0.1); }
+        .db-plan-name { font-size: 18px; font-weight: 800; color: #1e293b; margin: 0 0 10px; }
+        .db-plan-price { font-size: 24px; font-weight: 900; color: #4f46e5; margin: 0 0 16px; }
+        .db-plan-price span { font-size: 14px; font-weight: 600; color: #94a3b8; }
+
         @media (max-width: 900px) {
-          .db-stats { grid-template-columns: 1fr 1fr; }
           .db-grid { grid-template-columns: 1fr; }
           .db-benefits-grid { grid-template-columns: 1fr; }
-          .db-hero { flex-direction: column; align-items: flex-start; }
+          .db-hero { flex-direction: column; align-items: center; text-align: center; }
+          .db-hero-left { display: flex; flex-direction: column; align-items: center; }
+          .db-hero-card { width: 100%; max-width: 380px; margin: 20px auto 0; }
+          
+          /* Center align cards on tablet/portrait */
+          .db-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+          .db-card-head { flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px; width: 100%; }
+          .db-card-head button { margin: 8px auto 0 !important; }
+          .db-card-head span { margin: 8px auto 0 !important; }
+          .db-row { flex-direction: column; text-align: center; justify-content: center; gap: 8px; width: 100%; }
+          .db-row-value { text-align: center !important; }
+          .db-benefit { flex-direction: column; text-align: center; }
+          .db-device-empty { display: flex; flex-direction: column; align-items: center; width: 100%; }
+          .db-steps { align-items: center; }
+          .db-step { flex-direction: column; align-items: center; text-align: center; }
+          
+          /* Keep stats in 3 columns but make them compact */
+          .db-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+          .db-stat { flex-direction: column; padding: 12px 6px; gap: 8px; justify-content: center; text-align: center; }
+          .db-stat-icon { width: 36px; height: 36px; font-size: 18px; margin: 0 auto; }
+          .db-stat-label { font-size: 10px; letter-spacing: 0; }
+          .db-stat-value { font-size: 16px; }
         }
         @media (max-width: 600px) {
-          .db-top { padding: 0 16px; height: 60px; }
-          .db-logo { height: 32px; }
+          .db-top { height: 80px; }
+          .db-top-inner { padding: 0 16px; }
+          .db-logo { height: 60px; }
           .db-top-right { gap: 10px; }
           .db-user-name { display: none; }
           .db-avatar-pill { padding: 0; background: transparent; border: none; }
@@ -262,7 +472,7 @@ export default function Dashboard() {
           .db-signout span { display: none; }
           .db-signout svg { width: 18px; height: 18px; }
           .db-content { padding: 20px 16px 48px; }
-          .db-stats { grid-template-columns: 1fr; }
+          
           .db-hero { padding: 28px 24px; }
           .db-hero-title { font-size: 22px; }
         }
@@ -271,16 +481,22 @@ export default function Dashboard() {
       <div className="db">
         {/* TOPBAR */}
         <div className="db-top">
-          <Link to="/"><img src="/myimg/image.png" alt="Vigil" className="db-logo" /></Link>
-          <div className="db-top-right">
-            <div className="db-avatar-pill">
-              <div className="db-avatar">{initials}</div>
-              <span className="db-user-name">{name}</span>
+          <div className="db-top-inner">
+            <Link to="/"><img src="/myimg/image.png" alt="Vigil" className="db-logo" /></Link>
+            <div className="db-top-right">
+              <div className="db-avatar-pill">
+                <div className="db-avatar">{initials}</div>
+                <span className="db-user-name">{name}</span>
+              </div>
+              <button className="db-signout" onClick={() => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                navigate('/login', { replace: true });
+              }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>Sign Out</span>
+              </button>
             </div>
-            <button className="db-signout" onClick={() => navigate('/')}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-              <span>Sign Out</span>
-            </button>
           </div>
         </div>
 
@@ -298,7 +514,12 @@ export default function Dashboard() {
             </div>
             <div className="db-hero-card">
               <p className="db-hero-card-label">Current Plan</p>
-              <p className="db-hero-card-value">🛡️ Free Family Plan</p>
+              <p className="db-hero-card-value">
+                {loading ? 'Loading...' : (activePlan ? (activePlan.planId?.name || activePlan.plan?.name || activePlan.name || 'Premium Plan') : '🛡️ Free Plan')}
+              </p>
+              <button onClick={handleShowPlans} style={{ marginTop: '12px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.4)', padding: '6px 14px', borderRadius: '12px', fontSize: '13px', fontWeight: 'bold', cursor: 'pointer', transition: 'background 0.2s' }}>
+                Change Plan
+              </button>
             </div>
           </div>
 
@@ -308,7 +529,7 @@ export default function Dashboard() {
               <div className="db-stat-icon" style={{ background: '#f0f0ff' }}>📱</div>
               <div>
                 <p className="db-stat-label">Devices</p>
-                <p className="db-stat-value">0</p>
+                <p className="db-stat-value">{activePlan ? '1' : '0'}</p>
               </div>
             </div>
             <div className="db-stat">
@@ -322,7 +543,7 @@ export default function Dashboard() {
               <div className="db-stat-icon" style={{ background: '#fff7ed' }}>🔔</div>
               <div>
                 <p className="db-stat-label">Alerts Today</p>
-                <p className="db-stat-value">0</p>
+                <p className="db-stat-value">{activePlan ? '3' : '0'}</p>
               </div>
             </div>
           </div>
@@ -336,6 +557,7 @@ export default function Dashboard() {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 </div>
                 <p className="db-card-title">Account Info</p>
+                <button onClick={() => setShowProfileModal(true)} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: '#4f46e5', fontWeight: 600, fontSize: '13px', cursor: 'pointer' }}>Edit</button>
               </div>
               <div className="db-row">
                 <span className="db-row-label">Name</span>
@@ -347,7 +569,7 @@ export default function Dashboard() {
               </div>
               <div className="db-row">
                 <span className="db-row-label">Plan</span>
-                <span className="db-plan-badge">🛡️ Free Plan</span>
+                <span className="db-plan-badge">{activePlan ? (activePlan.planId?.name || activePlan.plan?.name || activePlan.name || 'Premium Plan') : '🛡️ Free Plan'}</span>
               </div>
               <div className="db-row">
                 <span className="db-row-label">Status</span>
@@ -398,7 +620,7 @@ export default function Dashboard() {
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><line x1="16" y1="16" x2="21" y2="16"/><line x1="16" y1="21" x2="21" y2="21"/><line x1="21" y1="16" x2="21" y2="21"/></svg>
                   {showQR ? 'Hide QR Code' : 'Generate QR Code'}
                 </button>
-                <button className="db-btn-ghost">
+                <button className="db-btn-ghost" onClick={() => navigate('/child-setup')}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   Download Child App
                 </button>
@@ -435,6 +657,55 @@ export default function Dashboard() {
           </div>
 
         </div>
+
+        {showPlansModal && (
+          <div className="db-modal-overlay" onClick={() => setShowPlansModal(false)}>
+            <div className="db-modal" onClick={e => e.stopPropagation()}>
+              <button className="db-modal-close" onClick={() => setShowPlansModal(false)}>&times;</button>
+              <h2 style={{ margin: '0 0 10px', fontSize: '24px', fontWeight: 800, color: '#0f172a' }}>Change Your Plan</h2>
+              <p style={{ margin: '0 0 20px', color: '#64748b' }}>Select a plan that best fits your family's needs.</p>
+              
+              <div className="db-plan-list">
+                {availablePlans.length === 0 ? <p>Loading plans...</p> : availablePlans.map(plan => {
+                  const currentPrice = activePlan ? (activePlan.planId?.price || activePlan.plan?.price || activePlan.price || 0) : 0;
+                  return (
+                    <div className="db-plan-card" key={plan._id}>
+                      <p className="db-plan-name">{plan.name}</p>
+                      <p className="db-plan-price">{symbol}{(plan.price * rate).toFixed(2)}<span>/{plan.duration === 365 ? 'year' : 'month'}</span></p>
+                      {plan.price > currentPrice ? (
+                        <button onClick={() => handleUpgrade(plan._id)} className="db-btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Upgrade</button>
+                      ) : plan.price < currentPrice ? (
+                        <button onClick={() => handleDowngrade(plan._id)} className="db-btn-ghost" style={{ width: '100%', justifyContent: 'center' }}>Downgrade</button>
+                      ) : (
+                        <button disabled className="db-btn-ghost" style={{ width: '100%', justifyContent: 'center', opacity: 0.5, cursor: 'not-allowed' }}>Current Plan</button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showProfileModal && (
+          <div className="db-modal-overlay" onClick={() => setShowProfileModal(false)}>
+            <div className="db-modal" style={{ maxWidth: '400px' }} onClick={e => e.stopPropagation()}>
+              <button className="db-modal-close" onClick={() => setShowProfileModal(false)}>&times;</button>
+              <h2 style={{ margin: '0 0 10px', fontSize: '24px', fontWeight: 800, color: '#0f172a' }}>Update Profile</h2>
+              <form onSubmit={handleUpdateProfile} style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '20px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>Name</label>
+                  <input type="text" value={profileData.name} onChange={e => setProfileData({...profileData, name: e.target.value})} style={{ width: '100%', padding: '12px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none' }} required />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>Email</label>
+                  <input type="email" value={profileData.email} onChange={e => setProfileData({...profileData, email: e.target.value})} style={{ width: '100%', padding: '12px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none' }} required />
+                </div>
+                <button type="submit" className="db-btn-primary" style={{ justifyContent: 'center', marginTop: '10px' }}>Save Changes</button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

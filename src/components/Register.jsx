@@ -53,7 +53,13 @@ export default function Register() {
         })
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      let data = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch (e) {
+        data = { message: text || 'An unexpected error occurred.' };
+      }
 
       if (!response.ok) {
         throw new Error(data.msg || data.message || 'Registration failed. Please try again.');
@@ -134,7 +140,7 @@ export default function Register() {
         }
 
         .reg-logo {
-          display: flex; align-items: center; gap: 12px; position: relative; z-index: 2; margin-bottom: 40px; margin-left: 30px;
+          display: flex; align-items: center; gap: 12px; position: relative; z-index: 2; margin-bottom: 40px;
         }
         .reg-logo-icon {
           width: 44px; height: 44px; border-radius: 12px;
@@ -232,7 +238,7 @@ export default function Register() {
 
         .inputs-row { display: flex; gap: 16px; margin-bottom: 16px; }
         .inp-wrap { position: relative; flex: 1; }
-        .inp-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; width: 18px; height: 18px; pointer-events: none; }
+        .inp-icon { position: absolute; left: 14px; top: 14px; color: #94a3b8; width: 18px; height: 18px; pointer-events: none; }
         
         .reg-inp {
           width: 100%; padding: 14px 14px 14px 44px !important; box-sizing: border-box;
@@ -240,13 +246,15 @@ export default function Register() {
           color: #0f172a; font-size: 14px; outline: none; transition: all 0.2s; font-weight: 500;
           height: auto !important; line-height: normal; margin: 0;
         }
+        .reg-inp.has-error { border-color: #ef4444; }
         .reg-inp::placeholder { color: #94a3b8; font-weight: 400; }
         .reg-inp:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
-        .err { color: #ef4444; font-size: 11px; font-weight: 500; display: block; margin-top: 4px; padding-left: 4px; }
+        .reg-inp.has-error:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.1); }
+        .err { color: #ef4444; font-size: 12px; font-weight: 500; display: block; margin-top: 6px; padding-left: 4px; }
 
         .pw-wrap { position: relative; margin-bottom: 16px; }
-        .pw-eye { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94a3b8; display: flex; z-index: 10; }
-        .pw-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; width: 18px; height: 18px; pointer-events: none; z-index: 10; }
+        .pw-eye { position: absolute; right: 14px; top: 14px; cursor: pointer; color: #94a3b8; display: flex; z-index: 10; }
+        .pw-icon { position: absolute; left: 14px; top: 14px; color: #94a3b8; width: 18px; height: 18px; pointer-events: none; z-index: 10; }
 
         .hints { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
         .hint { display: flex; align-items: center; gap: 8px; color: #64748b; font-size: 13px; }
@@ -269,7 +277,7 @@ export default function Register() {
         .login-box p { color: #64748b; font-size: 13px; margin: 0 0 6px; }
         .login-box a { color: #4f46e5; font-weight: 700; font-size: 14px; text-decoration: none; }
 
-        .privacy-note { display: flex; align-items: center; justify-content: center; gap: 6px; color: #94a3b8; font-size: 12px; margin-top: 24px; text-align: center; }
+        .privacy-note { display: flex; align-items: flex-start; justify-content: center; gap: 8px; color: #94a3b8; font-size: 12px; margin: 24px auto 0; text-align: left; max-width: 320px; line-height: 1.5; }
 
         @media (max-width: 1024px) {
           .reg-wrapper { flex-direction: column; }
@@ -287,16 +295,16 @@ export default function Register() {
         <div className="reg-left">
           <div className="reg-left-overlay"></div>
           
-          {/* Logo */}
-          <div className="reg-logo">
-            <Link to="/">
-              <img src="/myimg/image.png" alt="Vigil" style={{ height: '50px', width: 'auto' }} />
-            </Link>
-          </div>
-
           <div className="reg-content-row">
             {/* Text & Features */}
             <div className="reg-text-col">
+              {/* Logo */}
+              <div className="reg-logo">
+                <Link to="/">
+                  <img src="/myimg/image.png" alt="Vigil" style={{ height: '50px', width: 'auto' }} />
+                </Link>
+              </div>
+              
               <p className="reg-tag">Welcome to VIGIL</p>
               <h2 className="reg-title">Peace of Mind<br/>for <span>Every Parent.</span></h2>
               <p className="reg-subtitle">Monitor, protect, and guide your child's digital journey — all in one place.</p>
@@ -364,21 +372,25 @@ export default function Register() {
                 </div>
 
                 <div className="inputs-row">
-                  <div className="inp-wrap">
-                    <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name" className="reg-inp" />
+                  <div style={{ flex: 1 }}>
+                    <div className="inp-wrap" style={{ flex: 'none' }}>
+                      <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name" className={`reg-inp ${errors.fullName ? 'has-error' : ''}`} />
+                    </div>
                     {errors.fullName && <span className="err">{errors.fullName}</span>}
                   </div>
-                  <div className="inp-wrap">
-                    <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" className="reg-inp" />
+                  <div style={{ flex: 1 }}>
+                    <div className="inp-wrap" style={{ flex: 'none' }}>
+                      <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                      <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" className={`reg-inp ${errors.email ? 'has-error' : ''}`} />
+                    </div>
                     {errors.email && <span className="err">{errors.email}</span>}
                   </div>
                 </div>
 
                 {apiError && (
-                  <div style={{ color: '#ef4444', fontSize: '13px', fontWeight: '500', marginBottom: '16px', textAlign: 'center', background: '#fef2f2', padding: '10px', borderRadius: '8px', border: '1px solid #fee2e2' }}>
-                    {apiError}
+                  <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+                    <span className="err" style={{ display: 'inline-block' }}>{apiError}</span>
                   </div>
                 )}
 
@@ -403,8 +415,8 @@ export default function Register() {
             </div>
 
             <p className="privacy-note">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              VIGIL is committed to protecting your family's privacy and keeping your data secure.
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>VIGIL is committed to protecting your family's privacy and keeping your data secure.</span>
             </p>
             
           </div>

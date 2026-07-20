@@ -113,5 +113,33 @@
     <script src="/assets/js/aos.js"></script>
     <script src="/assets/js/niceselect.js"></script>
     <script src="/assets/js/app.js"></script>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,hi,ha,zu',
+          autoDisplay: false
+        }, 'google_translate_element');
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <style>
+      /* Hide the default Google Translate widget */
+      .skiptranslate iframe {
+        display: none !important;
+      }
+      body {
+        top: 0px !important;
+      }
+      #google_translate_element {
+        display: none !important;
+      }
+      /* Hide the Google Translate toolbar */
+      .goog-te-banner-frame {
+        display: none !important;
+      }
+    </style>
   </body>
 </html>

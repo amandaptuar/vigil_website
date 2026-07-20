@@ -1,15 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import SchemaMarkup from './SchemaMarkup';
 import './Testimonials.css';
 import './Features.css';
+import './FeaturesPage.css';
 import './OnlineRisks.css';
 import HowItWorks from './HowItWorks';
 import DashboardShowcase from './DashboardShowcase';
 
 
 function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentVideo, setCurrentVideo] = useState(null);
+
+  const openVideoModal = (videoUrl) => {
+    setCurrentVideo(videoUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeVideoModal = () => {
+    setIsModalOpen(false);
+    setCurrentVideo(null);
+  };
+
   useEffect(() => {
     let $slider;
     if (window.jQuery && window.jQuery.fn.slick) {
@@ -176,21 +190,40 @@ function Home() {
                   </li>
                 </ul>
 
-                {/* Actions (CTA Button + Setup Info) */}
-                <div className="vigil-actions-block">
-                  <Link to="/pricing" className="vigil-cta-btn">
-                    <span>Start Protecting Your Child Today</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14" />
-                      <path d="m12 5 7 7-7 7" />
-                    </svg>
-                  </Link>
-                  <div className="vigil-setup-badge">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                      <polyline points="22 4 12 14.01 9 11.01" />
-                    </svg>
-                    <span>Setup in Under 5 Minutes</span>
+                {/* Actions (CTA Button + Setup Info + Demos) */}
+                <div className="vigil-actions-block" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {/* Row 1: Primary CTA and Badge */}
+                  <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <Link to="/pricing" className="vigil-cta-btn">
+                      <span>Start Protecting Your Child Today</span>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                      </svg>
+                    </Link>
+                    <div className="vigil-setup-badge">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                        <polyline points="22 4 12 14.01 9 11.01" />
+                      </svg>
+                      <span>Setup in Under 5 Minutes</span>
+                    </div>
+                  </div>
+                  
+                  {/* Row 2: Demo Video Buttons */}
+                  <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                    <button className="demo-video-btn" onClick={() => openVideoModal('/videos/whatsapp_video.mp4')} style={{ marginTop: 0 }}>
+                      Watch Video
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    </button>
+                    <button className="demo-video-btn" onClick={() => openVideoModal('/videos/parentdemo.mp4')} style={{ marginTop: 0 }}>
+                      Watch Parent App Demo
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    </button>
+                    <button className="demo-video-btn" onClick={() => openVideoModal('/videos/childapp.mp4')} style={{ marginTop: 0 }}>
+                      Watch Child App Demo
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    </button>
                   </div>
                 </div>
 
@@ -1051,6 +1084,26 @@ function Home() {
 
       {/* --- HOW IT WORKS SECTION --- */}
       <HowItWorks />
+
+      {/* VIDEO MODAL */}
+      {isModalOpen && (
+        <div className="video-modal-overlay" onClick={closeVideoModal}>
+          <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="video-modal-close" onClick={closeVideoModal}>
+              &times;
+            </button>
+            <video 
+              className="video-modal-video" 
+              src={currentVideo} 
+              controls 
+              autoPlay 
+              playsInline
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      )}
     </>
   );
 }

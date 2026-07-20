@@ -39,7 +39,15 @@ export default function Login() {
     e.preventDefault();
     setApiError('');
     const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    if (Object.keys(errs).length > 0) { 
+      setErrors(errs);
+      if (errs.username && errs.password) {
+        setApiError('Please fill in all required fields.');
+      } else {
+        setApiError(Object.values(errs)[0]);
+      }
+      return; 
+    }
     
     setLoading(true);
     try {
@@ -54,7 +62,13 @@ export default function Login() {
         })
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      let data = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch (e) {
+        data = { message: text || 'An unexpected error occurred.' };
+      }
 
       if (!response.ok) {
         throw new Error(data.message || data.msg || 'Login failed. Please try again.');
@@ -67,6 +81,12 @@ export default function Login() {
           state: { token }
         });
       } else {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify({
+          name: data.userName || formData.username,
+          email: data.userEmail || '',
+          userId: data.userId || ''
+        }));
         navigate('/dashboard', {
           state: {
             user: {
@@ -146,7 +166,7 @@ export default function Login() {
         }
 
         .reg-logo {
-          display: flex; align-items: center; gap: 12px; position: relative; z-index: 2; margin-bottom: 40px; margin-left: 30px;
+          display: flex; align-items: center; gap: 12px; position: relative; z-index: 2; margin-bottom: 40px;
         }
         .reg-logo-icon {
           width: 44px; height: 44px; border-radius: 12px;
@@ -244,7 +264,7 @@ export default function Login() {
 
         .inputs-row { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
         .inp-wrap { position: relative; width: 100%; }
-        .inp-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; width: 18px; height: 18px; pointer-events: none; }
+        .inp-icon { position: absolute; left: 14px; top: 14px; color: #94a3b8; width: 18px; height: 18px; pointer-events: none; }
         
         .reg-inp {
           width: 100%; padding: 14px 14px 14px 44px !important; box-sizing: border-box;
@@ -252,13 +272,15 @@ export default function Login() {
           color: #0f172a; font-size: 14px; outline: none; transition: all 0.2s; font-weight: 500;
           height: auto !important; line-height: normal; margin: 0;
         }
+        .reg-inp.has-error { border-color: #ef4444; }
         .reg-inp::placeholder { color: #94a3b8; font-weight: 400; }
         .reg-inp:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
-        .err { color: #ef4444; font-size: 11px; font-weight: 500; display: block; margin-top: 4px; padding-left: 4px; }
+        .reg-inp.has-error:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.1); }
+        .err { color: #ef4444; font-size: 12px; font-weight: 500; display: block; margin-top: 6px; padding-left: 4px; }
 
-        .pw-wrap { position: relative; margin-bottom: 24px; }
-        .pw-eye { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94a3b8; display: flex; z-index: 10; }
-        .pw-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; width: 18px; height: 18px; pointer-events: none; z-index: 10; }
+        .pw-wrap { position: relative; margin-bottom: 8px; }
+        .pw-eye { position: absolute; right: 14px; top: 14px; cursor: pointer; color: #94a3b8; display: flex; z-index: 10; }
+        .pw-icon { position: absolute; left: 14px; top: 14px; color: #94a3b8; width: 18px; height: 18px; pointer-events: none; z-index: 10; }
 
         .reg-btn {
           width: 100%; padding: 16px; border-radius: 12px; border: none;
@@ -277,7 +299,7 @@ export default function Login() {
         .login-box p { color: #64748b; font-size: 13px; margin: 0 0 6px; }
         .login-box a { color: #4f46e5; font-weight: 700; font-size: 14px; text-decoration: none; }
 
-        .privacy-note { display: flex; align-items: center; justify-content: center; gap: 6px; color: #94a3b8; font-size: 12px; margin-top: 24px; text-align: center; }
+        .privacy-note { display: flex; align-items: flex-start; justify-content: center; gap: 8px; color: #94a3b8; font-size: 12px; margin: 24px auto 0; text-align: left; max-width: 320px; line-height: 1.5; }
 
         @media (max-width: 1024px) {
           .reg-wrapper { flex-direction: column; }
@@ -295,16 +317,16 @@ export default function Login() {
         <div className="reg-left">
           <div className="reg-left-overlay"></div>
           
-          {/* Logo */}
-          <div className="reg-logo">
-            <Link to="/">
-              <img src="/myimg/image.png" alt="Vigil" style={{ height: '50px', width: 'auto' }} />
-            </Link>
-          </div>
-
           <div className="reg-content-row">
             {/* Text & Features */}
             <div className="reg-text-col">
+              {/* Logo */}
+              <div className="reg-logo">
+                <Link to="/">
+                  <img src="/myimg/image.png" alt="Vigil" style={{ height: '50px', width: 'auto' }} />
+                </Link>
+              </div>
+              
               <p className="reg-tag">Welcome to VIGIL</p>
               <h2 className="reg-title">Peace of Mind<br/>for <span>Every Parent.</span></h2>
               <p className="reg-subtitle">Monitor, protect, and guide your child's digital journey — all in one place.</p>
@@ -363,27 +385,29 @@ export default function Login() {
 
             <form onSubmit={handleSubmit}>
               <div className="inputs-row">
-                <div className="inp-wrap">
-                  <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" className="reg-inp" />
-                  {errors.username && <span className="err">{errors.username}</span>}
+                <div>
+                  <div className="inp-wrap">
+                    <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" className={`reg-inp ${errors.username ? 'has-error' : ''}`} />
+                  </div>
                 </div>
               </div>
 
-              <div className="pw-wrap">
-                <svg className="pw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} placeholder="Password" className="reg-inp" style={{ paddingRight: '48px !important' }} />
-                <div className="pw-eye" onClick={() => setShowPassword(!showPassword)}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    {showPassword ? <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></> : <><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></>}
-                  </svg>
+              <div style={{ marginBottom: '24px' }}>
+                <div className="pw-wrap">
+                  <svg className="pw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} placeholder="Password" className={`reg-inp ${errors.password ? 'has-error' : ''}`} style={{ paddingRight: '48px !important' }} />
+                  <div className="pw-eye" onClick={() => setShowPassword(!showPassword)}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      {showPassword ? <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></> : <><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></>}
+                    </svg>
+                  </div>
                 </div>
-                {errors.password && <span className="err">{errors.password}</span>}
               </div>
 
               {apiError && (
-                <div style={{ color: '#ef4444', fontSize: '13px', fontWeight: '500', marginBottom: '16px', textAlign: 'center', background: '#fef2f2', padding: '10px', borderRadius: '8px', border: '1px solid #fee2e2' }}>
-                  {apiError}
+                <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+                  <span className="err" style={{ display: 'inline-block' }}>{apiError}</span>
                 </div>
               )}
 
@@ -403,8 +427,8 @@ export default function Login() {
             </div>
 
             <p className="privacy-note">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              VIGIL is committed to protecting your family's privacy and keeping your data secure.
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>VIGIL is committed to protecting your family's privacy and keeping your data secure.</span>
             </p>
             
           </div>
