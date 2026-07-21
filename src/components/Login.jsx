@@ -36,12 +36,12 @@ export default function Login() {
   const validate = () => {
     const e = {};
     if (!formData.email.trim()) {
-      e.email = 'Email address is required';
+      e.email = 'Username is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       e.email = 'Please enter a valid email address';
     }
     if (formData.password.length < 8) {
-      e.password = 'Password must be at least 8 characters';
+      e.password = 'Min 8 characters';
     }
     return e;
   };
@@ -52,11 +52,6 @@ export default function Login() {
     const errs = validate();
     if (Object.keys(errs).length > 0) { 
       setErrors(errs);
-      if (errs.email && errs.password) {
-        setApiError('Please fill in all required fields.');
-      } else {
-        setApiError(Object.values(errs)[0]);
-      }
       return; 
     }
     
@@ -279,14 +274,35 @@ export default function Login() {
         
         .reg-inp {
           width: 100%; padding: 14px 14px 14px 44px !important; box-sizing: border-box;
-          border: 1px solid #cbd5e1; border-radius: 12px; background: #fff;
+          border: 1.5px solid #94a3b8 !important; border-radius: 12px; background: #ffffff !important;
           color: #0f172a; font-size: 14px; outline: none; transition: all 0.2s; font-weight: 500;
           height: auto !important; line-height: normal; margin: 0;
+          box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
         }
-        .reg-inp.has-error { border-color: #ef4444; }
+        @keyframes errSlide {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .reg-inp.has-error { border: 1.5px solid #ef4444 !important; background: #ffffff !important; }
         .reg-inp::placeholder { color: #94a3b8; font-weight: 400; }
-        .reg-inp:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
-        .reg-inp.has-error:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.1); }
+        .reg-inp:focus { border-color: #6366f1 !important; box-shadow: 0 0 0 4px rgba(99,102,241,0.12) !important; }
+        .reg-inp.has-error:focus { border-color: #dc2626 !important; box-shadow: 0 0 0 4px rgba(239,68,68,0.15) !important; }
+        
+        .err-msg-box {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          color: #dc2626;
+          font-size: 12px;
+          font-weight: 500;
+          margin-top: 6px;
+          padding: 5px 10px;
+          background: #fef2f2;
+          border: 1px solid #fee2e2;
+          border-radius: 8px;
+          animation: errSlide 0.2s ease-out forwards;
+        }
+        .err-msg-box svg { flex-shrink: 0; }
         .err { color: #ef4444; font-size: 12px; font-weight: 500; display: block; margin-top: 6px; padding-left: 4px; }
 
         .pw-wrap { position: relative; margin-bottom: 8px; }
@@ -404,6 +420,12 @@ export default function Login() {
                     <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" className={`reg-inp ${errors.email ? 'has-error' : ''}`} />
                   </div>
+                  {errors.email && (
+                    <div className="err-msg-box">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      <span>{errors.email}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -417,6 +439,12 @@ export default function Login() {
                     </svg>
                   </div>
                 </div>
+                {errors.password && (
+                  <div className="err-msg-box">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span>{errors.password}</span>
+                  </div>
+                )}
               </div>
 
               {apiError && (
