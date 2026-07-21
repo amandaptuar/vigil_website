@@ -3,13 +3,18 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState('');
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/dashboard', { replace: true });
+      return;
+    }
     window.scrollTo(0, 0);
     const header = document.querySelector('header');
     const footer = document.querySelector('footer');
@@ -30,8 +35,14 @@ export default function Login() {
 
   const validate = () => {
     const e = {};
-    if (!formData.username.trim()) e.username = 'Username is required';
-    if (formData.password.length < 8) e.password = 'Min 8 characters';
+    if (!formData.email.trim()) {
+      e.email = 'Email address is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      e.email = 'Please enter a valid email address';
+    }
+    if (formData.password.length < 8) {
+      e.password = 'Password must be at least 8 characters';
+    }
     return e;
   };
 
@@ -41,7 +52,7 @@ export default function Login() {
     const errs = validate();
     if (Object.keys(errs).length > 0) { 
       setErrors(errs);
-      if (errs.username && errs.password) {
+      if (errs.email && errs.password) {
         setApiError('Please fill in all required fields.');
       } else {
         setApiError(Object.values(errs)[0]);
@@ -57,7 +68,7 @@ export default function Login() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: formData.username,
+          username: formData.email,
           password: formData.password
         })
       });
@@ -83,15 +94,15 @@ export default function Login() {
       } else {
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify({
-          name: data.userName || formData.username,
-          email: data.userEmail || '',
+          name: data.userName || formData.email.split('@')[0],
+          email: data.userEmail || formData.email,
           userId: data.userId || ''
         }));
         navigate('/dashboard', {
           state: {
             user: {
-              name: data.userName || formData.username,
-              email: data.userEmail || '',
+              name: data.userName || formData.email.split('@')[0],
+              email: data.userEmail || formData.email,
               userId: data.userId || '',
               token
             }
@@ -304,11 +315,14 @@ export default function Login() {
         @media (max-width: 1024px) {
           .reg-wrapper { flex-direction: column; }
           .reg-left, .reg-right { width: 100%; flex: none; }
+          .reg-left { padding: 30px 20px 20px !important; }
+          .reg-right { padding: 20px !important; }
           .reg-content-row { flex-direction: column; text-align: center; }
           .reg-text-col { max-width: 100%; }
-          .feat-item { text-align: left; }
-          .reg-badges { flex-direction: column; }
+          .feat-list, .reg-badges, .reg-subtitle { display: none !important; }
           .inputs-row { flex-direction: column; }
+          .reg-logo { justify-content: center; margin-left: 0 !important; margin-bottom: 20px !important; }
+          .reg-title { font-size: 32px; margin-bottom: 0; }
         }
       `}</style>
 
@@ -387,8 +401,8 @@ export default function Login() {
               <div className="inputs-row">
                 <div>
                   <div className="inp-wrap">
-                    <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" className={`reg-inp ${errors.username ? 'has-error' : ''}`} />
+                    <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" className={`reg-inp ${errors.email ? 'has-error' : ''}`} />
                   </div>
                 </div>
               </div>

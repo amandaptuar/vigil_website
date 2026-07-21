@@ -3,7 +3,52 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <footer className="luminix-footer-section1">
+    <>
+      <style>{`
+        @media (max-width: 991px) {
+          .luminix-footer-section1 {
+            text-align: center !important;
+          }
+          .luminix-footer-textarea {
+            padding-right: 0 !important;
+            margin-bottom: 30px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+          }
+          .luminix-footer-textarea a {
+            display: block !important;
+            margin: 0 auto 15px !important;
+          }
+          .luminix-social-wrap.wrap2 ul {
+            justify-content: center !important;
+          }
+          .luminix-footer-menu, .luminix-footer-menu2 {
+            padding-left: 0 !important;
+            margin-bottom: 30px !important;
+            text-align: center !important;
+          }
+          .luminix-footer-menu ul, .luminix-footer-menu2 ul {
+            padding: 0 !important;
+            list-style: none;
+            display: inline-block;
+            text-align: center;
+          }
+          .luminix-footer-menu ul li, .luminix-footer-menu2 ul li {
+            text-align: center !important;
+          }
+          .luminix-footer-bottom-text.text2 {
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            gap: 10px;
+          }
+          .luminix-footer-bottom-menu ul {
+            justify-content: center !important;
+          }
+        }
+      `}</style>
+      <footer className="luminix-footer-section1">
       <div className="container">
         <div className="luminix-footer-one">
           <div className="row">
@@ -93,13 +138,14 @@ function Footer() {
           <p>© Copyright {new Date().getFullYear()}, All Rights Reserved by Vigil</p>
           <div className="luminix-footer-bottom-menu">
             <ul>
-              <li><Link to="/terms-conditions" className="dot">Privacy Policy</Link></li>
+              <li><Link to="/privacy-policy" className="dot">Privacy Policy</Link></li>
               <li><Link to="/terms-conditions">Terms & Conditions</Link></li>
             </ul>
           </div>
         </div>
       </div>
     </footer>
+    </>
   );
 }
 

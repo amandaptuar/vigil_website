@@ -9,6 +9,11 @@ export default function Register() {
   const [apiError, setApiError] = useState('');
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/dashboard', { replace: true });
+      return;
+    }
     window.scrollTo(0, 0);
     const header = document.querySelector('header');
     const footer = document.querySelector('footer');
@@ -282,11 +287,14 @@ export default function Register() {
         @media (max-width: 1024px) {
           .reg-wrapper { flex-direction: column; }
           .reg-left, .reg-right { width: 100%; flex: none; }
+          .reg-left { padding: 30px 20px 20px !important; }
+          .reg-right { padding: 20px !important; }
           .reg-content-row { flex-direction: column; text-align: center; }
           .reg-text-col { max-width: 100%; }
-          .feat-item { text-align: left; }
-          .reg-badges { flex-direction: column; }
+          .feat-list, .reg-badges, .reg-subtitle { display: none !important; }
           .inputs-row { flex-direction: column; }
+          .reg-logo { justify-content: center; margin-left: 0 !important; margin-bottom: 20px !important; }
+          .reg-title { font-size: 32px; margin-bottom: 0; }
         }
       `}</style>
 
@@ -405,7 +413,7 @@ export default function Register() {
 
                 <p className="terms-txt">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  By signing up, you agree to our <Link to="/terms-conditions">Terms of Service</Link> and <Link to="/terms-conditions">Privacy Policy</Link>.
+                  By signing up, you agree to our <Link to="/terms-conditions">Terms of Service</Link> and <Link to="/privacy-policy">Privacy Policy</Link>.
                 </p>
               </form>
 

@@ -7,6 +7,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Service from './components/Service';
 import Terms from './components/Terms';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import Pricing from './components/Pricing';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -79,6 +80,7 @@ function App() {
         <Route path="/child-setup" element={<ChildSetup />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-conditions" element={<Terms />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/casestudy" element={<CaseStudy />} />
         <Route path="/casestudy/:id" element={<CaseStudySingle />} />
         <Route path="/blog/how-to-keep-children-safe-online-2026" element={<BlogPost />} />

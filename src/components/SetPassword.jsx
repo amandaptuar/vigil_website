@@ -252,10 +252,13 @@ export default function SetPassword() {
         @media (max-width: 1024px) {
           .reg-wrapper { flex-direction: column; }
           .reg-left, .reg-right { width: 100%; flex: none; }
+          .reg-left { padding: 30px 20px 20px !important; }
+          .reg-right { padding: 20px !important; }
           .reg-content-row { flex-direction: column; text-align: center; }
           .reg-text-col { max-width: 100%; }
-          .feat-item { text-align: left; }
-          .reg-badges { flex-direction: column; }
+          .feat-list, .reg-badges, .reg-subtitle { display: none !important; }
+          .reg-logo { justify-content: center; margin-left: 0 !important; margin-bottom: 20px !important; }
+          .reg-title { font-size: 32px; margin-bottom: 0; }
         }
       `}</style>
 

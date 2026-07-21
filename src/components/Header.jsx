@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Header() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [currentLang, setCurrentLang] = useState('en');
@@ -400,19 +403,43 @@ function Header() {
             ))}
           </div>
           <div className="luminix-mobile-menu-btn" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px', padding: '0 20px' }}>
-            <Link to="/login" onClick={closeMenu} style={{
-              display: 'flex', justifyContent: 'center', alignItems: 'center',
-              padding: '12px 20px', borderRadius: '8px', fontWeight: '600',
-              background: '#f1f5f9', color: '#4f46e5', border: '1px solid #c7d2fe',
-              textDecoration: 'none'
-            }}>Login to VIGIL</Link>
-            
-            <Link to="/register" onClick={closeMenu} style={{
-              display: 'flex', justifyContent: 'center', alignItems: 'center',
-              padding: '12px 20px', borderRadius: '8px', fontWeight: '600',
-              background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', color: '#fff',
-              border: 'none', textDecoration: 'none'
-            }}>Create Account</Link>
+            {token ? (
+              <>
+                <Link to="/dashboard" onClick={closeMenu} style={{
+                  display: 'flex', justifyContent: 'center', alignItems: 'center',
+                  padding: '12px 20px', borderRadius: '8px', fontWeight: '600',
+                  background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', color: '#fff',
+                  border: 'none', textDecoration: 'none'
+                }}>Go to Dashboard</Link>
+                <button onClick={() => {
+                  localStorage.removeItem('token');
+                  localStorage.removeItem('user');
+                  closeMenu();
+                  navigate('/');
+                }} style={{
+                  display: 'flex', justifyContent: 'center', alignItems: 'center',
+                  padding: '12px 20px', borderRadius: '8px', fontWeight: '600',
+                  background: '#fef2f2', color: '#ef4444', border: '1px solid #fee2e2',
+                  cursor: 'pointer', fontSize: '16px', outline: 'none'
+                }}>Sign Out</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" onClick={closeMenu} style={{
+                  display: 'flex', justifyContent: 'center', alignItems: 'center',
+                  padding: '12px 20px', borderRadius: '8px', fontWeight: '600',
+                  background: '#f1f5f9', color: '#4f46e5', border: '1px solid #c7d2fe',
+                  textDecoration: 'none'
+                }}>Login to VIGIL</Link>
+                
+                <Link to="/register" onClick={closeMenu} style={{
+                  display: 'flex', justifyContent: 'center', alignItems: 'center',
+                  padding: '12px 20px', borderRadius: '8px', fontWeight: '600',
+                  background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', color: '#fff',
+                  border: 'none', textDecoration: 'none'
+                }}>Create Account</Link>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -421,7 +448,7 @@ function Header() {
         <div className="luminix-header-bottom white-bg1">
           <div className="container-fluid px-4 px-xl-5">
             <div className="row gx-3 align-items-center justify-content-between flex-nowrap">
-              <div className="col-auto">
+              <div className="col-auto mobile-logo-col">
                 <div className="header-logo1 ">
                   <Link to="/">
                     <img src="/myimg/image.png" alt="logo" style={{ maxHeight: '90px' }} />
@@ -450,6 +477,11 @@ function Header() {
                       <li>
                         <Link to="/contact">Contact Us</Link>
                       </li>
+                      {token && (
+                        <li>
+                          <Link to="/dashboard" style={{ color: '#4f46e5', fontWeight: 'bold' }}>Dashboard</Link>
+                        </li>
+                      )}
                     </ul>
                   </nav>
                 </div>
@@ -481,13 +513,23 @@ function Header() {
                       ))}
                     </div>
                   </div>
-                  <Link className="luminix-default-btn luminix-header-btn" to="/contact">
-                    <span className="btn-text">Contact Us</span>
-                    <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={{marginLeft: '6px'}}>
-                      <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="#001A3D" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="#001A3D" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
+                  {token ? (
+                    <Link className="luminix-default-btn luminix-header-btn" to="/dashboard" style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', border: 'none' }}>
+                      <span className="btn-text" style={{ color: '#fff' }}>Dashboard</span>
+                      <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={{marginLeft: '6px'}}>
+                        <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </Link>
+                  ) : (
+                    <Link className="luminix-default-btn luminix-header-btn" to="/login">
+                      <span className="btn-text">Login</span>
+                      <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={{marginLeft: '6px'}}>
+                        <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="#001A3D" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M11.2139 1.5L17.7139 8M17.7139 8L11.2139 14.5M17.7139 8L0.999581 8" stroke="#001A3D" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </Link>
+                  )}
                 </div>
                 <div className="luminix-header-menu">
                   <nav className="navbar site-navbar justify-content-between">
