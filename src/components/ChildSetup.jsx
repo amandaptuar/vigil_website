@@ -51,6 +51,19 @@ function ChildSetup() {
               <div style={{ textAlign: 'center', marginBottom: '30px' }}>
                 <h2 style={{ color: '#fff', fontSize: '28px', fontWeight: 'bold' }}>Child Device Permissions</h2>
                 <p style={{ color: '#9ca3af' }}>Please grant the following permissions on the child's device to enable full protection.</p>
+                <a
+                  href="https://drive.google.com/file/d/1QXkj26yfIGkeSoyNvTp2V8ZmYxRBegJ2/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '8px',
+                    background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)', color: '#fff',
+                    fontWeight: '600', fontSize: '14px', padding: '12px 24px',
+                    borderRadius: '10px', textDecoration: 'none', marginTop: '16px'
+                  }}
+                >
+                  Download Vigil Child App
+                </a>
               </div>
 
               {/* Step Indicators */}
