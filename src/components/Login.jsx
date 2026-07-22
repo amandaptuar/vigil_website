@@ -10,9 +10,9 @@ export default function Login() {
   const [apiError, setApiError] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('vigil_token');
     if (token) {
-      navigate('/dashboard', { replace: true });
+      window.location.href = 'https://vigil-1.com/parent/';
       return;
     }
     window.scrollTo(0, 0);
@@ -36,7 +36,7 @@ export default function Login() {
   const validate = () => {
     const e = {};
     if (!formData.email.trim()) {
-      e.email = 'Username is required';
+      e.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       e.email = 'Please enter a valid email address';
     }
@@ -63,7 +63,7 @@ export default function Login() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: formData.email,
+          email: formData.email,
           password: formData.password
         })
       });
@@ -87,22 +87,13 @@ export default function Login() {
           state: { token }
         });
       } else {
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify({
+        localStorage.setItem('vigil_token', token);
+        localStorage.setItem('vigil_user', JSON.stringify({
+          _id: data.userId || '',
           name: data.userName || formData.email.split('@')[0],
-          email: data.userEmail || formData.email,
-          userId: data.userId || ''
+          email: data.userEmail || formData.email
         }));
-        navigate('/dashboard', {
-          state: {
-            user: {
-              name: data.userName || formData.email.split('@')[0],
-              email: data.userEmail || formData.email,
-              userId: data.userId || '',
-              token
-            }
-          }
-        });
+        window.location.href = 'https://vigil-1.com/parent/';
       }
     } catch (error) {
       setApiError(error.message);

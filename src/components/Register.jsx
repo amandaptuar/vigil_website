@@ -3,15 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ fullName: '', email: '' });
+  const [formData, setFormData] = useState({ fullName: '', email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('vigil_token');
     if (token) {
-      navigate('/dashboard', { replace: true });
+      window.location.href = 'https://vigil-1.com/parent/';
       return;
     }
     window.scrollTo(0, 0);
@@ -36,6 +37,7 @@ export default function Register() {
     const e = {};
     if (!formData.fullName.trim()) e.fullName = 'Required';
     if (!/\S+@\S+\.\S+/.test(formData.email)) e.email = 'Valid email required';
+    if (formData.password.length < 8) e.password = 'Min 8 characters';
     return e;
   };
 
@@ -44,7 +46,7 @@ export default function Register() {
     setApiError('');
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    
+
     setLoading(true);
     try {
       const response = await fetch('/api/auth/register-website', {
@@ -54,7 +56,8 @@ export default function Register() {
         },
         body: JSON.stringify({
           name: formData.fullName,
-          email: formData.email
+          email: formData.email,
+          password: formData.password
         })
       });
 
@@ -70,13 +73,11 @@ export default function Register() {
         throw new Error(data.msg || data.message || 'Registration failed. Please try again.');
       }
 
-      navigate('/register/success', {
-        state: {
-          name: formData.fullName,
-          email: formData.email,
-          message: data.msg
-        }
-      });
+      localStorage.setItem('vigil_token', data.token);
+      localStorage.setItem('vigil_user', JSON.stringify({
+        _id: data.userId, name: data.userName, email: data.userEmail
+      }));
+      window.location.href = 'https://vigil-1.com/parent/';
     } catch (error) {
       setApiError(error.message);
     } finally {
@@ -395,6 +396,17 @@ export default function Register() {
                     {errors.email && <span className="err">{errors.email}</span>}
                   </div>
                 </div>
+
+                <div className="pw-wrap">
+                  <svg className="pw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} placeholder="Create a Password" className={`reg-inp ${errors.password ? 'has-error' : ''}`} />
+                  <div className="pw-eye" onClick={() => setShowPassword(!showPassword)}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      {showPassword ? <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></> : <><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></>}
+                    </svg>
+                  </div>
+                </div>
+                {errors.password && <span className="err" style={{ display: 'block', marginTop: '-8px', marginBottom: '16px' }}>{errors.password}</span>}
 
                 {apiError && (
                   <div style={{ textAlign: 'center', marginBottom: '16px' }}>
