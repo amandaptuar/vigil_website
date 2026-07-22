@@ -65,7 +65,7 @@ export default function RegistrationSuccess() {
               Your account has been created successfully.
             </p>
             <p style={{ color: '#6b7280', fontSize: '14px', lineHeight: 1.5, margin: '0 auto 24px auto', maxWidth: '85%' }}>
-              Hi <strong>{name || 'there'}</strong>! Thank you for joining VIGIL. Your unique username and temporary password have been sent to your email address.
+              Hi <strong>{name || 'there'}</strong>! Thank you for joining VIGIL. You can now log in with your email address.
             </p>
 
             {/* Account Details Box */}
@@ -82,7 +82,7 @@ export default function RegistrationSuccess() {
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#4f46e5" strokeWidth="2" strokeLinecap="round"/>
                   <polyline points="22,6 12,13 2,6" stroke="#4f46e5" strokeWidth="2" strokeLinecap="round"/>
                 </svg>
-                <span style={{ color: '#4f46e5', fontWeight: 600, fontSize: '14px' }}>Credentials Sent To</span>
+                <span style={{ color: '#4f46e5', fontWeight: 600, fontSize: '14px' }}>Your Login Email</span>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
@@ -98,7 +98,7 @@ export default function RegistrationSuccess() {
                 }}>{email || '—'}</span>
               </div>
 
-              {/* Security Alert Banner */}
+              {/* Info Banner */}
               <div style={{
                 backgroundColor: '#ffffff',
                 border: '1px solid #e2e8f0',
@@ -115,8 +115,8 @@ export default function RegistrationSuccess() {
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4b5563" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 <div>
-                  <strong style={{ color: '#111827', display: 'block', marginBottom: '2px' }}>Check your inbox</strong>
-                  Your username and temporary password have been emailed to you. Please save them before logging in.
+                  <strong style={{ color: '#111827', display: 'block', marginBottom: '2px' }}>You're all set</strong>
+                  Use this email and the password you chose to log in any time.
                 </div>
               </div>
             </div>
