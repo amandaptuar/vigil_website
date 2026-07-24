@@ -85,7 +85,7 @@ export default function Login() {
 
       if (data.must_reset_password) {
         navigate('/set-password', {
-          state: { token }
+          state: { token, deviceKey: data.deviceKey || (data.data && data.data.deviceKey) || '' }
         });
       } else {
         // Store token first so the /me fallback can authenticate
@@ -117,9 +117,15 @@ export default function Login() {
         }
 
         const refreshToken = data.refreshToken || (data.data && data.data.refreshToken) || '';
-        // Clear stale child/device keys from previous sessions
+        // Clear stale child key from previous sessions
         localStorage.removeItem('vigil_childId');
-        localStorage.removeItem('vigil_deviceKey');
+        // deviceKey (shared parent-viewing key, from the login response) is
+        // required by /api/sms, /api/logs, /api/files, /api/apps, /api/contacts,
+        // /api/events, /api/locations (see deviceAuth.middleware.js) — without
+        // storing it here, every one of those calls 401s.
+        const deviceKey = data.deviceKey || (data.data && data.data.deviceKey) || '';
+        if (deviceKey) localStorage.setItem('vigil_deviceKey', deviceKey);
+        else localStorage.removeItem('vigil_deviceKey');
         localStorage.setItem('vigil_parentId', parentId);
         if (refreshToken) localStorage.setItem('vigil_refreshToken', refreshToken);
         localStorage.setItem('vigil_user', JSON.stringify({

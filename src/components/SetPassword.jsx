@@ -5,6 +5,7 @@ export default function SetPassword() {
   const navigate = useNavigate();
   const location = useLocation();
   const token = location.state?.token;
+  const deviceKey = location.state?.deviceKey;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -96,9 +97,14 @@ export default function SetPassword() {
       }
       if (parentId) localStorage.setItem('vigil_parentId', parentId);
 
-      // ── Clear stale child/device keys from any previous session ──
+      // ── Clear stale child key from any previous session ──
       localStorage.removeItem('vigil_childId');
-      localStorage.removeItem('vigil_deviceKey');
+      // deviceKey (required by /api/sms, /api/logs, /api/files, /api/apps,
+      // /api/contacts, /api/events, /api/locations) was passed through from
+      // the Login screen's response, since change-password-first-time itself
+      // doesn't return one.
+      if (deviceKey) localStorage.setItem('vigil_deviceKey', deviceKey);
+      else localStorage.removeItem('vigil_deviceKey');
 
       navigate('/dashboard');
     } catch (error) {
