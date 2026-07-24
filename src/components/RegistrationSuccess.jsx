@@ -153,10 +153,10 @@ export default function RegistrationSuccess() {
                 Back to Home
               </Link>
 
-              {/* Move to Dashboard Button */}
+              {/* Go to Login Button */}
               <Link
-                to="/dashboard"
-                state={{ user: { name, email } }}
+                to="/login"
+                state={{ email }}
                 style={{
                   backgroundColor: '#4f46e5',
                   color: '#ffffff',
@@ -180,12 +180,9 @@ export default function RegistrationSuccess() {
                 onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#4f46e5'}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="14" width="7" height="7"></rect>
-                  <rect x="3" y="14" width="7" height="7"></rect>
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
                 </svg>
-                Move to your Dashboard
+                Go to Login
               </Link>
             </div>
           </div>

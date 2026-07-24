@@ -25,7 +25,7 @@ DirectoryIndex index.html
 </IfModule>
 
 # ─── API Proxy ──────────────────────────────────────────────────────────────
-RewriteRule ^api/(.*)$ http://160-153-179-249.sslip.io/api/$1 [P,L]
+RewriteRule ^api/(.*)$ https://160-153-179-249.sslip.io/api/$1 [P,L]
 
 # ─── React Router Fallback (Fixes 404 errors) ──────────────────────────────
 # Routes any missing pages to index.html so React can handle them.

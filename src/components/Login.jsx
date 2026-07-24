@@ -12,7 +12,7 @@ export default function Login() {
   useEffect(() => {
     const token = localStorage.getItem('vigil_token');
     if (token) {
-      window.location.href = 'https://vigil-1.com/parent/';
+      navigate('/dashboard');
       return;
     }
     window.scrollTo(0, 0);
@@ -57,7 +57,8 @@ export default function Login() {
     
     setLoading(true);
     try {
-      const response = await fetch('/api/auth/login', {
+      const apiBase = import.meta.env.PROD ? 'https://160-153-179-249.sslip.io' : '';
+      const response = await fetch(`${apiBase}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -88,12 +89,24 @@ export default function Login() {
         });
       } else {
         localStorage.setItem('vigil_token', token);
+        // Try every possible field the backend might send for the parent's ID
+        const parentId = 
+          data.userId || data.parentId || data._id || data.id ||
+          (data.data && (data.data.userId || data.data.parentId || data.data._id || data.data.id)) ||
+          (data.user && (data.user._id || data.user.id || data.user.userId)) || '';
+        const refreshToken = data.refreshToken || (data.data && data.data.refreshToken) || '';
+        localStorage.setItem('vigil_parentId', parentId);
+        if (refreshToken) localStorage.setItem('vigil_refreshToken', refreshToken);
         localStorage.setItem('vigil_user', JSON.stringify({
-          _id: data.userId || '',
-          name: data.userName || formData.email.split('@')[0],
-          email: data.userEmail || formData.email
+          _id: parentId,
+          name: data.userName || data.name || (data.user && data.user.name) || formData.email.split('@')[0],
+          email: data.userEmail || data.email || (data.user && data.user.email) || formData.email
         }));
-        window.location.href = 'https://vigil-1.com/parent/';
+        // Debug: log what we got (remove after testing)
+        console.log('[Vigil Login] Response data:', JSON.stringify(data));
+        console.log('[Vigil Login] Extracted parentId:', parentId);
+        navigate('/dashboard');
+        if (!parentId) console.warn('[Vigil] parentId is empty - check API response fields');
       }
     } catch (error) {
       setApiError(error.message);

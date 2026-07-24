@@ -1,0 +1,120 @@
+=======================================================
+VIGIL PARENT APP — API USAGE TRACKER (used.txt)
+=======================================================
+Base URL: http://160-153-179-249.sslip.io
+
+FORMAT: [STATUS] METHOD /endpoint → Page Used In
+  STATUS: [DONE] = integrated in frontend | [PENDING] = not yet done
+
+=======================================================
+1. AUTH APIs
+=======================================================
+[DONE] POST /api/auth/register                          → Register.jsx (existing)
+[DONE] POST /api/auth/register-website                  → Register.jsx (existing)
+[DONE] POST /api/auth/login                             → Login.jsx (existing)
+[DONE] POST /api/auth/refresh-token                     → ProfilePage.jsx
+[DONE] POST /api/auth/change-password-first-time        → SetPassword.jsx (existing) + ProfilePage.jsx
+[DONE] POST /api/auth/request-password-reset            → Login.jsx (existing)
+[DONE] POST /api/auth/verify-otp                        → Login.jsx (existing)
+[DONE] POST /api/auth/reset-password                    → Login.jsx (existing)
+[DONE] GET  /api/auth/me                                → DashHome.jsx + ProfilePage.jsx
+[DONE] POST /api/auth/logout                            → ProfilePage.jsx + sidebar
+
+=======================================================
+2. DASHBOARD & CHILD MANAGEMENT APIs
+=======================================================
+[DONE] POST /api/children                               → ChildrenPage.jsx (create child)
+[DONE] GET  /api/children                               → ChildrenPage.jsx + DashHome.jsx
+[DONE] GET  /api/children/:childId                      → ChildrenPage.jsx (get single)
+[DONE] GET  /api/children/childrens/:parentId           → ChildrenPage.jsx (by parent)
+[DONE] PUT  /api/children/:childId/update-name          → ChildrenPage.jsx
+[DONE] DELETE /api/children/:childId                    → ChildrenPage.jsx
+[DONE] GET  /api/deviceData/:parentId                   → DashHome.jsx (aggregated)
+[DONE] GET  /api/children/:childId/activity-overview    → DashHome.jsx (child stats)
+
+=======================================================
+3. DEVICE PAIRING APIs
+=======================================================
+[DONE] POST /api/children/login-and-send-otp            → DevicePairing.jsx
+[DONE] POST /api/children/verify-otp-and-pair-device    → DevicePairing.jsx
+[DONE] POST /api/children/children-by-email             → DevicePairing.jsx
+
+=======================================================
+4. PERMISSIONS & DEVICE STATUS APIs
+=======================================================
+[DONE] GET  /api/children/:childId/live-status          → PermissionsPage.jsx + DashHome.jsx
+[DONE] GET  /api/children/:childId/permissions          → PermissionsPage.jsx
+[DONE] PUT  /api/children/:childId/permissions          → PermissionsPage.jsx
+[DONE] PUT  /api/children/:childId/device-info          → PermissionsPage.jsx
+[DONE] GET  /api/children/:childId/device-info          → PermissionsPage.jsx
+
+=======================================================
+5. CALLS MONITORING APIs
+=======================================================
+[DONE] GET /api/logs/calllogs?child_id=&parent_id=&page=1&limit=20               → CallLogs.jsx (all)
+[DONE] GET /api/logs/calllogs?...&callType=incoming                               → CallLogs.jsx (incoming tab)
+[DONE] GET /api/logs/calllogs?...&callType=outgoing                               → CallLogs.jsx (outgoing tab)
+[DONE] GET /api/logs/calllogs?...&callType=missed                                 → CallLogs.jsx (missed tab)
+
+=======================================================
+6. SMS MONITORING APIs
+=======================================================
+[DONE] GET /api/sms/get_sms?child_id=&parent_id=&page=1&limit=20                 → SMSPage.jsx (all)
+[DONE] GET /api/sms/get_sms?...&address=+923001234567                             → SMSPage.jsx (search by contact)
+[DONE] GET /api/sms/get_sms?...&keyword=drugs                                     → SMSPage.jsx (keyword/AI search)
+[DONE] GET /api/sms/get_sms?...&type=inbox                                        → SMSPage.jsx (inbox tab)
+
+=======================================================
+7. GALLERY (FILES) APIs
+=======================================================
+[DONE] GET /api/files/get_files?child_id=&parent_id=&page=1&limit=20             → GalleryPage.jsx (all files)
+[DONE] GET /api/files/get_files?...&file_type=image                               → GalleryPage.jsx (photos tab)
+[DONE] GET /api/files/get_files?...&file_type=video                               → GalleryPage.jsx (videos tab)
+
+=======================================================
+8. LIVE GPS & LOCATION APIs
+=======================================================
+[DONE] GET  /api/children/:childId/location                                       → LocationPage.jsx (live pin)
+[DONE] GET  /api/children/:childId/location-history?page=1&limit=20              → LocationPage.jsx
+[DONE] POST /api/children/:childId/location-history                               → LocationPage.jsx (add location)
+[DONE] PUT  /api/children/:childId/location                                       → LocationPage.jsx (update location)
+[DONE] GET  /api/locations/history/:childId?hours=24                              → LocationPage.jsx (history window)
+[DONE] GET  /api/locations/get_locations?child_id=&parent_id=&page=1&limit=50    → LocationPage.jsx (all records)
+
+=======================================================
+9. GEOFENCING (SAFE ZONES) APIs
+=======================================================
+[DONE] POST  /api/geozones/create                                                 → GeofencePage.jsx
+[DONE] GET   /api/geozones/:parentId                                              → GeofencePage.jsx
+[DONE] GET   /api/geozones/:parentId/:childId                                     → GeofencePage.jsx
+[DONE] PATCH /api/geozones/:geoZoneId/toggle                                      → GeofencePage.jsx
+[DONE] DELETE /api/geozones/:geoZoneId                                            → GeofencePage.jsx
+
+=======================================================
+10. SCREEN TIME (APPS) APIs
+=======================================================
+[DONE] GET /api/apps/get_apps?child_id=&parent_id=&page=1&limit=50               → ScreenTimePage.jsx
+
+=======================================================
+11. CONTACTS APIs
+=======================================================
+[DONE] GET /api/contacts/get_contacts?child_id=&parent_id=&page=1&limit=50       → ContactsPage.jsx
+
+=======================================================
+12. EVENTS / CALENDAR APIs
+=======================================================
+[DONE] GET /api/events/get_events?child_id=&parent_id=&page=1&limit=20           → CalendarPage.jsx
+
+=======================================================
+13. AI BEHAVIOUR ANALYSIS APIs
+=======================================================
+[DONE] POST /api/ai/children/:childId/analyze                                     → AIAnalysisPage.jsx (run analysis)
+[DONE] GET  /api/ai/children/:childId/daily/:date                                 → AIAnalysisPage.jsx (get daily)
+[DONE] GET  /api/ai/children/:childId/daily                                       → AIAnalysisPage.jsx (list history)
+[DONE] GET  /api/ai/children/:childId/daily/:date/report                          → AIAnalysisPage.jsx (PDF download)
+[DONE] GET  /api/ai/children/:childId/relationships                               → AIAnalysisPage.jsx
+[DONE] GET  /api/ai/children/:childId/longitudinal?kind=longitudinal              → AIAnalysisPage.jsx (trends)
+
+=======================================================
+TOTAL: 47 API endpoints across 13 categories — ALL COVERED
+=======================================================

@@ -1,0 +1,126 @@
+========================================================
+VIGIL PARENT DASHBOARD — BRAIN.TXT (FINAL)
+========================================================
+Last Updated: 2026-07-25
+Status: ✅ FULLY COMPLETE
+
+=======================================================
+QUICK RESUME GUIDE
+=======================================================
+1. Token keys in localStorage:
+   - vigil_token      → Bearer JWT for all API calls
+   - vigil_parentId   → Parent's MongoDB _id
+   - vigil_childId    → Selected child's MongoDB _id
+   - vigil_refreshToken → (if returned by login)
+   - vigil_user       → JSON: { _id, name, email }
+
+2. API base URL: '' (empty) — Vite proxy routes /api → http://160-153-179-249.sslip.io
+   - Proxy configured in: vite.config.js
+   - All API calls in: src/utils/apiService.js (BASE_URL = '')
+
+3. Dashboard shell: src/components/ParentDashboard/ParentDashboard.jsx
+4. Dashboard CSS: src/components/ParentDashboard/ParentDashboard.css
+5. Pages dir: src/components/ParentDashboard/pages/
+6. App routing: src/App.jsx — /dashboard → ParentDashboard
+7. Auth guard: ParentDashboard checks vigil_token → redirects to /login if missing
+8. Login: src/components/Login.jsx — saves all tokens, navigates to /dashboard
+9. Registration success: src/components/RegistrationSuccess.jsx — links to /login
+
+=======================================================
+FILE STRUCTURE
+=======================================================
+src/
+  App.jsx                              ← Updated: conditional Header/Footer
+  utils/
+    apiService.js                      ← 47 endpoints, BASE_URL=''
+  components/
+    Login.jsx                          ← Updated: saves parentId, → /dashboard
+    RegistrationSuccess.jsx            ← Updated: Go to Login button
+    ParentDashboard/
+      ParentDashboard.jsx              ← Shell: sidebar, topbar, routing
+      ParentDashboard.css              ← Full design system
+      pages/
+        DashHome.jsx                   ← Overview stats + device status
+        ChildrenPage.jsx               ← CRUD for children (card grid)
+        DevicePairing.jsx              ← 3-step OTP flow + lookup
+        CallLogs.jsx                   ← All/Incoming/Outgoing/Missed tabs
+        SMSPage.jsx                    ← All/Inbox/Contact/Keyword search
+        GalleryPage.jsx                ← All/Photos/Videos filter
+        ContactsPage.jsx               ← Contacts + search + avatar colours
+        CalendarPage.jsx               ← Events with date chips
+        ScreenTimePage.jsx             ← Apps + usage bars + sort/search
+        LocationPage.jsx               ← Live + History(hours) + All records
+        GeofencePage.jsx               ← Create/Toggle/Delete zones + map links
+        AIAnalysisPage.jsx             ← Run/History/Relationships/Trends + PDF
+        PermissionsPage.jsx            ← Status/Permissions/Device Info
+        ProfilePage.jsx                ← Account info + change password + logout
+
+=======================================================
+STATUS TRACKING (ALL COMPLETE)
+=======================================================
+[x] App.jsx — conditional Header/Footer (NO chrome on /dashboard, /login, etc.)
+[x] vite.config.js — proxy /api → production server (CORS solved)
+[x] apiService.js — 47 endpoints, BASE_URL=''
+[x] ParentDashboard.css — full dark design system
+[x] ParentDashboard.jsx — sidebar, child selector, topbar, page routing, auth guard
+[x] DashHome.jsx — greeting banner, 4 stats, children list, device status
+[x] ChildrenPage.jsx — card grid, add/rename/delete modals
+[x] DevicePairing.jsx — step indicator, OTP flow, success screen, lookup
+[x] CallLogs.jsx — 4 tabs, table, pagination
+[x] SMSPage.jsx — 4 tabs, search, table, pagination
+[x] GalleryPage.jsx — 3 tabs, file icons, table, pagination
+[x] ContactsPage.jsx — search, coloured avatars, table
+[x] CalendarPage.jsx — date chips, card-style events
+[x] ScreenTimePage.jsx — stats, search, sort, usage progress bars
+[x] LocationPage.jsx — live pin, history hours picker, all records, Google Maps links
+[x] GeofencePage.jsx — zone cards, toggle, delete, create modal with tip
+[x] AIAnalysisPage.jsx — run analysis, wellness score, emotions, concerns, recs, PDF, history, relationships, trends
+[x] PermissionsPage.jsx — connectivity, battery, permissions toggles, device info
+[x] ProfilePage.jsx — banner, account info, change password, logout
+[x] Login.jsx — relative URL, saves parentId+token, navigate('/dashboard')
+[x] RegistrationSuccess.jsx — Go to Login instead of dashboard
+
+=======================================================
+DESIGN SYSTEM (ParentDashboard.css)
+=======================================================
+CSS Variables:
+  --primary: #6366f1   --accent: #06b6d4
+  --success: #22c55e   --danger: #ef4444   --warning: #f59e0b
+  --bg-base: #070c1a   --bg-sidebar: #0b1120  --bg-card: rgba(17,24,39,0.9)
+  --text-primary: #f9fafb  --text-secondary: #9ca3af  --text-muted: #6b7280
+  --border: rgba(255,255,255,0.06)  --border-bright: rgba(255,255,255,0.12)
+  --sidebar-width: 256px  --topbar-height: 60px
+
+Key CSS classes:
+  .vd-wrapper, .vd-sidebar, .vd-main, .vd-topbar, .vd-content
+  .vd-card, .vd-card-header, .vd-card-body, .vd-card-title
+  .vd-stat-card, .vd-stat-grid, .vd-stat-icon, .vd-stat-value
+  .vd-page-head (h2 + p heading)
+  .vd-tabs, .vd-tab
+  .vd-table, .vd-table-wrap, .vd-pagination, .vd-page-btn
+  .vd-badge (+ vd-badge-success/danger/warning/primary/cyan/purple)
+  .vd-btn (+ vd-btn-primary/outline/danger/sm)
+  .vd-input, .vd-select, .vd-form-group, .vd-form-label
+  .vd-modal-overlay, .vd-modal, .vd-modal-header, .vd-modal-body, .vd-modal-footer
+  .vd-loading, .vd-spinner, .vd-empty, .vd-error
+  .vd-toggle, .vd-toggle-slider
+  .vd-progress-bar, .vd-progress-fill
+  .vd-grid-2, .vd-grid-3
+  Responsive: @media max-width 900px (mobile sidebar), 520px
+
+=======================================================
+API MODULES (apiService.js)
+=======================================================
+authApi:     getMe, login, logout, changePasswordFirstTime
+childrenApi: getAll, create, updateName, delete, loginAndSendOtp, verifyOtpAndPair, getByEmail, activityOverview
+callsApi:    getAll, getByType (incoming/outgoing/missed)
+smsApi:      getAll, getInbox, searchByKeyword, getByAddress
+filesApi:    getAll, getImages, getVideos
+contactsApi: getAll
+eventsApi:   getAll
+locationApi: getLive, getHistoryByHours, getAllRecords
+geofenceApi: getForChild, getForParent, create, toggle, delete
+appsApi:     getAll
+permissionsApi: getLiveStatus, getPermissions, updatePermissions, getDeviceInfo
+aiApi:       runAnalysis, listDailyHistory, downloadReport, getRelationships, getLongitudinal
+deviceApi:   getInfo (used by permissionsApi.getDeviceInfo)

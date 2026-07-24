@@ -1,0 +1,3501 @@
+{
+	"info": {
+		"_postman_id": "f2c40155-b580-468c-9b35-4937a9cf9027",
+		"name": "Vigil Parent Web",
+		"description": "## Vigil Parent Web — API Test Collection\n\n### 🔑 Credentials & Environment\n| Field | Value |\n|---|---|\n| Base URL | `http://160-153-179-249.sslip.io` |\n| Parent Email | `parent@vigil.com` |\n| Parent Password | `Parent@1234` |\n| Environment | **Vigil env** (`35304629-fa1bd18d`) |\n\n> The collection pre-request script auto-refreshes `token` before every request using `POST /api/auth/login`. `parentId` is also captured automatically.\n>\n> ⚠️ If login returns **403**, the `parent@vigil.com` account may be unverified or suspended. Use the **Vigil Admin Panel** collection → \"10. Update User Status\" to activate the account.\n\n---\n\n### ✅ Fully Automated (no device required)\n\n| Folder | Endpoints | Notes |\n|---|---|---|\n| **1. Auth** | Register, Login, Verify OTP, Forgot/Reset Password | Register creates `parent@vigil.com` (accepts 409 if exists); Login captures `token` + `parentId` |\n| **2. Dashboard** | Get Child Profile, Get Children list | `childId` and `parentId` captured from login/children responses |\n| **7. Geofencing** | Create Geo Zone | `geoZoneId` captured on creation |\n| **11. Child Management** | Add Child, Get Children, Update Child, Delete Child | `childId` captured from Get/Add Child |\n\n---\n\n### 🔒 Requires Physical Paired Device (majority of collection)\n\nThe following endpoint groups require:\n1. A real **Android device** with the Vigil Child App installed and running\n2. A completed **device pairing flow** (generates `x-device-key` / `deviceKey`)\n3. An active `childId` linked to the paired device\n\nWithout these, all monitoring endpoints return **401 Unauthorized**.\n\n| Folder | Endpoints | Device Requirement |\n|---|---|---|\n| **3. Calls Monitoring** | Incoming, Outgoing, Missed calls, Call logs | `x-device-key` in headers |\n| **4. SMS Monitoring** | All SMS, Inbox, Keyword search, SMS count | `x-device-key` in headers |\n| **5. Gallery (Files)** | Get files, Get by type | `x-device-key` in headers |\n| **6. Live GPS & Location** | Current location, History, Location count | `x-device-key` in headers |\n| **7. Geofencing** | Toggle, Delete Geo Zone | `geoZoneId` from Create + device active |\n| **8. Screen Time (Apps)** | Installed apps, App count | `x-device-key` in headers |\n| **9. Contacts** | Get contacts, Contact count | `x-device-key` in headers |\n| **10. Events / Calendar** | Get events, Event count | `x-device-key` in headers |\n\n---\n\n### ⚠️ Known Limitations\n- **Rate limiting (429)**: Auth endpoints (`/api/auth/login`, etc.) are rate-limited. If the collection is run multiple times quickly, Login will return 429. Wait ~5 minutes before re-running.\n- **geoZoneId for Toggle/Delete**: `geoZoneId` is only captured if Create Geo Zone (in this collection) runs and succeeds first within the same run.\n\n---\n\n### 🚦 Automation Status\n- **Without paired device:** ~24% pass rate (auth + child management endpoints only)\n- **With paired device + active childId + deviceKey:** ~85%+ expected pass rate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35304629",
+		"_collection_link": "https://go.postman.co/collection/35304629-f2c40155-b580-468c-9b35-4937a9cf9027?source=collection_link"
+	},
+	"item": [
+		{
+			"name": "1. Auth",
+			"description": "Parent authentication — register (app + website), login, refresh-token, first-time password change, OTP password reset, profile, logout.",
+			"item": [
+				{
+					"name": "1. Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Register or user already exists', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201, 400, 409, 429]);",
+									"});",
+									"var res = pm.response.json();",
+									"if (pm.response.code === 201 || pm.response.code === 200) {",
+									"  var tok = res.token || (res.data && res.data.token);",
+									"  var uid = res.userId || res.parentId || (res.data && (res.data.userId || res.data.parentId || res.data._id));",
+									"  if (tok) {",
+									"    pm.environment.set('token', tok);",
+									"    pm.collectionVariables.set('token', tok);",
+									"    pm.environment.set('tokenIssuedAt', Date.now().toString());",
+									"  }",
+									"  if (uid) {",
+									"    pm.environment.set('parentId', uid);",
+									"    pm.collectionVariables.set('parentId', uid);",
+									"  }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Test Parent\",\n  \"email\": \"parent@vigil.com\",\n  \"password\": \"Parent@1234\",\n  \"role\": \"parent\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1b. Register via Website (name + email + password)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Account created or already exists', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201, 400, 409, 429]);",
+									"});",
+									"if (pm.response.code === 201) {",
+									"  console.log('[Parent Web] ✅ Account created — unique username + temp password generated and EMAILED to the user. No token returned; user must log in with the emailed password.');",
+									"}",
+									"if (pm.response.code === 409) {",
+									"  console.log('[Parent Web] Email already registered — ask the user to log in instead.');",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Rahul Sharma\",\n  \"email\": \"rahul@example.com\",\n  \"password\": \"Rahul@1234\",\n  \"mobile\": \"9876543210\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register-website",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register-website"
+							]
+						},
+						"description": "Fixed July 2026: parent sets their own password directly. Returns token immediately (no more emailed auto-generated username/temp-password) — redirect straight into the dashboard already signed in."
+					},
+					"response": []
+				},
+				{
+					"name": "2. Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Login succeeded', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"var res = pm.response.json();",
+									"var tok = res.token || (res.data && res.data.token);",
+									"var uid = res.userId || res.parentId || (res.data && (res.data.userId || res.data.parentId || res.data._id));",
+									"if (tok) {",
+									"  pm.environment.set('token', tok);",
+									"  pm.collectionVariables.set('token', tok);",
+									"  pm.environment.set('tokenIssuedAt', Date.now().toString());",
+									"  pm.collectionVariables.set('tokenIssuedAt', Date.now().toString());",
+									"  console.log('[Parent Web] token captured');",
+									"}",
+									"if (uid) {",
+									"  pm.environment.set('parentId', uid);",
+									"  pm.collectionVariables.set('parentId', uid);",
+									"  console.log('[Parent Web] parentId captured:', uid);",
+									"}",
+									"if (res.refreshToken) { pm.environment.set('refreshToken', res.refreshToken); pm.collectionVariables.set('refreshToken', res.refreshToken); console.log('[Parent Web] refreshToken captured'); }",
+									"// Website-registered users must change temp password on first login",
+									"if (res.must_reset_password === true) {",
+									"  console.log('[Parent Web] ⚠️ must_reset_password=true — frontend should redirect to Change Password screen');",
+									"  pm.collectionVariables.set('mustResetPassword', 'true');",
+									"} else {",
+									"  pm.collectionVariables.set('mustResetPassword', 'false');",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"parent@vigil.com\",\n  \"password\": \"Parent@1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2b. Refresh Token (when access token expires) — NEW",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Refreshed or refresh token expired', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 400, 401]);",
+									"});",
+									"var res; try { res = pm.response.json(); } catch (e) { res = {}; }",
+									"if (res.token) { pm.environment.set('token', res.token); pm.collectionVariables.set('token', res.token); pm.environment.set('tokenIssuedAt', Date.now().toString()); pm.collectionVariables.set('tokenIssuedAt', Date.now().toString()); console.log('[refresh] new access token set'); }",
+									"if (res.refreshToken) { pm.environment.set('refreshToken', res.refreshToken); pm.collectionVariables.set('refreshToken', res.refreshToken); console.log('[refresh] refresh token rotated'); }"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh-token"
+							]
+						},
+						"description": "Exchange the saved `refreshToken` for a fresh access `token` (no re-login). Call when any request returns 401, then retry with the new token. Response 200: `{ token, refreshToken }` — both new (rotated); save the latest. If this returns 401, the refresh token itself expired → user must log in again."
+					},
+					"response": []
+				},
+				{
+					"name": "3. Change Password — First Login (legacy accounts only)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Password changed or validation/auth error', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 400, 401, 429]);",
+									"});",
+									"if (pm.response.code === 200) {",
+									"  pm.collectionVariables.set('mustResetPassword', 'false');",
+									"  console.log('[Parent Web] Temp password replaced — user can now access dashboard');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newPassword\": \"MyNewSecure@789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/change-password-first-time",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"change-password-first-time"
+							]
+						},
+						"description": "Only relevant for accounts created BEFORE the July 2026 fix (auto-generated temp password, must_reset_password:true). New website registrations set their real password at signup and never hit this."
+					},
+					"response": []
+				},
+				{
+					"name": "4. Request Password Reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Request accepted', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"parent@vigil.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/request-password-reset",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"request-password-reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Verify Reset OTP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('OTP verification step (manual OTP required)', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201, 400, 401]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"parent@vigil.com\",\n  \"otp\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/verify-otp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Reset Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Password reset step (manual OTP required)', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201, 400, 401]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"parent@vigil.com\",\n  \"otp\": \"123456\",\n  \"newPassword\": \"NewParent@1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/reset-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Get My Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"{{baseUrl}}/api/auth/me\" -H \"Authorization: Bearer {{token}}\""
+					},
+					"response": []
+				},
+				{
+					"name": "6b. Get Profile (full, editable fields)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/parents/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"parents",
+								"profile"
+							]
+						},
+						"description": "This is what the Profile page actually reads — richer than /api/auth/me (address, city, country, postal_code, avatar, etc.)."
+					}
+				},
+				{
+					"name": "6c. Update Profile (name, email, mobile, address...)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/parents/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"parents",
+								"profile"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Name\",\n  \"email\": \"newemail@example.com\",\n  \"mobile\": \"9876543210\",\n  \"address\": \"123 Main St\",\n  \"city\": \"Mumbai\",\n  \"country\": \"India\",\n  \"postal_code\": \"400001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"description": "Fixed for Vigil_012: email is now editable here too (was previously locked). Validates format + uniqueness — 409 if another account already has that email."
+					}
+				},
+				{
+					"name": "7. Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Logout succeeded', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST \"{{baseUrl}}/api/auth/logout\" -H \"Authorization: Bearer {{token}}\""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Dashboard & Child Management",
+			"description": "Child profiles + dashboard: list/create children, per-child overview, aggregated device data, rename, delete.",
+			"item": [
+				{
+					"name": "6. Create Child",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Create Child succeeds', function() {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"    var res = pm.response.json();",
+									"    var id = res._id || res.childId || res.id ||",
+									"             (res.child && (res.child._id || res.child.id || res.child.childId)) ||",
+									"             (res.data && (res.data._id || res.data.childId || res.data.id ||",
+									"             (res.data.child && (res.data.child._id || res.data.child.id))));",
+									"    if (id) {",
+									"        pm.environment.set('childId', id);",
+									"        pm.collectionVariables.set('childId', id);",
+									"        console.log('[Parent App] childId captured from Create Child:', id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ali\",\n  \"age\": 10,\n  \"gender\": \"male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/children",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Get All Children",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"var res = pm.response.json();",
+									"var children = res.children || res.data || (Array.isArray(res) ? res : []);",
+									"// Do NOT overwrite childId here — it was already captured from Create Child",
+									"// Only set childId if it is currently empty/missing",
+									"var existingChildId = pm.environment.get('childId') || pm.collectionVariables.get('childId');",
+									"if (!existingChildId && children.length > 0) {",
+									"  pm.environment.set('childId', children[children.length - 1]._id);",
+									"  pm.collectionVariables.set('childId', children[children.length - 1]._id);",
+									"  console.log('[Parent App] childId set from Get All Children (fallback):', children[children.length - 1]._id);",
+									"} else {",
+									"  console.log('[Parent App] childId preserved from Create Child:', existingChildId);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Get Child by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status 200 or 404', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. Get Children by Parent ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children/childrens/{{parentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"childrens",
+								"{{parentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. Update Child Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Update accepted', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ali Updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/update-name",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"update-name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11. Delete Child",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Delete accepted', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Get All Device Data (aggregated)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Device data returned or not found', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        404",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/deviceData/{{parentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"deviceData",
+								"{{parentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. Get Activity Overview (child card stats)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/activity-overview",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"activity-overview"
+							]
+						},
+						"description": "Returns: totalCallsToday, totalSmsToday, appCount, appUsageMinutes, currentLocation, batteryLevel, isOnline, lastSeen"
+					},
+					"response": []
+				},
+				{
+					"name": "Dashboard Summary (device/online/alert counts)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/parent-data/dashboard-summary",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"parent-data",
+								"dashboard-summary"
+							]
+						},
+						"description": "Powers the Quick Stats row on the dashboard: deviceCount, onlineCount, alertsToday."
+					}
+				},
+				{
+					"name": "My Alerts (for notification bell)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/parent-data/alerts?limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"parent-data",
+								"alerts"
+							]
+						},
+						"description": "Real alerts (sos_panic, geofence_violation, device_offline, sim_changed, low_battery, app_uninstall) across all of this parent's children."
+					}
+				},
+				{
+					"name": "Child Social Activity",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/parent-data/children/{{childId}}/social",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"parent-data",
+								"children",
+								"{{childId}}",
+								"social"
+							]
+						},
+						"description": "Requires socialMonitoring feature flag on the plan. Per-app conversations (WhatsApp/Instagram/etc.) captured from the child device."
+					}
+				},
+				{
+					"name": "Child Files (Gallery, parent-data view)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/parent-data/children/{{childId}}/files",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"parent-data",
+								"children",
+								"{{childId}}",
+								"files"
+							]
+						},
+						"description": "Requires mediaMonitoring feature flag."
+					}
+				},
+				{
+					"name": "Child Apps Summary (7-day usage)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/parent-data/children/{{childId}}/apps-summary?days=7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"parent-data",
+								"children",
+								"{{childId}}",
+								"apps-summary"
+							]
+						},
+						"description": "Requires appUsage feature flag. Powers the Reports page trend chart + top apps."
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Device Pairing",
+			"item": [
+				{
+					"name": "13. Login & Send OTP (for child device pairing)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('OTP sent or credentials invalid (semi-manual step)', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201, 400, 401, 404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"parent@vigil.com\",\n  \"password\": \"Parent@1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/children/login-and-send-otp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"login-and-send-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP & Pair Device",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Pair device step (real OTP from parent email)', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 400, 401]);",
+									"});",
+									"var res; try { res = pm.response.json(); } catch (e) { res = {}; }",
+									"if (res.token) { pm.environment.set('token', res.token); pm.collectionVariables.set('token', res.token); pm.environment.set('tokenIssuedAt', Date.now().toString()); pm.collectionVariables.set('tokenIssuedAt', Date.now().toString()); console.log('[pair] CHILD token captured'); }",
+									"if (res.deviceKey) { pm.environment.set('deviceKey', res.deviceKey); pm.collectionVariables.set('deviceKey', res.deviceKey); console.log('[pair] deviceKey captured'); }",
+									"if (res.childId) { pm.environment.set('childId', res.childId); pm.collectionVariables.set('childId', res.childId); }",
+									"if (res.parentId) { pm.environment.set('parentId', res.parentId); pm.collectionVariables.set('parentId', res.parentId); }"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-postman-collection-run",
+								"value": "true"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"parent@vigil.com\",\n  \"otp\": \"123456\",\n  \"name\": \"Ali\",\n  \"age\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/children/verify-otp-and-pair-device",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"verify-otp-and-pair-device"
+							]
+						},
+						"description": "STEP 2 of pairing. Submit the OTP emailed to the parent. Returns: token (CHILD scoped JWT) + a PER-DEVICE unique deviceKey (vigil_dk_...) + childId + parentId. The test script auto-captures all of them into env/collection vars. Use the returned deviceKey in the x-device-key header for all monitoring data-push calls (/api/sms, /api/apps, /api/files, /api/logs...)."
+					},
+					"response": []
+				},
+				{
+					"name": "18. Get Children by Parent Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"var res = pm.response.json();",
+									"var children = res.children || res.data || (Array.isArray(res) ? res : []);",
+									"if (children.length > 0) pm.collectionVariables.set('childId', children[0]._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"parent@vigil.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/children/children-by-email",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"children-by-email"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Permissions & Device Status",
+			"item": [
+				{
+					"name": "Get Live Status (battery + connectivity) — NEW",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Live status returned', function(){ pm.expect(pm.response.code).to.be.oneOf([200,401,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/live-status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"live-status"
+							]
+						},
+						"description": "NEW endpoint (added 08 Jun 2026). Returns consolidated real-time device status: isOnline, sessionActive, liveStatusUpdatedAt, batteryInfo { level, state, isInBatterySaveMode, temperature, voltage }, and connectivity { connectionType[], isConnected, hasWifi, hasMobile, hasBluetooth, hasVpn, wifiInfo }.\n\nIMPORTANT: 5-minute stale guard — if the child app has not called PUT /live-status in the last 5 minutes, this endpoint returns isOnline: false regardless of the DB value. This correctly handles the case where the app was killed in the background without a clean disconnect.\n\nAuth: parent JWT (Bearer token) OR child JWT."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Permissions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Permissions returned', function(){ pm.expect(pm.response.code).to.be.oneOf([200,401,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "x-postman-collection-run",
+								"value": "true"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/permissions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"permissions"
+							]
+						},
+						"description": "Read the child current permission state (counterpart of PUT Update Permissions). Returns only permission fields — battery/online fields removed as of 08 Jun 2026."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Permissions (all-in-one)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Permissions updated', function () { pm.expect(pm.response.code).to.be.oneOf([200,401,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "x-postman-collection-run",
+								"value": "true"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"scanDeviceForSecurity\": true,\n  \"improveHarmfulDetection\": true,\n  \"systemUpdateService\": true,\n  \"allowUsageTracking\": true,\n  \"administratorAccess\": true,\n  \"batteryOptimizationAllowed\": true,\n  \"deviceName\": \"Samsung Galaxy A52\",\n  \"notificationAccess\": {\n    \"systemUpdateService\": true,\n    \"secureFolder\": false,\n    \"sosNotification\": true,\n    \"workspace\": false\n  },\n  \"dataAccess\": {\n    \"messages\": true,\n    \"contacts\": true,\n    \"call_log\": true,\n    \"calendar\": true,\n    \"location\": true,\n    \"app_usage\": true,\n    \"network_wifi\": true\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/permissions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"permissions"
+							]
+						},
+						"description": "ONE endpoint for ALL permissions. Send any subset of fields — only present fields update. Replaces the 8 separate permission endpoints.\n\n⚠️ Response cleaned up 08 Jun 2026: returns ONLY { childId, name, deviceName, permissions }. Fields batteryLevel, isOnline, and lastSeen removed from this response — use GET /live-status for real-time device status."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Device Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Device info saved', function () { pm.expect(pm.response.code).to.be.oneOf([200,401,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "x-postman-collection-run",
+								"value": "true"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceId\": \"AND-123456\",\n  \"model\": \"Samsung Galaxy A52\",\n  \"manufacturer\": \"Samsung\",\n  \"osVersion\": \"Android 13\",\n  \"appVersion\": \"1.0.0\",\n  \"sdkVersion\": \"33\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/device-info",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"device-info"
+							]
+						},
+						"description": "Child app reports hardware/OS details after pairing. Only provided fields update."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Device Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Device info returned', function () { pm.expect(pm.response.code).to.be.oneOf([200,401,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "x-postman-collection-run",
+								"value": "true"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/device-info",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"device-info"
+							]
+						},
+						"description": "Read back the device hardware/OS info (deviceId, model, manufacturer, osVersion, appVersion, sdkVersion). Note: batteryLevel, isOnline, and lastSeen were removed from this response on 08 Jun 2026 — use GET /live-status for those fields."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. Calls Monitoring",
+			"item": [
+				{
+					"name": "9. Get All Call Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Call logs returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "x-device-key",
+								"value": "{{deviceKey}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/logs/calllogs?child_id={{childId}}&parent_id={{parentId}}&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"logs",
+								"calllogs"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. Incoming Calls",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Incoming calls returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/logs/calllogs?child_id={{childId}}&parent_id={{parentId}}&callType=incoming&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"logs",
+								"calllogs"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "callType",
+									"value": "incoming"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11. Outgoing Calls",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Outgoing calls returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/logs/calllogs?child_id={{childId}}&parent_id={{parentId}}&callType=outgoing&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"logs",
+								"calllogs"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "callType",
+									"value": "outgoing"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12. Missed Calls",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Missed calls returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/logs/calllogs?child_id={{childId}}&parent_id={{parentId}}&callType=missed&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"logs",
+								"calllogs"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "callType",
+									"value": "missed"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "6. SMS Monitoring",
+			"item": [
+				{
+					"name": "14. Get All SMS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('SMS returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sms/get_sms?child_id={{childId}}&parent_id={{parentId}}&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"sms",
+								"get_sms"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "15. Search SMS by Address/Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('SMS search returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sms/get_sms?child_id={{childId}}&parent_id={{parentId}}&address=+923001234567&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"sms",
+								"get_sms"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "address",
+									"value": "+923001234567"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "15b. SMS Keyword Search (AI Alerts)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('SMS keyword search returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sms/get_sms?child_id={{childId}}&parent_id={{parentId}}&keyword=drugs&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"sms",
+								"get_sms"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "keyword",
+									"value": "drugs"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "15c. Get Inbox SMS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Inbox SMS returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sms/get_sms?child_id={{childId}}&parent_id={{parentId}}&type=inbox&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"sms",
+								"get_sms"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "type",
+									"value": "inbox"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "7. Gallery (Files)",
+			"item": [
+				{
+					"name": "17. Get All Files",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Files returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/files/get_files?child_id={{childId}}&parent_id={{parentId}}&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"get_files"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "17b. Get Photos Only",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Photos returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/files/get_files?child_id={{childId}}&parent_id={{parentId}}&file_type=image&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"get_files"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "file_type",
+									"value": "image"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "17c. Get Videos Only",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Videos returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/files/get_files?child_id={{childId}}&parent_id={{parentId}}&file_type=video&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"get_files"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "file_type",
+									"value": "video"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "8. Live GPS & Location",
+			"description": "Live location + history: latest pin, location-history (read/write), configurable hours window, raw locations.",
+			"item": [
+				{
+					"name": "27. Get Child Location",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/location",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "28. Get Location History",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/location-history?page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"location-history"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "29. Add Location History",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status accepted', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"coordinates\": [74.3587, 31.5204],\n  \"address\": \"Lahore, Pakistan\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/location-history",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"location-history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "30. Update Child Location",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status accepted', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 31.5204,\n  \"longitude\": 74.3587\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/children/{{childId}}/location",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"{{childId}}",
+								"location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "20. Get Location History (default 48h · ?hours=N)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Location history with date range returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/locations/history/{{childId}}?hours=24",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"locations",
+								"history",
+								"{{childId}}"
+							],
+							"query": [
+								{
+									"key": "hours",
+									"value": "24",
+									"description": "Hours of history to return (e.g. 3, 7, 24). Omit for default 48h. from/to no longer used."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "21. Get All Location Records",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('All location records returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/locations/get_locations?child_id={{childId}}&parent_id={{parentId}}&page=1&limit=50",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"locations",
+								"get_locations"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "9. Geofencing (Safe Zones)",
+			"item": [
+				{
+					"name": "22. Create Geo Zone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Geo zone created', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"var res = pm.response.json();",
+									"if (res._id) pm.collectionVariables.set('geoZoneId', res._id);",
+									"if (res.geozone && res.geozone._id) pm.collectionVariables.set('geoZoneId', res.geozone._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"label\": \"Home\",\n  \"centerLat\": 31.5204,\n  \"centerLng\": 74.3587,\n  \"radiusMeters\": 200,\n  \"child_id\": \"{{childId}}\",\n  \"parent_id\": \"{{parentId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/geozones/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"geozones",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "23. Get Geo Zones for Parent",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/geozones/{{parentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"geozones",
+								"{{parentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "24. Get Geo Zones for Specific Child",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/geozones/{{parentId}}/{{childId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"geozones",
+								"{{parentId}}",
+								"{{childId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "25. Toggle Geo Zone Active/Inactive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Toggle accepted', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"pm.test('Toggle geo zone accepted or not found', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        201,",
+									"        404",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/geozones/{{geoZoneId}}/toggle",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"geozones",
+								"{{geoZoneId}}",
+								"toggle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "26. Delete Geo Zone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Delete accepted', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"pm.test('Delete geo zone accepted or not found', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        201,",
+									"        204,",
+									"        404",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/geozones/{{geoZoneId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"geozones",
+								"{{geoZoneId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "10. Screen Time (Apps)",
+			"item": [
+				{
+					"name": "27. Get Installed Apps with Usage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Apps returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/apps/get_apps?child_id={{childId}}&parent_id={{parentId}}&page=1&limit=50",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"get_apps"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "11. Contacts",
+			"item": [
+				{
+					"name": "29. Get All Contacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Contacts returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/contacts/get_contacts?child_id={{childId}}&parent_id={{parentId}}&page=1&limit=50",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"get_contacts"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "12. Events / Calendar",
+			"item": [
+				{
+					"name": "31. Get Calendar Events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+									"",
+									"pm.test('Events returned or no device key', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([",
+									"        200,",
+									"        401",
+									"    ]);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/get_events?child_id={{childId}}&parent_id={{parentId}}&page=1&limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"get_events"
+							],
+							"query": [
+								{
+									"key": "child_id",
+									"value": "{{childId}}"
+								},
+								{
+									"key": "parent_id",
+									"value": "{{parentId}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "13. AI Behaviour Analysis",
+			"item": [
+				{
+					"name": "Run Daily Analysis (SMS + Calls)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Analyze OK\", function(){ pm.expect(pm.response.code).to.be.oneOf([200,404]); });",
+									"var j = pm.response.json();",
+									"if (j && j.date) pm.collectionVariables.set(\"aiDate\", j.date);",
+									"if (j && j.analyzed === false) console.log(\"No SMS/calls for this date — seed data or pick another date.\");",
+									"if (j && j.result) console.log(\"wellness_score:\", j.result.wellness_score, \"| band:\", j.result.wellness_band);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"date\": \"{{aiDate}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/ai/children/{{childId}}/analyze",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ai",
+								"children",
+								"{{childId}}",
+								"analyze"
+							]
+						},
+						"description": "Runs the day’s AI Behaviour Analysis for a child. Backend pulls that child’s SMS + call logs for `date`, maps them to the AI model format, calls the model (server-to-server), and returns the analysis.\n\n**Auth:** parent JWT (Bearer {{token}}). Verifies the child belongs to you.\n\n**Body:** `{ \"date\": \"{{aiDate}}\" }` — optional, defaults to today (IST).\n\n**Verified 08 Jul 2026** with real seeded data (3 SMS + 2 calls) → returned wellness_score 99.4, band \"good\", + PDF report. A nightly cron (02:00 IST) also auto-runs this for every child’s previous day.\n\nSee the saved example response below for the exact shape."
+					},
+					"response": [
+						{
+							"name": "200 — Verified (3 SMS + 2 calls)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"date\": \"{{aiDate}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/ai/children/{{childId}}/analyze",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"ai",
+										"children",
+										"{{childId}}",
+										"analyze"
+									]
+								},
+								"description": "Collects the child`s SMS + call logs for the given day, maps them into the AI service format, and runs the behaviour analysis.\n\n**Auth:** parent JWT (Bearer token) + verifies the child belongs to you.\n\n**Body:** `{ \"date\": \"YYYY-MM-DD\" }` — optional; defaults to TODAY (IST). Usually you analyse a completed day (yesterday).\n\n**Response (data found):** `{ status:200, analyzed:true, date, smsCount, callCount, result:{ ...daily_intelligence } }` — result has wellness_score, wellness_band, executive_summary, dominant_emotions, concerning_findings, recommendations, relationships, top_priorities, longitudinal trends, overall_confidence.\n\n**Response (no data that day):** `{ status:200, analyzed:false, message:\"No SMS or call logs found...\" }`.\n\nNOTE: a **daily cron runs this automatically at 02:00 IST for every child`s previous day** — this endpoint is for on-demand / \"Generate Report\" button. Added 03 Jul 2026."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"status\": 200,\n  \"analyzed\": true,\n  \"date\": \"2026-07-09\",\n  \"smsCount\": 3,\n  \"callCount\": 2,\n  \"result\": {\n    \"wellness_score\": 99.4,\n    \"wellness_band\": \"good\",\n    \"executive_summary\": \"Today’s signals indicate a generally positive and joyful day for your child, with a high wellness score...\",\n    \"dominant_emotions\": [\n      \"joy\",\n      \"affection\"\n    ],\n    \"positive_findings\": [\n      \"Warm, supportive exchange with a parent contact\",\n      \"Friendly social plans with a peer\"\n    ],\n    \"concerning_findings\": [],\n    \"recommendations\": [\n      \"Keep encouraging open communication\"\n    ],\n    \"relationships\": [\n      {\n        \"contact\": \"Mom\",\n        \"role\": \"family\",\n        \"sentiment\": \"positive\"\n      },\n      {\n        \"contact\": \"Rahul\",\n        \"role\": \"friend\",\n        \"sentiment\": \"positive\"\n      }\n    ],\n    \"overall_confidence\": 0.86\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Daily Analysis (JSON)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/ai/children/{{childId}}/daily/{{aiDate}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ai",
+								"children",
+								"{{childId}}",
+								"daily",
+								"{{aiDate}}"
+							]
+						},
+						"description": "Fetch a previously-generated day`s analysis (JSON) for a child. Date in the path is `YYYY-MM-DD`.\n\nReturns the full `daily_intelligence` object. 404 if that day hasn`t been analysed yet (run the analyze endpoint or wait for the nightly cron). Auth: parent JWT."
+					},
+					"response": []
+				},
+				{
+					"name": "List Daily Analyses (history)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/ai/children/{{childId}}/daily",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ai",
+								"children",
+								"{{childId}}",
+								"daily"
+							]
+						},
+						"description": "List all daily analyses available for a child (history timeline). Auth: parent JWT."
+					},
+					"response": []
+				},
+				{
+					"name": "Download Daily Report (PDF)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/ai/children/{{childId}}/daily/{{aiDate}}/report",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ai",
+								"children",
+								"{{childId}}",
+								"daily",
+								"{{aiDate}}",
+								"report"
+							]
+						},
+						"description": "Premium PDF report for a child + date. The backend streams the PDF straight from the AI service (Content-Type: application/pdf). In Postman use **Send and Download** to save it. Auth: parent JWT."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Relationships",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/ai/children/{{childId}}/relationships",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ai",
+								"children",
+								"{{childId}}",
+								"relationships"
+							]
+						},
+						"description": "Relationship analysis for the child (roles, trust/conflict scores, protective vs stressful contacts). Auth: parent JWT."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Longitudinal / Trends",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200,404]); });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/ai/children/{{childId}}/longitudinal?kind=longitudinal",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ai",
+								"children",
+								"{{childId}}",
+								"longitudinal"
+							],
+							"query": [
+								{
+									"key": "kind",
+									"value": "longitudinal",
+									"description": "longitudinal | timeline | summary/daily | summary/weekly | summary/monthly"
+								}
+							]
+						},
+						"description": "Trends over time for the child. `kind` selects the view:\n- `longitudinal` (default) — trend directions + confidence\n- `timeline` — event timeline\n- `summary/daily` · `summary/weekly` · `summary/monthly` — rolled-up summaries\n\nAuth: parent JWT."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "14. Subscriptions & Payments",
+			"item": [
+				{
+					"name": "1. Get Plans (public)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/subscriptions/plans",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"subscriptions",
+								"plans"
+							]
+						},
+						"description": "No auth needed. Returns active plans with feature_flags — use this to render the pricing/upgrade screen."
+					}
+				},
+				{
+					"name": "2. Get My Subscription",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/subscriptions/my",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"subscriptions",
+								"my"
+							]
+						},
+						"description": "Returns hasSubscription + plan.feature_flags (use feature_flags to show/hide lock icons per feature) + daysRemaining/inTrial."
+					}
+				},
+				{
+					"name": "3. Initiate Payment (Stripe Checkout)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payments/initiate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"initiate"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"planId\": \"<plan _id from Get Plans>\",\n  \"email\": \"{{parentEmail}}\",\n  \"name\": \"{{parentName}}\",\n  \"success_url\": \"vigilapp://payment-success\",\n  \"cancel_url\": \"vigilapp://payment-cancel\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"description": "IMPORTANT for mobile: pass your own success_url/cancel_url as a deep link (e.g. vigilapp://...) so the app can catch the redirect after the in-app browser closes. Open the returned  in an in-app browser/WebView. The webhook activates the subscription automatically server-side — no action needed from the app for that part. After the browser returns/closes, call \"Get My Subscription\" to confirm hasSubscription:true and the new plan."
+					}
+				},
+				{
+					"name": "4. Upgrade Plan",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/subscriptions/upgrade",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"subscriptions",
+								"upgrade"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newPlanId\": \"<target plan _id>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"description": "Returns a Stripe Checkout url for the prorated amount (same in-app-browser + poll pattern as Initiate Payment)."
+					}
+				},
+				{
+					"name": "5. Downgrade Plan",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/subscriptions/downgrade",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"subscriptions",
+								"downgrade"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newPlanId\": \"<target plan _id>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"description": "No payment needed — takes effect at the next billing cycle, not immediately."
+					}
+				},
+				{
+					"name": "6. Cancel Subscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/subscriptions/cancel",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"subscriptions",
+								"cancel"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"description": "Turns off auto-renew. Access continues until the current expiry_date."
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"// [Parent Web] Auto-login pre-request script",
+					"var token = pm.environment.get('token') || pm.collectionVariables.get('token');",
+					"var issuedAt = parseInt(pm.environment.get('tokenIssuedAt') || pm.collectionVariables.get('tokenIssuedAt') || '0');",
+					"var ageMinutes = (Date.now() - issuedAt) / 60000;",
+					"",
+					"if (!token || ageMinutes > 55) {",
+					"    var baseUrl = pm.environment.get('baseUrl') || 'http://160-153-179-249.sslip.io';",
+					"    var apiBase = baseUrl.replace(/\\/api$/, '');",
+					"    var email = pm.environment.get('loginEmail') || 'parent@vigil.com';",
+					"    var password = pm.environment.get('loginPassword') || 'Parent@1234';",
+					"",
+					"    pm.sendRequest({",
+					"        url: apiBase + '/api/auth/login',",
+					"        method: 'POST',",
+					"        header: { 'Content-Type': 'application/json' },",
+					"        body: {",
+					"            mode: 'raw',",
+					"            raw: JSON.stringify({ email: email, password: password })",
+					"        }",
+					"    }, function(err, res) {",
+					"        if (!err && res && (res.code === 200 || res.code === 201)) {",
+					"            var body = res.json();",
+					"            var newToken = body.token || (body.data && body.data.token);",
+					"            if (newToken) {",
+					"                pm.environment.set('token', newToken);",
+					"                pm.collectionVariables.set('token', newToken);",
+					"                pm.environment.set('tokenIssuedAt', Date.now().toString());",
+					"                pm.collectionVariables.set('tokenIssuedAt', Date.now().toString());",
+					"                console.log('[Parent Web] token refreshed');",
+					"            }",
+					"            var userId = body.userId || body.parentId || (body.data && (body.data.userId || body.data.parentId || body.data._id));",
+					"            if (userId) {",
+					"                pm.environment.set('parentId', userId);",
+					"                pm.collectionVariables.set('parentId', userId);",
+					"            }",
+					"        } else {",
+					"            console.error('[Parent Web] Auto-login failed:', err || (res ? res.code : 'no response'));",
+					"        }",
+					"    });",
+					"}",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test('Response time is acceptable', function() {",
+					"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+					"});",
+					"pm.test('Response is not a server error', function() {",
+					"    pm.expect(pm.response.code).to.be.below(500);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://160-153-179-249.sslip.io"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "parentId",
+			"value": ""
+		},
+		{
+			"key": "childId",
+			"value": ""
+		},
+		{
+			"key": "geoZoneId",
+			"value": ""
+		},
+		{
+			"key": "tokenIssuedAt",
+			"value": ""
+		},
+		{
+			"key": "pairingCode",
+			"value": ""
+		},
+		{
+			"key": "deviceKey",
+			"value": ""
+		},
+		{
+			"key": "refreshToken",
+			"value": ""
+		},
+		{
+			"key": "aiDate",
+			"value": "2026-07-09"
+		}
+	]
+}

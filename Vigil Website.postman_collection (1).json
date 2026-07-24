@@ -1,0 +1,564 @@
+{
+	"info": {
+		"_postman_id": "a7c91e22-f3b4-4d88-b012-8e5f3c7d9a01",
+		"name": "Vigil Website",
+		"description": "## Vigil Public Website — API Collection\n\nAll backend API calls used by the Vigil marketing/public website (`github.com/amandaptuar/vigil_website`).\n\n### Base URL\n`http://160-153-179-249.sslip.io`\n\n### Endpoints Covered\n| # | Endpoint | Auth | Used By |\n|---|---|---|---|\n| 1 | GET /api/health | Public | Health check |\n| 2 | GET /api/subscriptions/plans | Public | Pricing page — fetch real plans |\n| 3a | POST /api/auth/register-website | Public | Register page — auto-generates username + temp password, emails credentials |\n| 3b | POST /api/auth/login | Public | Login with USERNAME + temp password, returns `must_reset_password: true` |\n| 3c | POST /api/auth/change-password-first-time | JWT | First-login mandatory password change |\n| 4 | POST /api/payments/checkout-session | Public | Pricing page — Stripe checkout |\n| 5 | POST /api/contact | Public | Contact page — contact form |\n\n### Registration Flow (Website)\n```\nUser fills Name + Email on website\n        ↓\nPOST /api/auth/register-website\n        ↓ backend auto-generates\n  username = \"john_a4b3\"\n  temp password = \"Vigil@8Xk3Mq2P\"\n  email sent to user (USERNAME + PASSWORD only — no email field)\n        ↓\nUser checks email → logs in with USERNAME + temp password\nPOST /api/auth/login → { must_reset_password: true }\n        ↓\nFrontend shows Change Password screen\nPOST /api/auth/change-password-first-time\n        ↓\nUser accesses full dashboard ✅\n```\n\n### CORS Note\nAdd the website production domain to `ALLOWED_ORIGINS` in the VPS `.env` file.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://160-153-179-249.sslip.io",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "1. Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"health"
+					]
+				},
+				"description": "Verify backend is online. Returns `{ status: 'ok', timestamp }`."
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Backend is healthy', function () {",
+							"  pm.response.to.have.status(200);",
+							"  var json = pm.response.json();",
+							"  pm.expect(json.status).to.eql('ok');",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Pricing — Get Subscription Plans",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/subscriptions/plans",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"subscriptions",
+						"plans"
+					]
+				},
+				"description": "Fetches all available subscription plans (Free, Basic, Premium, Family). Public endpoint — no auth required. The Pricing page uses this to show real plan names, prices, and features instead of hardcoded values."
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Returns plans array', function () {",
+							"  pm.response.to.have.status(200);",
+							"  var json = pm.response.json();",
+							"  // API returns { status, count, plans: [...] } — handle both shapes",
+							"  var plans = Array.isArray(json) ? json : json.plans;",
+							"  pm.expect(plans).to.be.an('array').that.is.not.empty;",
+							"});",
+							"var json = pm.response.json();",
+							"var plans = Array.isArray(json) ? json : (json.plans || []);",
+							"if (plans.length > 0) {",
+							"  pm.collectionVariables.set('planId', plans[0]._id || plans[0].id);",
+							"  console.log('Captured planId:', pm.collectionVariables.get('planId'));",
+							"}"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Register & Login — Website Flow",
+			"item": [
+				{
+					"name": "3a. Register (Website — name + email + password)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register-website",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register-website"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Test Parent\",\n  \"email\": \"website.test@example.com\",\n  \"password\": \"Test@1234\",\n  \"mobile\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"description": "As of the July 2026 fix: the parent sets their OWN password on the form. No more auto-generated username/temp-password emailed to them. Returns a token immediately — redirect straight into Parent Web already signed in (see success handling in the website Register.jsx)."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"  var res = pm.response.json();",
+									"  if (res.token) { pm.collectionVariables.set(\"token\", res.token); }",
+									"  if (res.userId) { pm.collectionVariables.set(\"parentId\", res.userId); }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "3b. Login (email + password, set by the parent)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"website.test@example.com\",\n  \"password\": \"Test@1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"description": "Same endpoint as before. must_reset_password will be false for anyone who registered after the fix — only legacy (pre-fix) accounts still get true."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"  var res = pm.response.json();",
+									"  if (res.token) { pm.collectionVariables.set(\"token\", res.token); }",
+									"  if (res.userId) { pm.collectionVariables.set(\"parentId\", res.userId); }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "3b-2. Refresh Token (when access token expires)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh-token"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"  var res = pm.response.json();",
+									"  if (res.token) { pm.collectionVariables.set(\"token\", res.token); }",
+									"  if (res.userId) { pm.collectionVariables.set(\"parentId\", res.userId); }",
+									"}"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "3c. Change Password (legacy accounts only — must_reset_password:true)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/change-password-first-time",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"change-password-first-time"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newPassword\": \"NewPass@1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"description": "Only relevant for accounts created BEFORE the fix (auto-generated temp password). New registrations set their real password directly at signup and never see this step."
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Pricing — Stripe Checkout Session",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"planId\": \"{{planId}}\",\n  \"email\": \"website-user@example.com\",\n  \"successUrl\": \"http://your-website.com/#/success\",\n  \"cancelUrl\": \"http://your-website.com/#/pricing\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/payments/checkout-session",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"payments",
+						"checkout-session"
+					]
+				},
+				"description": "Creates a Stripe Checkout session for the selected plan. Returns `{ checkoutUrl }`. The frontend should redirect the user to this URL to complete payment on Stripe's hosted page.\n\nAfter payment Stripe fires a webhook to `POST /api/payments/webhook` which auto-assigns the subscription to the parent account."
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Checkout session created', function () {",
+							"  pm.expect(pm.response.code).to.be.oneOf([200, 201, 400, 500]);",
+							"});",
+							"var res = pm.response.json();",
+							"if (res.checkoutUrl) {",
+							"  pm.collectionVariables.set('checkoutUrl', res.checkoutUrl);",
+							"  console.log('Stripe checkout URL:', res.checkoutUrl);",
+							"}"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Contact — Submit Contact Form",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"John Parent\",\n  \"email\": \"john@example.com\",\n  \"subject\": \"General Support\",\n  \"message\": \"Hello, I have a question about the Vigil app. How do I pair my child's device?\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/contact",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"contact"
+					]
+				},
+				"description": "Public contact form endpoint. The Vigil website Contact page should call this instead of FormSubmit.co. Validates all fields, sends an email to the support inbox via Nodemailer.\n\nBody fields:\n- `name` (string, required)\n- `email` (valid email, required)\n- `subject` (string, required)\n- `message` (string, required)\n\nReturns `{ status: 200, message: 'Message sent successfully.' }`"
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Contact form submitted successfully', function () {",
+							"  pm.expect(pm.response.code).to.be.oneOf([200, 500]);",
+							"  if (pm.response.code === 200) {",
+							"    var json = pm.response.json();",
+							"    pm.expect(json.status).to.eql(200);",
+							"  }",
+							"});",
+							"// 500 is expected if EMAIL_USER/EMAIL_PASS env vars aren't configured on test server"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "6. Contact — Validation Error (missing fields)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"John\",\n  \"email\": \"\",\n  \"subject\": \"Test\",\n  \"message\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/contact",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"contact"
+					]
+				},
+				"description": "Test validation — should return 400 when required fields are missing."
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Returns 400 for missing fields', function () {",
+							"  pm.response.to.have.status(400);",
+							"  var json = pm.response.json();",
+							"  pm.expect(json.status).to.eql(400);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "7. Register — Password Reset Flow",
+			"item": [
+				{
+					"name": "7a. Request Password Reset (Send OTP)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"website-user@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/request-password-reset",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"request-password-reset"
+							]
+						},
+						"description": "Sends a 6-digit OTP to the user's email for password reset. OTP expires in 10 minutes."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('OTP request accepted', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 400, 404, 429]);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "7b. Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"website-user@example.com\",\n  \"otp\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/verify-otp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verify-otp"
+							]
+						},
+						"description": "Verifies the OTP code sent to the user's email. Replace 123456 with the actual OTP received."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('OTP verified or invalid', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 400, 429]);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "7c. Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"website-user@example.com\",\n  \"otp\": \"123456\",\n  \"newPassword\": \"NewSecurePass@456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/reset-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"reset-password"
+							]
+						},
+						"description": "Sets a new password after OTP verification. Replace otp value with the actual code received."
+					},
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Password reset accepted', function () {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 400, 429]);",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

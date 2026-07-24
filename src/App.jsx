@@ -13,12 +13,15 @@ import Register from './components/Register';
 import Login from './components/Login';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import SetPassword from './components/SetPassword';
-import Dashboard from './components/Dashboard';
+import ParentDashboard from './components/ParentDashboard/ParentDashboard';
 import ChildSetup from './components/ChildSetup';
 import Features from './components/Features';
 import BlogPost from './components/BlogPost';
 import CaseStudy from './components/CaseStudy';
 import CaseStudySingle from './components/CaseStudySingle';
+
+// Routes where Header & Footer should NOT be shown
+const NO_CHROME_PATHS = ['/dashboard', '/login', '/register', '/register/success', '/set-password', '/child-setup'];
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -26,45 +29,39 @@ function ScrollToTop() {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (window.AOS) {
-      setTimeout(() => {
-        window.AOS.init();
-      }, 100);
+      setTimeout(() => { window.AOS.init(); }, 100);
     }
   }, [pathname]);
 
   return null;
 }
 
-function App() {
-  useEffect(() => {
-    // Re-initialize AOS if it's available globally
-    if (window.AOS) {
-      window.AOS.init();
-    }
-  }, []);
+function AppShell() {
+  const { pathname } = useLocation();
+  const hideChrome = NO_CHROME_PATHS.some(p => pathname === p || pathname.startsWith(p + '/'));
 
   return (
-    <Router>
-      <ScrollToTop />
-
-      <div className="progress-bar-container">
-        <div className="progress-bar"></div>
-      </div>
-
-      <div className="paginacontainer">
-        <div className="progress-wrap">
-          <svg className="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-          </svg>
-          <div className="top-arrow">
-            <svg width="12" height="20" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0.999999 1L8 8L1 15" stroke="#2920D2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+    <>
+      {!hideChrome && (
+        <>
+          <div className="progress-bar-container">
+            <div className="progress-bar"></div>
           </div>
-        </div>
-      </div>
-
-      <Header />
+          <div className="paginacontainer">
+            <div className="progress-wrap">
+              <svg className="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+              </svg>
+              <div className="top-arrow">
+                <svg width="12" height="20" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0.999999 1L8 8L1 15" stroke="#2920D2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <Header />
+        </>
+      )}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -76,7 +73,7 @@ function App() {
         <Route path="/register/success" element={<RegistrationSuccess />} />
         <Route path="/login" element={<Login />} />
         <Route path="/set-password" element={<SetPassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<ParentDashboard />} />
         <Route path="/child-setup" element={<ChildSetup />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-conditions" element={<Terms />} />
@@ -86,10 +83,22 @@ function App() {
         <Route path="/blog/how-to-keep-children-safe-online-2026" element={<BlogPost />} />
       </Routes>
 
-      <Footer />
+      {!hideChrome && <Footer />}
+    </>
+  );
+}
+
+function App() {
+  useEffect(() => {
+    if (window.AOS) window.AOS.init();
+  }, []);
+
+  return (
+    <Router>
+      <ScrollToTop />
+      <AppShell />
     </Router>
   );
 }
 
 export default App;
-
