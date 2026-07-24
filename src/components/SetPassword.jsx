@@ -59,7 +59,8 @@ export default function SetPassword() {
     
     setLoading(true);
     try {
-      const response = await fetch('/api/auth/change-password-first-time', {
+      const apiBase = import.meta.env.PROD ? 'https://160-153-179-249.sslip.io' : '';
+      const response = await fetch(`${apiBase}/api/auth/change-password-first-time`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,13 +77,30 @@ export default function SetPassword() {
         throw new Error(data.message || data.msg || 'Failed to update password. Please try again.');
       }
 
-      navigate('/dashboard', {
-        state: {
-          accountDetails: {
-            token
+      // ── Store token so the dashboard auth guard passes ──
+      localStorage.setItem('vigil_token', token);
+
+      // ── Resolve parentId via /api/auth/me ──
+      let parentId = data.userId || data.parentId || data._id || '';
+      if (!parentId) {
+        try {
+          const meRes = await fetch(`${apiBase}/api/auth/me`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (meRes.ok) {
+            const meData = await meRes.json();
+            parentId = meData._id || meData.userId ||
+              (meData.data && (meData.data._id || meData.data.userId)) || '';
           }
-        }
-      });
+        } catch (_) {}
+      }
+      if (parentId) localStorage.setItem('vigil_parentId', parentId);
+
+      // ── Clear stale child/device keys from any previous session ──
+      localStorage.removeItem('vigil_childId');
+      localStorage.removeItem('vigil_deviceKey');
+
+      navigate('/dashboard');
     } catch (error) {
       setApiError(error.message);
     } finally {

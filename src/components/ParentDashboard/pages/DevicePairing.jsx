@@ -35,9 +35,37 @@ export default function DevicePairing({ refreshChildren }) {
     const res = await childrenApi.verifyOtpAndPair(f('email'), f('otp'), f('childName'), parseInt(f('childAge')));
     setLoading(false);
     if (res.ok || res.status === 200 || res.status === 201) {
-      if (res.data?.childId) localStorage.setItem('vigil_childId', res.data.childId);
+      const d = res.data || {};
+
+      // Store deviceKey — unlocks all monitoring endpoints (x-device-key header)
+      const deviceKey = d.deviceKey || d.device_key || d.token_device || '';
+      if (deviceKey) {
+        localStorage.setItem('vigil_deviceKey', deviceKey);
+        console.log('[Vigil Pairing] deviceKey stored:', deviceKey);
+      } else {
+        console.warn('[Vigil Pairing] No deviceKey in pairing response — monitoring endpoints may return 401');
+      }
+
+      // Store childId
+      const childId =
+        d.childId || d.child_id || d.child?._id || d.child?.id ||
+        d.data?.childId || d.data?.child_id || '';
+      if (childId) {
+        localStorage.setItem('vigil_childId', childId);
+        console.log('[Vigil Pairing] childId stored:', childId);
+      }
+
+      // Store parentId (may be returned here too)
+      const parentId =
+        d.parentId || d.parent_id || d.userId ||
+        d.data?.parentId || d.data?.userId || '';
+      if (parentId) {
+        localStorage.setItem('vigil_parentId', parentId);
+        console.log('[Vigil Pairing] parentId refreshed:', parentId);
+      }
+
       setStep(3);
-      setSuccess('Device paired successfully!');
+      setSuccess('Device paired successfully! Monitoring is now active.');
       refreshChildren?.();
     } else {
       setError(res.data?.message || res.data?.msg || 'Pairing failed. Check OTP and try again.');

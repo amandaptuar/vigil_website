@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { locationApi } from '../../../utils/apiService';
+import { getIds } from '../../../utils/dashHelpers';
 
-export default function LocationPage({ selectedChildId, parentId }) {
+export default function LocationPage({ selectedChildId, parentId: propParentId }) {
+  const { childId, parentId } = getIds(selectedChildId, propParentId);
   const [tab, setTab] = useState('live');
   const [liveLocation, setLiveLocation] = useState(null);
   const [history, setHistory] = useState([]);
@@ -11,21 +13,21 @@ export default function LocationPage({ selectedChildId, parentId }) {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    if (selectedChildId) fetchData();
-  }, [selectedChildId, tab, hours, page]);
+    if (childId) fetchData();
+  }, [childId, tab, hours, page]);
 
   const fetchData = async () => {
     setLoading(true); setError('');
     if (tab === 'live') {
-      const res = await locationApi.getLive(selectedChildId);
+      const res = await locationApi.getLive(childId);
       if (res.ok) setLiveLocation(res.data?.data || res.data?.location || res.data);
       else setError('Live location unavailable. Device must be paired and location permission granted.');
     } else if (tab === 'history') {
-      const res = await locationApi.getHistoryByHours(selectedChildId, hours);
+      const res = await locationApi.getHistoryByHours(childId, hours);
       if (res.ok) setHistory(res.data?.data || res.data?.history || res.data?.locations || (Array.isArray(res.data) ? res.data : []));
       else setError('Location history unavailable.');
     } else {
-      const res = await locationApi.getAllRecords(selectedChildId, parentId, page);
+      const res = await locationApi.getAllRecords(childId, parentId, page);
       if (res.ok) setHistory(res.data?.data || res.data?.locations || (Array.isArray(res.data) ? res.data : []));
       else setError('Could not load location records.');
     }

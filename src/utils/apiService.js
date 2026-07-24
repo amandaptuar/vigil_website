@@ -11,12 +11,16 @@ function getParentId() {
 function getChildId() {
   return localStorage.getItem('vigil_childId') || '';
 }
+// NEW: device key obtained after child-device pairing flow
+function getDeviceKey() {
+  return localStorage.getItem('vigil_deviceKey') || '';
+}
 
 async function request(method, path, body = null, extraHeaders = {}) {
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${getToken()}`,
-    ...extraHeaders
+    ...extraHeaders,
   };
   const opts = { method, headers };
   if (body) opts.body = JSON.stringify(body);
@@ -33,11 +37,24 @@ async function request(method, path, body = null, extraHeaders = {}) {
 export const authApi = {
   getMe: () => request('GET', '/api/auth/me'),
   logout: () => request('POST', '/api/auth/logout'),
-  changePasswordFirstTime: (newPassword) => request('POST', '/api/auth/change-password-first-time', { newPassword }),
-  refreshToken: (refreshToken) => request('POST', '/api/auth/refresh-token', { refreshToken }),
-  requestPasswordReset: (email) => request('POST', '/api/auth/request-password-reset', { email }),
-  verifyOtp: (email, otp) => request('POST', '/api/auth/verify-otp', { email, otp }),
-  resetPassword: (email, otp, newPassword) => request('POST', '/api/auth/reset-password', { email, otp, newPassword }),
+  changePasswordFirstTime: (newPassword) =>
+    request('POST', '/api/auth/change-password-first-time', { newPassword }),
+  refreshToken: (refreshToken) =>
+    request('POST', '/api/auth/refresh-token', { refreshToken }),
+  requestPasswordReset: (email) =>
+    request('POST', '/api/auth/request-password-reset', { email }),
+  verifyOtp: (email, otp) =>
+    request('POST', '/api/auth/verify-otp', { email, otp }),
+  resetPassword: (email, otp, newPassword) =>
+    request('POST', '/api/auth/reset-password', { email, otp, newPassword }),
+};
+
+// ============================================================
+// PARENTS PROFILE  (richer than /api/auth/me)
+// ============================================================
+export const parentsApi = {
+  getProfile: () => request('GET', '/api/parents/profile'),
+  updateProfile: (data) => request('PUT', '/api/parents/profile', data),
 };
 
 // ============================================================
@@ -48,68 +65,141 @@ export const childrenApi = {
   getById: (childId) => request('GET', `/api/children/${childId}`),
   getByParentId: (parentId) => request('GET', `/api/children/childrens/${parentId}`),
   create: (name, age, gender) => request('POST', '/api/children', { name, age, gender }),
-  updateName: (childId, name) => request('PUT', `/api/children/${childId}/update-name`, { name }),
+  updateName: (childId, name) =>
+    request('PUT', `/api/children/${childId}/update-name`, { name }),
   delete: (childId) => request('DELETE', `/api/children/${childId}`),
-  activityOverview: (childId) => request('GET', `/api/children/${childId}/activity-overview`),
-  getDeviceData: (parentId) => request('GET', `/api/deviceData/${parentId}`),
-  // Pairing
-  loginAndSendOtp: (email, password) => request('POST', '/api/children/login-and-send-otp', { email, password }),
-  verifyOtpAndPair: (email, otp, name, age) => request('POST', '/api/children/verify-otp-and-pair-device', { email, otp, name, age }),
-  getByEmail: (email) => request('POST', '/api/children/children-by-email', { email }),
+  activityOverview: (childId) =>
+    request('GET', `/api/children/${childId}/activity-overview`),
+  getDeviceData: (parentId) =>
+    request('GET', `/api/deviceData/${parentId}`),
+  // Pairing flow
+  loginAndSendOtp: (email, password) =>
+    request('POST', '/api/children/login-and-send-otp', { email, password }),
+  verifyOtpAndPair: (email, otp, name, age) =>
+    request('POST', '/api/children/verify-otp-and-pair-device', { email, otp, name, age }),
+  getByEmail: (email) =>
+    request('POST', '/api/children/children-by-email', { email }),
 };
 
 // ============================================================
-// PERMISSIONS & DEVICE
+// PERMISSIONS & DEVICE STATUS
 // ============================================================
 export const permissionsApi = {
-  getLiveStatus: (childId) => request('GET', `/api/children/${childId}/live-status`),
-  getPermissions: (childId) => request('GET', `/api/children/${childId}/permissions`),
-  updatePermissions: (childId, perms) => request('PUT', `/api/children/${childId}/permissions`, perms),
-  getDeviceInfo: (childId) => request('GET', `/api/children/${childId}/device-info`),
-  updateDeviceInfo: (childId, info) => request('PUT', `/api/children/${childId}/device-info`, info),
+  getLiveStatus: (childId) =>
+    request('GET', `/api/children/${childId}/live-status`),
+  getPermissions: (childId) =>
+    request('GET', `/api/children/${childId}/permissions`),
+  updatePermissions: (childId, perms) =>
+    request('PUT', `/api/children/${childId}/permissions`, perms),
+  getDeviceInfo: (childId) =>
+    request('GET', `/api/children/${childId}/device-info`),
+  updateDeviceInfo: (childId, info) =>
+    request('PUT', `/api/children/${childId}/device-info`, info),
 };
 
 // ============================================================
-// CALL LOGS
+// PARENT-DATA  (dashboard summary, alerts, per-child social/files/apps)
+// ============================================================
+export const parentDataApi = {
+  getDashboardSummary: () =>
+    request('GET', '/api/parent-data/dashboard-summary'),
+  getAlerts: (limit = 10) =>
+    request('GET', `/api/parent-data/alerts?limit=${limit}`),
+  getChildSocial: (childId) =>
+    request('GET', `/api/parent-data/children/${childId}/social`),
+  getChildFiles: (childId) =>
+    request('GET', `/api/parent-data/children/${childId}/files`),
+  getChildAppsSummary: (childId, days = 7) =>
+    request('GET', `/api/parent-data/children/${childId}/apps-summary?days=${days}`),
+};
+
+// ============================================================
+// CALL LOGS  ← requires x-device-key
 // ============================================================
 export const callsApi = {
   getAll: (childId, parentId, page = 1, limit = 20) =>
-    request('GET', `/api/logs/calllogs?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/logs/calllogs?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
   getByType: (childId, parentId, callType, page = 1, limit = 20) =>
-    request('GET', `/api/logs/calllogs?child_id=${childId}&parent_id=${parentId}&callType=${callType}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/logs/calllogs?child_id=${childId}&parent_id=${parentId}&callType=${callType}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
 };
 
 // ============================================================
-// SMS
+// SMS  ← requires x-device-key
 // ============================================================
 export const smsApi = {
   getAll: (childId, parentId, page = 1, limit = 20) =>
-    request('GET', `/api/sms/get_sms?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/sms/get_sms?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
   getByAddress: (childId, parentId, address, page = 1, limit = 20) =>
-    request('GET', `/api/sms/get_sms?child_id=${childId}&parent_id=${parentId}&address=${encodeURIComponent(address)}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/sms/get_sms?child_id=${childId}&parent_id=${parentId}&address=${encodeURIComponent(address)}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
   searchByKeyword: (childId, parentId, keyword, page = 1, limit = 20) =>
-    request('GET', `/api/sms/get_sms?child_id=${childId}&parent_id=${parentId}&keyword=${encodeURIComponent(keyword)}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/sms/get_sms?child_id=${childId}&parent_id=${parentId}&keyword=${encodeURIComponent(keyword)}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
   getInbox: (childId, parentId, page = 1, limit = 20) =>
-    request('GET', `/api/sms/get_sms?child_id=${childId}&parent_id=${parentId}&type=inbox&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/sms/get_sms?child_id=${childId}&parent_id=${parentId}&type=inbox&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
 };
 
 // ============================================================
-// FILES / GALLERY
+// FILES / GALLERY  ← requires x-device-key
 // ============================================================
 export const filesApi = {
   getAll: (childId, parentId, page = 1, limit = 20) =>
-    request('GET', `/api/files/get_files?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/files/get_files?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
   getImages: (childId, parentId, page = 1, limit = 20) =>
-    request('GET', `/api/files/get_files?child_id=${childId}&parent_id=${parentId}&file_type=image&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/files/get_files?child_id=${childId}&parent_id=${parentId}&file_type=image&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
   getVideos: (childId, parentId, page = 1, limit = 20) =>
-    request('GET', `/api/files/get_files?child_id=${childId}&parent_id=${parentId}&file_type=video&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/files/get_files?child_id=${childId}&parent_id=${parentId}&file_type=video&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
 };
 
 // ============================================================
-// LOCATION
+// LOCATION  ← history/records endpoints require x-device-key
 // ============================================================
 export const locationApi = {
-  getLive: (childId) => request('GET', `/api/children/${childId}/location`),
+  getLive: (childId) =>
+    request('GET', `/api/children/${childId}/location`),
   getHistory: (childId, page = 1, limit = 20) =>
     request('GET', `/api/children/${childId}/location-history?page=${page}&limit=${limit}`),
   addHistory: (childId, coordinates, address) =>
@@ -117,9 +207,19 @@ export const locationApi = {
   updateLocation: (childId, latitude, longitude) =>
     request('PUT', `/api/children/${childId}/location`, { latitude, longitude }),
   getHistoryByHours: (childId, hours = 24) =>
-    request('GET', `/api/locations/history/${childId}?hours=${hours}`),
+    request(
+      'GET',
+      `/api/locations/history/${childId}?hours=${hours}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
   getAllRecords: (childId, parentId, page = 1, limit = 50) =>
-    request('GET', `/api/locations/get_locations?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/locations/get_locations?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
 };
 
 // ============================================================
@@ -135,38 +235,58 @@ export const geofenceApi = {
 };
 
 // ============================================================
-// SCREEN TIME / APPS
+// SCREEN TIME / APPS  ← requires x-device-key
 // ============================================================
 export const appsApi = {
   getAll: (childId, parentId, page = 1, limit = 50) =>
-    request('GET', `/api/apps/get_apps?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/apps/get_apps?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
 };
 
 // ============================================================
-// CONTACTS
+// CONTACTS  ← requires x-device-key
 // ============================================================
 export const contactsApi = {
   getAll: (childId, parentId, page = 1, limit = 50) =>
-    request('GET', `/api/contacts/get_contacts?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/contacts/get_contacts?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
 };
 
 // ============================================================
-// EVENTS / CALENDAR
+// EVENTS / CALENDAR  ← requires x-device-key
 // ============================================================
 export const eventsApi = {
   getAll: (childId, parentId, page = 1, limit = 20) =>
-    request('GET', `/api/events/get_events?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`),
+    request(
+      'GET',
+      `/api/events/get_events?child_id=${childId}&parent_id=${parentId}&page=${page}&limit=${limit}`,
+      null,
+      { 'x-device-key': getDeviceKey() }
+    ),
 };
 
 // ============================================================
 // AI ANALYSIS
 // ============================================================
 export const aiApi = {
-  runAnalysis: (childId, date) => request('POST', `/api/ai/children/${childId}/analyze`, { date }),
-  getDaily: (childId, date) => request('GET', `/api/ai/children/${childId}/daily/${date}`),
-  listDailyHistory: (childId) => request('GET', `/api/ai/children/${childId}/daily`),
-  downloadReport: (childId, date) => request('GET', `/api/ai/children/${childId}/daily/${date}/report`),
-  getRelationships: (childId) => request('GET', `/api/ai/children/${childId}/relationships`),
+  runAnalysis: (childId, date) =>
+    request('POST', `/api/ai/children/${childId}/analyze`, { date }),
+  getDaily: (childId, date) =>
+    request('GET', `/api/ai/children/${childId}/daily/${date}`),
+  listDailyHistory: (childId) =>
+    request('GET', `/api/ai/children/${childId}/daily`),
+  downloadReport: (childId, date) =>
+    request('GET', `/api/ai/children/${childId}/daily/${date}/report`),
+  getRelationships: (childId) =>
+    request('GET', `/api/ai/children/${childId}/relationships`),
   getLongitudinal: (childId, kind = 'longitudinal') =>
     request('GET', `/api/ai/children/${childId}/longitudinal?kind=${kind}`),
 };

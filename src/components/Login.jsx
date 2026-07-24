@@ -88,13 +88,38 @@ export default function Login() {
           state: { token }
         });
       } else {
+        // Store token first so the /me fallback can authenticate
         localStorage.setItem('vigil_token', token);
+
         // Try every possible field the backend might send for the parent's ID
-        const parentId = 
+        let parentId =
           data.userId || data.parentId || data._id || data.id ||
           (data.data && (data.data.userId || data.data.parentId || data.data._id || data.data.id)) ||
           (data.user && (data.user._id || data.user.id || data.user.userId)) || '';
+
+        // ── FALLBACK: if parentId is still empty, call /api/auth/me to get it ──
+        if (!parentId) {
+          try {
+            const meRes = await fetch(`${apiBase}/api/auth/me`, {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (meRes.ok) {
+              const meData = await meRes.json();
+              parentId =
+                meData._id || meData.userId || meData.id ||
+                (meData.data && (meData.data._id || meData.data.userId || meData.data.id)) ||
+                (meData.user && (meData.user._id || meData.user.id)) || '';
+              console.log('[Vigil Login] parentId resolved via /api/auth/me:', parentId);
+            }
+          } catch (meErr) {
+            console.warn('[Vigil Login] /api/auth/me fallback failed:', meErr.message);
+          }
+        }
+
         const refreshToken = data.refreshToken || (data.data && data.data.refreshToken) || '';
+        // Clear stale child/device keys from previous sessions
+        localStorage.removeItem('vigil_childId');
+        localStorage.removeItem('vigil_deviceKey');
         localStorage.setItem('vigil_parentId', parentId);
         if (refreshToken) localStorage.setItem('vigil_refreshToken', refreshToken);
         localStorage.setItem('vigil_user', JSON.stringify({
@@ -102,11 +127,9 @@ export default function Login() {
           name: data.userName || data.name || (data.user && data.user.name) || formData.email.split('@')[0],
           email: data.userEmail || data.email || (data.user && data.user.email) || formData.email
         }));
-        // Debug: log what we got (remove after testing)
-        console.log('[Vigil Login] Response data:', JSON.stringify(data));
         console.log('[Vigil Login] Extracted parentId:', parentId);
+        if (!parentId) console.warn('[Vigil] parentId is still empty — check /api/auth/login and /api/auth/me response shapes');
         navigate('/dashboard');
-        if (!parentId) console.warn('[Vigil] parentId is empty - check API response fields');
       }
     } catch (error) {
       setApiError(error.message);

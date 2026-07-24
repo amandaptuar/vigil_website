@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { callsApi } from '../../../utils/apiService';
+import { getIds } from '../../../utils/dashHelpers';
 
 const TABS = [
   { id: 'all',      label: '📞 All Calls',  type: null },
@@ -11,9 +12,7 @@ const TABS = [
 const TYPE_BADGE = { incoming: 'vd-badge-success', outgoing: 'vd-badge-cyan', missed: 'vd-badge-danger' };
 
 export default function CallLogs({ selectedChildId, parentId: propParentId }) {
-  // Always read from localStorage as fallback
-  const parentId = propParentId || localStorage.getItem('vigil_parentId') || '';
-  const childId  = selectedChildId || localStorage.getItem('vigil_childId') || '';
+  const { childId, parentId } = getIds(selectedChildId, propParentId);
 
   const [tab, setTab]       = useState('all');
   const [logs, setLogs]     = useState([]);
