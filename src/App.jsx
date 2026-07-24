@@ -88,13 +88,21 @@ function AppShell() {
   );
 }
 
+// Deployed at both vigil-1.com (root) and 160-153-179-249.sslip.io/parentsaccess
+// (VPS mirror) — pick the basename that matches wherever we're actually loaded.
+function getBasename() {
+  const p = window.location.pathname;
+  if (p.startsWith('/parentsaccess')) return '/parentsaccess';
+  return '';
+}
+
 function App() {
   useEffect(() => {
     if (window.AOS) window.AOS.init();
   }, []);
 
   return (
-    <Router>
+    <Router basename={getBasename()}>
       <ScrollToTop />
       <AppShell />
     </Router>

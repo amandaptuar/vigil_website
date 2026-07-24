@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/', // Use absolute base path for BrowserRouter
+  base: './', // Relative — works whether deployed at root (vigil-1.com) or a subpath (/parentsaccess)
   server: {
     proxy: {
       '/api': {
