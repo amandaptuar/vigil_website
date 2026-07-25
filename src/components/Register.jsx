@@ -12,7 +12,7 @@ export default function Register() {
   useEffect(() => {
     const token = localStorage.getItem('vigil_token');
     if (token) {
-      window.location.href = 'https://vigil-1.com/parent/';
+      navigate('/dashboard', { replace: true });
       return;
     }
     window.scrollTo(0, 0);
@@ -74,10 +74,13 @@ export default function Register() {
       }
 
       localStorage.setItem('vigil_token', data.token);
+      localStorage.setItem('vigil_parentId', data.userId || '');
+      if (data.deviceKey) localStorage.setItem('vigil_deviceKey', data.deviceKey);
       localStorage.setItem('vigil_user', JSON.stringify({
         _id: data.userId, name: data.userName, email: data.userEmail
       }));
-      window.location.href = 'https://vigil-1.com/parent/';
+      // Go to the new in-app dashboard, NOT the old standalone /parent/ folder.
+      navigate('/dashboard', { replace: true });
     } catch (error) {
       setApiError(error.message);
     } finally {
