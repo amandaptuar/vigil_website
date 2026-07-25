@@ -20,7 +20,13 @@ export default function LocationPage({ selectedChildId, parentId: propParentId }
     setLoading(true); setError('');
     if (tab === 'live') {
       const res = await locationApi.getLive(childId);
-      if (res.ok) setLiveLocation(res.data?.data || res.data?.location || res.data);
+      // Response is a flat { _id, name, location: {coordinates:[lng,lat]}, address, updatedAt }.
+      // Merge location's coordinates up a level so coords()/address/updatedAt all read from one object,
+      // instead of picking just one nesting level and silently dropping the others.
+      if (res.ok) {
+        const d = res.data?.data || res.data;
+        setLiveLocation(d ? { ...d, ...(d.location || {}) } : null);
+      }
       else setError('Live location unavailable. Device must be paired and location permission granted.');
     } else if (tab === 'history') {
       const res = await locationApi.getHistoryByHours(childId, hours);
@@ -40,7 +46,7 @@ export default function LocationPage({ selectedChildId, parentId: propParentId }
     const lng = loc.lng ?? loc.longitude ?? loc.coordinates?.[0];
     if (lat !== undefined && lng !== undefined)
       return `${Number(lat).toFixed(6)}, ${Number(lng).toFixed(6)}`;
-    return JSON.stringify(loc);
+    return 'Not available yet';
   };
 
   const mapsUrl = (loc) => {

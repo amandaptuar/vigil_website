@@ -21,10 +21,13 @@ export default function ScreenTimePage({ selectedChildId, parentId: propParentId
     else setError('Could not load apps. Device may not be paired yet.');
   };
 
-  const totalMinutes = apps.reduce((s,a)=>s+(a.usage_minutes||a.usageMinutes||0),0);
+  // Backend shape: { appName, packageName, usageInfo: { displayMinutes|dailyMinutes|usageMinutes } }
+  const appMins = (a) => a.usageInfo?.displayMinutes ?? a.usageInfo?.dailyMinutes ?? a.usageInfo?.usageMinutes ?? a.usage_minutes ?? a.usageMinutes ?? 0;
+  const appLabel = (a) => a.appName || a.app_name || a.name || '';
+  const totalMinutes = apps.reduce((s,a)=>s+appMins(a),0);
   const sorted = [...apps]
-    .filter(a=>!search||(a.app_name||a.name||'').toLowerCase().includes(search.toLowerCase()))
-    .sort((a,b)=>sortBy==='usage'?(b.usage_minutes||b.usageMinutes||0)-(a.usage_minutes||a.usageMinutes||0):(a.app_name||a.name||'').localeCompare(b.app_name||b.name||''));
+    .filter(a=>!search||appLabel(a).toLowerCase().includes(search.toLowerCase()))
+    .sort((a,b)=>sortBy==='usage'?appMins(b)-appMins(a):appLabel(a).localeCompare(appLabel(b)));
 
   if (!childId||!parentId) return (
     <div><div className="vd-page-head"><h2>Screen Time & Apps</h2></div>
@@ -42,7 +45,7 @@ export default function ScreenTimePage({ selectedChildId, parentId: propParentId
         {[
           {label:'Total Apps',value:apps.length,emoji:'📱',color:'var(--primary)',bg:'rgba(79,70,229,0.08)',accent:'linear-gradient(90deg,#6366f1,#818cf8)'},
           {label:'Total Screen Time',value:`${totalH}h ${totalM}m`,emoji:'⏱️',color:'#b45309',bg:'rgba(217,119,6,0.08)',accent:'linear-gradient(90deg,#d97706,#fbbf24)'},
-          {label:'Most Used',value:apps[0]?.app_name||apps[0]?.name||'—',emoji:'🏆',color:'#15803d',bg:'rgba(22,163,74,0.08)',accent:'linear-gradient(90deg,#16a34a,#4ade80)'},
+          {label:'Most Used',value:(sorted[0]&&appLabel(sorted[0]))||'—',emoji:'🏆',color:'#15803d',bg:'rgba(22,163,74,0.08)',accent:'linear-gradient(90deg,#16a34a,#4ade80)'},
         ].map((s,i)=>(
           <div key={i} className="vd-stat-card" style={{'--card-accent':s.accent}}>
             <div className="vd-stat-icon" style={{background:s.bg}}><span>{s.emoji}</span></div>
@@ -76,12 +79,12 @@ export default function ScreenTimePage({ selectedChildId, parentId: propParentId
                   <thead><tr><th>#</th><th>App Name</th><th>Package</th><th>Usage</th><th>Share</th><th>Installed</th></tr></thead>
                   <tbody>
                     {sorted.map((app,i)=>{
-                      const mins=app.usage_minutes||app.usageMinutes||0;
+                      const mins=appMins(app);
                       const pct=totalMinutes>0?Math.round((mins/totalMinutes)*100):0;
                       return(
                         <tr key={app._id||i}>
                           <td style={{color:'var(--text-muted)',fontSize:12}}>{i+1}</td>
-                          <td style={{fontWeight:600,color:'var(--text-primary)'}}>{app.app_name||app.name||'—'}</td>
+                          <td style={{fontWeight:600,color:'var(--text-primary)'}}>{appLabel(app)||'—'}</td>
                           <td style={{fontFamily:'monospace',fontSize:11,color:'var(--text-muted)',maxWidth:180,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{app.package_name||app.packageName||'—'}</td>
                           <td style={{fontWeight:700,color:'#b45309',whiteSpace:'nowrap'}}>{mins>0?`${Math.floor(mins/60)}h ${mins%60}m`:'—'}</td>
                           <td style={{minWidth:120}}>

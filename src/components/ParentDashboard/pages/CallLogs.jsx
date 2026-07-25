@@ -32,7 +32,7 @@ export default function CallLogs({ selectedChildId, parentId: propParentId }) {
       : await callsApi.getAll(childId, parentId, page);
     setLoading(false);
     if (res.ok) {
-      setLogs(res.data?.data || res.data?.logs || res.data?.calllogs || (Array.isArray(res.data) ? res.data : []));
+      setLogs(res.data?.callLogs || res.data?.data || res.data?.logs || res.data?.calllogs || (Array.isArray(res.data) ? res.data : []));
     } else {
       setError('Could not load call logs. Device may not be paired or syncing yet.');
     }

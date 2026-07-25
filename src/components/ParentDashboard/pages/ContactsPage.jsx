@@ -15,7 +15,7 @@ export default function ContactsPage({ selectedChildId, parentId: propParentId }
   useEffect(() => {
     if (!search.trim()) { setFiltered(contacts); return; }
     const q = search.toLowerCase();
-    setFiltered(contacts.filter(c => (c.name||c.display_name||'').toLowerCase().includes(q) || (c.phone||c.number||c.phoneNumber||'').toLowerCase().includes(q)));
+    setFiltered(contacts.filter(c => (c.displayName||c.name||c.display_name||'').toLowerCase().includes(q) || (c.phone||c.number||c.phoneNumber||'').toLowerCase().includes(q)));
   }, [search, contacts]);
 
   const fetchContacts = async () => {
@@ -54,7 +54,7 @@ export default function ContactsPage({ selectedChildId, parentId: propParentId }
                 <table className="vd-table">
                   <thead><tr><th></th><th>Name</th><th>Phone Number</th><th>Type</th></tr></thead>
                   <tbody>
-                    {filtered.map((c,i)=>{const name=c.name||c.display_name||'Unknown'; return(
+                    {filtered.map((c,i)=>{const name=c.displayName||c.name||c.display_name||'Unknown'; return(
                       <tr key={c._id||i}>
                         <td style={{width:44}}><div style={{width:34,height:34,borderRadius:'50%',background:avatarColor(name),display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,color:'#fff',fontSize:13}}>{name.charAt(0).toUpperCase()}</div></td>
                         <td style={{fontWeight:600,color:'var(--text-primary)'}}>{name}</td>
