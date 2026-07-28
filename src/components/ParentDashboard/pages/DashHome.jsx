@@ -48,16 +48,19 @@ export default function DashHome({ selectedChildId, parentId, currentChild, user
           childrenApi.activityOverview(selectedChildId),
         ]);
 
-        const ov = ovRes.ok ? (ovRes.data?.data || ovRes.data || {}) : {};
-        const callList = callRes.ok ? (callRes.data?.data || callRes.data?.logs || callRes.data?.calllogs || (Array.isArray(callRes.data) ? callRes.data : [])) : [];
+        // activity-overview nests its counts under `activity` (not top-level).
+        const ov = ovRes.ok ? (ovRes.data?.activity || ovRes.data?.data || ovRes.data || {}) : {};
+        // getCallLogs returns `callLogs` (capital L) + `total`; getSms returns `sms`/`messages` + `total`.
+        const callList = callRes.ok ? (callRes.data?.callLogs || callRes.data?.data || callRes.data?.logs || callRes.data?.calllogs || (Array.isArray(callRes.data) ? callRes.data : [])) : [];
         const smsList  = smsRes.ok  ? (smsRes.data?.data  || smsRes.data?.messages|| smsRes.data?.sms       || (Array.isArray(smsRes.data)  ? smsRes.data  : [])) : [];
         const appsList = appsRes.ok ? (appsRes.data?.data || appsRes.data?.apps   || (Array.isArray(appsRes.data) ? appsRes.data : [])) : [];
         const totalMins = appsList.reduce((s, a) => s + (a.usage_minutes || a.usageMinutes || 0), 0);
 
         setCounts({
-          calls:      ov.totalCallsToday ?? ov.calls_today ?? ov.callCount ?? callList.length ?? null,
-          sms:        ov.totalSmsToday   ?? ov.sms_today   ?? ov.smsCount  ?? smsList.length  ?? null,
-          apps:       ov.appCount        ?? ov.app_count   ?? appsList.length ?? null,
+          // Prefer the backend's `total` (counts all matching records, not just the fetched page).
+          calls:      ov.totalCallsToday ?? ov.calls_today ?? ov.callCount ?? callRes.data?.total ?? callList.length ?? null,
+          sms:        ov.totalSmsToday   ?? ov.sms_today   ?? ov.smsCount  ?? smsRes.data?.total  ?? smsList.length  ?? null,
+          apps:       ov.appCount        ?? ov.app_count   ?? appsRes.data?.total ?? appsList.length ?? null,
           screenTime: ov.appUsageMinutes ?? ov.screen_time_minutes ?? (totalMins > 0 ? totalMins : null),
         });
       }
