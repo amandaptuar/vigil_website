@@ -49,7 +49,12 @@ export default function Register() {
 
     setLoading(true);
     try {
-      const response = await fetch('/api/auth/register-website', {
+      // Use the absolute backend URL in production. On vigil-1.com (FTP hosting
+      // with no working /api proxy) a relative '/api/...' path hits the web host
+      // itself and returns a 500 — which is why website register failed while
+      // the mobile app (which always calls the backend directly) worked.
+      const apiBase = import.meta.env.PROD ? 'https://160-153-179-249.sslip.io' : '';
+      const response = await fetch(`${apiBase}/api/auth/register-website`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
