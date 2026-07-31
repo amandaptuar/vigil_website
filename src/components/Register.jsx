@@ -3,10 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ fullName: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ fullName: '', email: '', password: '', otp: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [step, setStep] = useState(1); // 1: Details, 2: OTP Verification
   const [apiError, setApiError] = useState('');
+  const [otpSuccessMsg, setOtpSuccessMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -33,7 +36,7 @@ export default function Register() {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: null }));
   };
 
-  const validate = () => {
+  const validateStep1 = () => {
     const e = {};
     if (!formData.fullName.trim()) e.fullName = 'Required';
     if (!/\S+@\S+\.\S+/.test(formData.email)) e.email = 'Valid email required';
@@ -41,38 +44,71 @@ export default function Register() {
     return e;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSendOtp = async () => {
     setApiError('');
-    const errs = validate();
+    setOtpSuccessMsg('');
+    const errs = validateStep1();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
-    setLoading(true);
+    setOtpLoading(true);
     try {
-      // Use the absolute backend URL in production. On vigil-1.com (FTP hosting
-      // with no working /api proxy) a relative '/api/...' path hits the web host
-      // itself and returns a 500 — which is why website register failed while
-      // the mobile app (which always calls the backend directly) worked.
       const apiBase = import.meta.env.PROD ? 'https://160-153-179-249.sslip.io' : '';
-      const response = await fetch(`${apiBase}/api/auth/register-website`, {
+      const response = await fetch(`${apiBase}/api/auth/send-register-otp`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.fullName,
-          email: formData.email,
-          password: formData.password
+          email: formData.email
         })
       });
 
       const text = await response.text();
       let data = {};
-      try {
-        data = text ? JSON.parse(text) : {};
-      } catch (e) {
-        data = { message: text || 'An unexpected error occurred.' };
+      try { data = text ? JSON.parse(text) : {}; } catch (e) { data = { message: text }; }
+
+      if (!response.ok) {
+        throw new Error(data.msg || data.message || 'Could not send OTP. Please try again.');
       }
+
+      setStep(2);
+      setOtpSuccessMsg(data.msg || "OTP sent successfully! Please check your inbox. If you can't find the email, check your Spam/Junk folder.");
+    } catch (error) {
+      setApiError(error.message);
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (step === 1) {
+      handleSendOtp();
+      return;
+    }
+
+    setApiError('');
+    if (!formData.otp.trim()) {
+      setErrors({ otp: 'Please enter the 6-digit OTP code sent to your email' });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const apiBase = import.meta.env.PROD ? 'https://160-153-179-249.sslip.io' : '';
+      const response = await fetch(`${apiBase}/api/auth/register-website`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          otp: formData.otp.trim()
+        })
+      });
+
+      const text = await response.text();
+      let data = {};
+      try { data = text ? JSON.parse(text) : {}; } catch (e) { data = { message: text }; }
 
       if (!response.ok) {
         throw new Error(data.msg || data.message || 'Registration failed. Please try again.');
@@ -84,7 +120,6 @@ export default function Register() {
       localStorage.setItem('vigil_user', JSON.stringify({
         _id: data.userId, name: data.userName, email: data.userEmail
       }));
-      // Go to the new in-app dashboard, NOT the old standalone /parent/ folder.
       navigate('/dashboard', { replace: true });
     } catch (error) {
       setApiError(error.message);
@@ -385,21 +420,37 @@ export default function Register() {
             <form onSubmit={handleSubmit}>
                 <div className="sec-label">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  <span>Parent Details</span>
+                  <span>{step === 1 ? 'Parent Details' : 'Enter Verification OTP'}</span>
                 </div>
+
+                {otpSuccessMsg && (
+                  <div style={{
+                    backgroundColor: '#f0fdf4',
+                    border: '1px solid #bbf7d0',
+                    color: '#166534',
+                    borderRadius: '10px',
+                    padding: '12px 16px',
+                    fontSize: '13px',
+                    lineHeight: '1.5',
+                    marginBottom: '18px',
+                    textAlign: 'left'
+                  }}>
+                    📬 <strong>{otpSuccessMsg}</strong>
+                  </div>
+                )}
 
                 <div className="inputs-row">
                   <div style={{ flex: 1 }}>
                     <div className="inp-wrap" style={{ flex: 'none' }}>
                       <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                      <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name" className={`reg-inp ${errors.fullName ? 'has-error' : ''}`} />
+                      <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name" disabled={step === 2} className={`reg-inp ${errors.fullName ? 'has-error' : ''}`} />
                     </div>
                     {errors.fullName && <span className="err">{errors.fullName}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div className="inp-wrap" style={{ flex: 'none' }}>
                       <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                      <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" className={`reg-inp ${errors.email ? 'has-error' : ''}`} />
+                      <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" disabled={step === 2} className={`reg-inp ${errors.email ? 'has-error' : ''}`} />
                     </div>
                     {errors.email && <span className="err">{errors.email}</span>}
                   </div>
@@ -407,7 +458,7 @@ export default function Register() {
 
                 <div className="pw-wrap">
                   <svg className="pw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} placeholder="Create a Password" className={`reg-inp ${errors.password ? 'has-error' : ''}`} />
+                  <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} placeholder="Create a Password" disabled={step === 2} className={`reg-inp ${errors.password ? 'has-error' : ''}`} />
                   <div className="pw-eye" onClick={() => setShowPassword(!showPassword)}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       {showPassword ? <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></> : <><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></>}
@@ -416,18 +467,54 @@ export default function Register() {
                 </div>
                 {errors.password && <span className="err" style={{ display: 'block', marginTop: '-8px', marginBottom: '16px' }}>{errors.password}</span>}
 
+                {step === 2 && (
+                  <div style={{ marginBottom: '20px' }}>
+                    <div className="inp-wrap" style={{ flex: 'none' }}>
+                      <svg className="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      <input
+                        type="text"
+                        name="otp"
+                        value={formData.otp}
+                        onChange={handleChange}
+                        placeholder="Enter 6-Digit OTP Code"
+                        maxLength={6}
+                        className={`reg-inp ${errors.otp ? 'has-error' : ''}`}
+                        style={{ letterSpacing: '4px', fontWeight: 'bold', fontSize: '16px' }}
+                      />
+                    </div>
+                    {errors.otp && <span className="err">{errors.otp}</span>}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px', padding: '0 4px' }}>
+                      <button type="button" onClick={() => setStep(1)} style={{ background: 'none', border: 'none', color: '#64748b', fontSize: '12px', cursor: 'pointer', padding: 0 }}>
+                        ← Change Details
+                      </button>
+                      <button type="button" onClick={handleSendOtp} disabled={otpLoading} style={{ background: 'none', border: 'none', color: '#4f46e5', fontSize: '12px', fontWeight: 600, cursor: 'pointer', padding: 0 }}>
+                        {otpLoading ? 'Resending...' : 'Resend OTP'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 {apiError && (
                   <div style={{ textAlign: 'center', marginBottom: '16px' }}>
                     <span className="err" style={{ display: 'inline-block' }}>{apiError}</span>
                   </div>
                 )}
 
-                <button type="submit" className="reg-btn" disabled={loading} style={{ opacity: loading ? 0.7 : 1 }}>
-                  {loading ? 'Creating Account...' : (
-                    <>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-                      Create My Account
-                    </>
+                <button type="submit" className="reg-btn" disabled={loading || otpLoading} style={{ opacity: (loading || otpLoading) ? 0.7 : 1 }}>
+                  {step === 1 ? (
+                    otpLoading ? 'Sending Verification Code...' : (
+                      <>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        Send Verification Code
+                      </>
+                    )
+                  ) : (
+                    loading ? 'Verifying & Creating Account...' : (
+                      <>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Verify &amp; Create Account
+                      </>
+                    )
                   )}
                 </button>
 
